@@ -38,6 +38,7 @@ def 说明():
     python2版的实例手册地址: https://github.com/liquanzhou/ops_doc
     请使用"pycharm"打开此文档, "Ctrl+Shift+NumPad+/-"将函数展开或折叠后方便查阅
     错误在所难免, 还望指正！
+    不定期更新地址：https://github.com/332000640/python3_learn_man
     '''
 
 def 基础():
