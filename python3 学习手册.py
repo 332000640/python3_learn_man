@@ -7,7 +7,9 @@
 # Version : 1
 
 def 更新日志():
-    #数据的分解操作
+    log_2018_04_31 = '''
+        完善一些知识点包括数学运算，序列相关的内置函数,完成流程控制，完成一些常用模块，补充使用技巧模块。
+        '''
     log_2018_04_30 = '''
         补充一些知识点
         '''
@@ -29,6 +31,7 @@ def 更新日志():
 
 def 更新备忘录():
     '''
+    namedtuple
     python书籍补充。
     python2实例手册补充。
     '''
@@ -44,9 +47,8 @@ def 说明():
     '''
 
 def 基础():
-    '''
-    python3的基础知识
-    '''
+    '''python3的基础知识'''
+    '''约定变量名全部大写代表常量'''
 
     def 查看帮助():
 
@@ -82,9 +84,7 @@ def 基础():
             只要对象是可迭代的，就可以就行分解操作。
             a,_,b,_='1234'   丢弃操作
             a,*_,b='1234'    分解操作
-            
-            
-        '''
+            '''
 
         def 数字():
 
@@ -254,7 +254,7 @@ def 基础():
                 'test'.lower()      # 转换字符串中所有大写字符为小写。
                 'test'.lstrip()     # 截掉字符串左边的空格或指定字符。
                 'test'.replace('t', 'T',2)  # 把 将字符串中的 str1 替换成 str2,也可以指定替换次数。有返回值,返回替换后的字符串。
-                'test'.maketrans()          # 创建字符映射的转换表，对于接受两个参数的最简单的调用方式，第一个参数是字符串，表示需要转换的字符，第二个参数也是字符串表示转换的目标。
+                'test'.maketrans()          # 创建字符映射的转换表，对于接收两个参数的最简单的调用方式，第一个参数是字符串，表示需要转换的字符，第二个参数也是字符串表示转换的目标。
                  max('test')     # 返回字符串 str 中最大的字母。
                  min('test')     # 返回字符串 str 中最小的字母。
                 'test'.capitalize()     # 将字符串的第一个字符转换为大写。
@@ -269,7 +269,7 @@ def 基础():
                 'test'.zfill(9)         # 返回长度为 width 的字符串，原字符串右对齐，前面填充0
                 'test'.isdecimal()      # 检查字符串是否只包含十进制字符，如果是返回 true，否则返回 false。
                 'test'.splitlines(True) # 按照行('\r', '\r\n', \n')分隔，返回一个包含各行作为元素的列表，如果参数 keepends 为 False，不包含换行符，如果为 True，则保留换行符。
-                '+'.join([1,2,3])       # join,以指定的字符并将一个容器类型的数据。接受一个可迭代对象，返回拼接后的字符串。
+                '+'.join([1,2,3])       # join,以指定的字符并将一个容器类型的数据。接收一个可迭代对象，返回拼接后的字符串。可以直接将生成器表达式作为参数传入到join，不用加圆括号。
                 '''
 
             索引与切片 = '''
@@ -301,7 +301,7 @@ def 基础():
                 list.pop(obj=list[-1])  # 移除列表中的一个元素（默认最后一个元素），并且返回该元素的值
                 list.remove(obj)        # 移除列表中某个值的第一个匹配项 无返回值
                 list.reverse()          # 反向列表中元素,无返回值,改变列表本身,但reversed()不改变列表本身，返回反向的列表,列表中不能出现不同类型的数据.
-                list.sort([func])       # 对原列表进行排序,无返回值 ,改变列表本身,但sorted()不改变列表本身，返回反向的列表,列表中不能出现不同类型的数据.
+                list.sort([func])       # 对原列表进行排序,无返回值 ,改变列表本身,但sorted()不改变列表本身，返回反向的列表,列表中不能出现不同类型的数据.可以用key=func 来指定一个可调用对象来进行排序。
                 list.clear()            # 清空列表 无返回值 
                 list.copy()             # 复制列表 无返回值,属于浅拷贝
                 del                     # 语句可以删除列表中的元素，也可以在内存空间删除整个列表。
@@ -340,8 +340,8 @@ def 基础():
                 key in dict1                    # 如果键在字典dict里返回true，否则返回false 
                 dict1.items()                   # 以列表返回可遍历的(键, 值) 元组数组 
                 dict1.keys()                    # 以列表返回一个字典所有的键 
-                dict1.setdefault(key, default=None)     # 和get()类似, 但如果键不存在于字典中，将会添加键并将值设为default 
-                dict1.update(dict2)                     # 把字典dict2的键/值对更新到dict里 
+                dict1.setdefault(key, default=None)     # 和get()类似, 但如果键不存在于字典中，将会添加键并将值设为default，有返回值，无论key在不在字典里，都返回key相应的值。有着返回值，无则返回default。
+                dict1.update(dict2)                     # 把字典dict2的键/值对更新到dict里  无返回值。
                 dict1.values()                  # 以列表返回字典中的所有值 
                 dict1.pop(key,[default])        # 删除字典给定键 key 所对应的值，返回值为被删除的值。key值必须给出。 否则，返回default值。是有返回值的。 
                 dict1.popitem()                 # 随机返回并删除字典中的一对键和值(一般删除末尾对)。 是有返回值的。
@@ -369,6 +369,7 @@ def 基础():
                 集合是一个无序的，不重复的数据组合，基本功能是成员关系测试和删除重复元素。关系测试，测试两组数据之前的交集、差集、并集等关系，创建一个空集合必须用set()。
                 set([obj]) 可变集合:ojb必须是支持迭代的,由obj中的元素创建集合,否则创建一个空集合
                 frozenset([obj]) 不可变集:执行方式与set()方法相同,但它返回的是不可变集合
+                集合里面的元素必须是可哈希的。字典不能作为集合的元素
                 '''
 
             集合的使用 = '''
@@ -400,15 +401,42 @@ def 基础():
 
     def 流程结构():
 
-        if判断='''
-        布尔值操作符 and or not 实现多重判断
-        if elif elif ... else
-        '''
+        if判断 = '''
+            在没有()的情况下not 优先级高于 and，and优先级高于or，即优先级关系为( )>not>and>or，同一优先级从左往右计算。
+            通过使用 and or not 实现多重条件约束
+            
+            if not 条件 and 条件 or 条件:
+                pass
+            elif not 条件 and 条件 or 条件:
+                pass
+            else:
+                pass
+            '''
 
-        for循环='''
-        
-        '''
-    
+        循环 = '''        
+            while 条件:
+                pass
+            else:
+                pass
+            
+            for 变量 in 可迭代对象:
+                pass
+            else:
+            
+            break: 跳出当前循环。
+            continue: 跳出本次循环
+            
+            else 作用是指，当循环正常执行完，中间没有被break 中止的话，就会执行else后面的语句
+            如果执行过程中被break，就不会执行else的语句
+            '''
+
+        三元运算 = '''
+            r = 值1 if 条件 else 值2
+            n = x if x > y else y
+            如果 if 后面的条件成立,就返回 if 前面的值1，否则返回 else 后面的值2,r就等于返回值。
+            三元运算还可以和推导式配合使用。详见推导式。
+            '''
+
     def 文件操作():
 
         参数说明 = '''
@@ -486,7 +514,7 @@ def 基础():
                     end -- 用来设定以什么结尾。默认值是换行符 \n，我们可以换成其他字符串。
                     file -- 要写入的文件对象。file是一个文件描述符，with open('test.txt','a+') as file:
                 input()
-                    函数接受一个标准输入数据，返回为 string 类型。
+                    函数接收一个标准输入数据，返回为 string 类型。
                 '''
 
             内存相关 = '''
@@ -545,16 +573,20 @@ def 基础():
                     函数返回数字的绝对值。 
                 min()
                     返回给定参数的最小值，参数可以为序列。也可以不是序列。返回的是值。
-                    min也可以接受序列的元素为元组进行比较，以元组的第一个元素为比较依据，如果第一个元素相等，以第二个元素为依据。以此类推
+                    min也可以接收序列的元素为元组进行比较，以元组的第一个元素为比较依据，如果第一个元素相等，以第二个元素为依据。以此类推
                     例: min((3,'a'),(1,'b'),(1,'a')) 返回 (1, 'a'),可以用key=func 指定一个函数来根据函数返回的值来比较。
+                    生成器表达式可以作为单独的参数传入到min,不需要在加圆括号，例如: min(x for x in range(10))
                 max()
                     返回给定参数的最大值，参数可以为序列。也可以不是序列。返回的是值。
-                    max也可以接受序列的元素为元组进行比较，以元组的第一个元素为比较依据，如果第一个元素相等，以第二个元素为依据。以此类推
+                    max也可以接收序列的元素为元组进行比较，以元组的第一个元素为比较依据，如果第一个元素相等，以第二个元素为依据。以此类推
                     例: max((3,'a'),(1,'b'),(1,'a')) 返回 (3, 'a'),可以用key=func 指定一个函数来根据函数返回的值来比较。
+                    生成器表达式可以作为单独的参数传入到max,不需要在加圆括号，例如: max(x for x in range(10))
+                sum(iterable,start)
+                    对系列进行求和计算。参数必须是可迭代的数字集,可以指定开始值。
+                    sum 可以接收两个参数，第一个式可迭代对象，第二个参数是，从哪个值开始计算总和，不是指可迭代对象的索引，返回值: iterable的和加上start的值，start默认等于 0 .
+                    生成器表达式可以作为单独的参数传入到sum,不需要在加圆括号，例如: sum(x for x in range(10))
                 round()
                     返回浮点数x的四舍五入值。
-                sum(iterable,start)
-                    对系列进行求和计算。参数必须是可迭代的数字集,可以指定开始位置。
                 pow(x,y)
                     方法返回 xy（x的y次方） 的值。
                 divmod(x,y)
@@ -568,17 +600,26 @@ def 基础():
                     函数将列表转换为元组。
                 sorted(reverse=False)
                     对所有可迭代的对象进行排序操作,通过reverse参数可以反向排序。这里的方向排序是返回一个列表,而reversed()函数返回的是一个迭代器。
-                    也可以接受序列的元素为元组进行比较，以元组的第一个元素为比较依据，如果第一个元素相等，以第二个元素为依据。以此类推
+                    也可以接收序列的元素为元组进行比较，以元组的第一个元素为比较依据，如果第一个元素相等，以第二个元素为依据。以此类推
                     可以使用 key=func 的方式指定一个用于排序的函数.key指定一个接收一个参数的函数，这个函数用于从每个元素中提取一个用于比较的关键字。默认值为None
                     可以使用 reverse=True,来进行反转。
                     sort 与 sorted 区别： 
                     sort 是应用在 list 上的方法，sorted 可以对所有可迭代的对象进行排序操作。 
                     list 的 sort 方法返回的是对已经存在的列表进行操作，而内建函数 sorted 方法返回的是一个新的 list，而不是在原来的基础上进行的操作。
                 reversed()
-                    返回一个反转的迭代器。 接受一个序列,返回的是一个迭代器。不带关键字参数，没有key= 关键字
-                    也可以接受序列的元素为元组进行比较，以元组的第一个元素为比较依据，如果第一个元素相等，以第二个元素为依据。以此类推
+                    返回一个反转的迭代器。 接收一个序列,返回的是一个迭代器。不带关键字参数，没有key= 关键字
+                    也可以接收序列的元素为元组进行比较，以元组的第一个元素为比较依据，如果第一个元素相等，以第二个元素为依据。以此类推
                 slice()
                     实现切片对象，主要用在切片操作函数里的参数传递。
+                    如: l=[1,2,3,4]
+                    a=slice(1,3,1)  依次是起始值，结束值，步长  可以通过 a.start、a.stop、a.step 得到这三个值。
+                    l[a]
+                    a.indices(len)  接收一个可迭代对象的长度。
+                    如果，如果给定的len大于slice的结束值stop，就返回(start,stop,step),如果如果给定的len小于slice的结束值stop，就返回(start,len,step),总之避免IndexError异常。
+                    s='abcdefghijklmn'
+                    for i in range(*a.indices(len(s))):
+                        print(s[i])
+                    返回  bc
                 str()
                     将对象转化为适于人阅读的形式。 
                 format()
@@ -600,21 +641,23 @@ def 基础():
                 dict()
                     用于创建一个字典。
                 set()
-                    创建一个无序不重复元素集，可进行关系测试，删除重复数据，还可以计算交集、差集、并集等。
+                    创建一个无序不重复元素集，可进行关系测试，删除重复数据，还可以计算交集、差集、并集等。要求集合的元素必须是可哈希的.
                 frozenset()
-                    返回一个冻结的集合，冻结后集合不能再添加或删除任何元素。
+                    返回一个冻结的集合，冻结后集合不能再添加或删除任何元素。要求集合的元素必须是可哈希的.
                 len()
                     返回对象（字符、列表、元组等）长度或项目个数。 
                 enumerate()
                     用于将一个可遍历的数据对象(如列表、元组或字符串)组合为一个索引序列，同时列出数据和数据下标，一般用在 for 循环当中
                 all()
-                    用于判断给定的可迭代参数 iterable 中的所有元素是否不为 0、''、False 或者 iterable 为空，如果是返回 True，否则返回 False 
+                    用于判断给定的可迭代参数 iterable 中的所有元素是否不为 0、''、False 或者 iterable 为空，如果是返回 True，否则返回 False。可以直接将生成器表达式作为参数传入到all，不用加圆括号。
                 any()
-                    用于判断给定的可迭代参数 iterable 是否全部为空对象，如果都为空、0、false，则返回 False，如果不都为空、0、false，则返回 True。 
+                    用于判断给定的可迭代参数 iterable 是否全部为空对象，如果都为空、0、false，则返回 False，如果不都为空、0、false，则返回 True。 可以直接将生成器表达式作为参数传入到any，不用加圆括号。
                 zip()
                     函数用于将可迭代的对象作为参数，将对象中对应的元素打包成一个个元组，然后返回由这些元组组成的列表。如果各个迭代器的元素个数不一致，则返回列表长度与最短的对象相同，利用 * 号操作符，可以将元组解包为列表。 
                 filter()
-                    用于过滤序列，过滤掉不符合条件的元素，返回由符合条件元素组成的新列表。该接收两个参数，第一个为函数，第二个为序列，序列的每个元素作为参数传递给函数进行判，然后返回 True 或 False，最后将返回 True 的元素放到新列表中。 
+                    用于过滤序列，过滤掉不符合条件的元素，返回由符合条件元素组成的新列表。
+                    该接收两个参数，第一个为函数，第二个为序列，序列的每个元素作为参数传递给函数进行判断，然后返回 True 或 False，最后将返回 True 的元素放到新列表中。
+                    filter 返回的是一个迭代器。 
                 map()
                     会根据提供的函数对指定序列做映射。第一个参数 function 以参数序列中的每一个元素调用 function 函数，返回包含每次 function 函数返回值的新列表。 
                 '''
@@ -838,7 +881,7 @@ def 基础():
                 生成器函数的调用不会触发代码的执行，而是会返回一个生成器(迭代器).generator object。
                 需要使用next()函数或生成器函数的__next__()方法，才会执行一次生成器。
                 
-                生成器.send()方法，相当于，先发送给生成器一个值，然后再执行next()方法，所以在使用send()之前，要先执行一次next().如果不先执行一次next(),send()发送的值将无变量接受。
+                生成器.send()方法，相当于，先发送给生成器一个值，然后再执行next()方法，所以在使用send()之前，要先执行一次next().如果不先执行一次next(),send()发送的值将无变量接收。
                 会报错。
                 生成器用来解决 内存问题 和程序功能之间的解耦,是实现迭代器的一种手段
                 '''
@@ -906,6 +949,10 @@ def 基础():
                 dict((k,v) for k,v in [('a',1),('b',2)] if v > 0)
                 集合推导式:  自带去重功能
                 {i**2 for i in range(10)}
+                三元运算在推导式中的使用
+                list1 = [1,-2,3,-1,2,3,-4,6]
+                [i if i > else 0 for i in list1]    三元运算必须放在 for 循环的前面
+                [i for i in list1 if i > 0]         如果只有if语句，if 必须放在 for 循环后面。
                 '''
 
         def 递归函数():
@@ -984,29 +1031,75 @@ def 常用模块():
         '''collections是Python内建的一个集合模块，提供了许多有用的集合类。'''
 
         deque方法 = '''
-            from collections import deque  # 双端队列 p6
+            from collections import deque  # 双端队列
+            两端都可以操作的序列，在序列的前后你都可以执行添加或删除操作。
+            q=deque()           # 可以通过maxlen=3限制长度，当超过指定长度时，会移除最老的元素。默认不指定无长度限制。
+            q.append(1)         # 在右边追加一个元素
+            q.appendleft(0)     # 在左边追加一个元素
+            q.pop()             # 删除右边的最后一个元素，并返回其值。
+            q.popleft()         # 删除左边的最后一个元素，并返回其值。
+            q.extend([2,3])     # 在右边迭代追加一个列表中的元素。
+            q.extend([1,2,3])   # 在左边迭代追加一个列表中的元素,追加进去的依次是1，2，3,在列表中的顺序是3，2，1。
+            len(q)
             '''
 
         defaultdict方法 = '''
+            自动构造函数，将字典的键关联多个值，通常将多个值放到一个容器里面。一键多值字典,defaultdict 会自动初始化第一个值。
+            from collections import defaultdict
+            l = defaultdict(list)
+            l[key].append(1)
+            s = defaultdict(list)
+            s[key].add(1)
+            '''
+
+        OrderedDict方法 = '''
+            有序字典，当对字典做迭代时，会严格按照元素初始添加的顺序进行。有序字典要不普通字典所占的空间大。
+            from collections import defaultdict as dict
+            '''
+
+        Counter方法 = '''
+            找出序列中出现次数最多的n个值,序列中的元素必须是可迭代的，因为序列中的元素会作为字典的键，在Counter的实例化中。
+            from collections import Counter
+            word_a=['a','a','b','c','d','d','e','d','c']
+            word_count = Counter(word_a)     word_count 是一个以words的元素为键，元素出现次数为值的Counter字典。
+            word_count.most_common(3)       被实例化后的Counter对象，有一个most_common的方法，接收一个数字n，来返回指定n个的出现次数最多的值。
+            可以直接 修改 Counter对象的值，word_count['a']=10,也可以使用字典的update方法跟新 Counter对象word_count。
+            Counter对象 可以直接进行数学运算,适用于制表和数据统计
+            word_b=['a','e','e','a','d','d','e','d','c']
+            a=Counter(word_a)
+            b=Counter(word_b)
+            c=a+b
+            d=a-b
+            a ----> Counter({'a': 2, 'b': 1, 'c': 2, 'd': 3, 'e': 1})
+            b ----> Counter({'a': 2, 'c': 1, 'd': 3, 'e': 3})
+            c ----> Counter({'a': 4, 'b': 1, 'c': 3, 'd': 6, 'e': 4})
+            d ----> Counter({'b': 1, 'c': 1})
+            '''
+
+        namedtuple = '''
         
         '''
 
-        OrderedDict方法 = '''
-        '''
-
-        Counter方法 = '''
-        '''
-
-        namedtuple = '''
-        '''
-
         ChainMap = '''
-        '''
+            将多个字典或者关系映射，在逻辑上合并为一个字典或关系映射
+            a={'x':1,'z':3}
+            b={'y':2,'z':4}
+            from collections import ChainMap
+            c=ChainMap(a,b)
+            c['x']    # 1
+            c['y']    # 2
+            c['z']    # 3  如果有重复的键，以第一个字典的键对应的值为主。
+            a,b的值并不会变化
+            如果要修改值，变化的只有第一个字典。
+            c['z']=5
+            del c['y'] 会报错，因为a字典中不存在y键。
+            '''
 
     def os模块():
         pass
 
     def re模块():
+
         match = '''
         '''
         findall = '''
@@ -1015,34 +1108,117 @@ def 常用模块():
         '''
 
     def fnmatch模块():
+
         fnmatch = '''
         '''
         fnamtchcase = '''
         '''
 
     def heapq模块():
-        '''堆是一种特殊的数据结构，它的通常的表示是它的根结点的值最大或者是最小。'''
+        '''
+        堆是一种特殊的数据结构，它的通常的表示是它的根结点的值最大或者是最小。
+        堆最重要的特性就是heap[0],总是最小的元素。
+        可以接收一个可哈希的序列，以序列的第一元素作为关键字去比较，如果序列的第一个元素相同，就以第二个元素作为关键字去比较。以此类推
+        '''
+
+        list1 = [{'name':'a','price':2},{'name':'b','price':8},{'name':'a','price':1},{'name':'a','price':22},{'name':'a','price':32}]
+        heap = [2, 4, 3, 5, 7, 8, 9, 6]
 
         nlargest方法 = '''
-        
-        '''
+            从堆中找出最大的N个数,接收一个n值,表示想要获取值得个数，接收一个可迭代对象，接收一个函数key，用于筛选数据，用列表元素的某个属性和函数作为关键字。返回一个结果集 list
+            heapq.nlargest(2,list1,key=lambda x:x['price'])
+            '''
         nsmallest方法 = '''
-        
-        '''
+            从堆中找出最小的N个数,接收一个n值,表示想要获取值得个数，接收一个可迭代对象，接收一个函数key，用于筛选数据，用列表元素的某个属性和函数作为关键字。返回一个结果集 list
+            heapq.nsmallest(2,list1,key=lambda x:x['price'])
+            '''
 
+        heapify方法 = '''
+            将列表转换为堆,接收的对象必须是列表。
+            heapq.heapify(heap)  list里面的元素不能是不可哈希的，也就是说dict 不能作为列表的元素。 被heapify转化过的列表，不是有序的，但索引是0的位置的元素是最小的。
+            '''
+
+        heappop方法 = '''
+            将堆的第一个元素（最小的）删除，并返回其值，第二小的元素取而代之。不支持key的方式指定函数。
+            heapq.heappop(heap)
+            '''
+        heappush方法 = '''
+            向list2里面添加一个值
+            heapq.heappush(lheap, 66)
+            '''
+        heapreplace方法 = '''
+            删除最小元素值，并返回最小的值，再添加新的元素值，相当于先heappop，再heappush。
+            heapq.heapreplace(heap, 11) 返回2 ，而且添加的值并不是有序。------>heap = [3, 4, 8, 5, 7, 11, 9, 6]
+            '''
+
+        heappushpop方法 = '''
+            如果添加元素值大于堆的第一个元素值(最小元素)对比，就删除第一个元素值(最小元素)，然后添加新的元素值，如果添加元素值小于堆的第一个元素值，则不更改堆,只返回添加的元素。
+            heapq.heappushpop(heap,10)    返回2，添加10
+            heapq.heappushpop(heap,1)     只返回1
+            '''
+
+        merge方法 = '''
+            将多个堆合或者列表合并
+            heapq.merge(...)   返回的是一个生成器合并对象
+            '''
+
+        heapq应用 = '''
+            from heapq import *
+            h = list()
+            heappush(h, (5, 'a'))
+            heappush(h, (7, 'b'))
+            heappush(h, (1, 'c'))  第一个值，可以根据1，排序，再根据字母排序
+            heappush(h, (3, 'd'))
+            heappush(h, (1, 'd'))
+            
+            def heapsort(iterable):
+                heap = list()
+                for value in iterable:
+                    heappush(heap, value)
+                return [heappop(heap) for i in range(len(heap))]
+            '''
 
     def operator模块():
 
         itemgetter方法 = '''
-        '''
+            通过字典的公共键对字典列表进行排序,通过调用itemgetter,传入一个或多个键，返回相应的值。
+            list1 = [{'name':'lisi','id':1,'age':22},{'name':'lili','id':2,'age':22},{'name':'lina','id':3,'age':24},{'name':'nan','id':5,'age':33},{'name':'mimi','id':4,'age':20}]
+            sorted(list1,key=itemgetter('id'))
+            sorted(list1,key=itemgetter('age'))
+            sorted(list1,key=itemgetter('age','id'))   itemgetter比lambda要快一些
+            sorted(list1,key=lambda d:(d['age'],d['id']))
+            以上操作同样适用于min,max函数。
+            '''
+
+        attrgetter方法 = '''
+            对不支持比较操作的对象排序
+            基本与 itemgetter类似，attrgetter可以获取类的实例化对象的属性来进行排序。
+            '''
 
     def itertools模块():
 
         groupby = '''
-        '''
+            对字典列表，以字典中某个键来分组，分组的前提是，相对于这个键的字典，在列表中是有序的。
+            list1 = [{'name':'lisi','id':1,'age':22},{'name':'lili','id':2,'age':22},{'name':'lina','id':1,'age':20},{'name':'nan','id':2,'age':33},{'name':'mimi','id':4,'age':20}]
+            from operator import itemgetter
+            from itertools import groupby
+            list1.sort(key=itemgetter('age'))     也可以用  list1.sort(key=lambda d:d['age'])
+            groupby(list1,key=itemgetter('age'))  也可以用  groupby(list1,key=lambda d:d['age'])
+            groupby返回的是一个迭代器。每次迭代返回一个值和一个子迭代器。子迭代器里面包含该组的全部成员。返回的是一个itertools.groupby对象,该对象里面是一个个元组。
+            元组的第一个值是每个分组指定的键的值，本例中的键是age,第二个值是一个itertools._grouper对象，该对象是一个元组，里面包含该组的全部成员。
+            for group_name,groups in  groupby(list1,key=itemgetter('age')):
+                print(group_name)
+                print(*groups)
+            '''
 
         compress = '''
-        '''
+            接收一个可迭代对象，以及一个布尔选择器，返回所有为真的迭代对象的元素，返回的是一个迭代器。
+            把一个序列的筛选结果作用于另一个相关序列
+            a=(i if i > 0 else 0 for i in [1,-1,2,-2])
+            b=['a', 'b', 'v', 'd']
+            from itertools import compress
+            list(compress(b,a))  -----> ['a', 'v']
+            '''
 
         warps = '''
         '''
@@ -1172,7 +1348,7 @@ def 题目详解():
         sorted(list1,key=lambda x:(x<0,abs(x)))
         解:
         先明确两个知识点
-        1、sorted 可以接受序列的元素为元组进行比较，以元组的第一个元素为比较依据，如果第一个元素相等，以第二个元素为依据。以此类推
+        1、sorted 可以接收序列的元素为元组进行比较，以元组的第一个元素为比较依据，如果第一个元素相等，以第二个元素为依据。以此类推
         2、在数学运算中 int(True) = 1,int(False) = 0 ,在比较运算中  True > False
         lambda x:(x<0,abs(x)) 此匿名函数返回的是一个元组，第一个元素是False 或 True,第二个元素是绝对值。False在前面,以绝对值排序,True在后面,以绝对值排序.
         '''
@@ -1204,8 +1380,22 @@ def 使用技巧():
                         yield item
                         seen.add(val)
             a=[{'x':1,'y':2},{'x':1,'y':3},{'x':1,'y':2},{'x':2,'y':4}]
-            dedupe(a,key=lambda d:(d['x'],d['y']))   # 字典是不可哈希的，通过用字典的键来去重。       
+            dedupe(a,key=lambda d:(d['x'],d['y']))  # 字典是不可哈希的，通过用字典的键来去重。       
             '''
+
+    def 实现switch_case():
+
+        def func1(*args,**kwargs):
+            pass
+
+        def func2(*args,**kwargs):
+            pass
+
+        def switch(func,*args,**kwargs):
+            case = globals().get(func.__name__,None)
+            return case(*args,**kwargs)
+
+        switch(func1,1,2)
 
 def 例子():
     pass
