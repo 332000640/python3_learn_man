@@ -1,12 +1,15 @@
 #!/usr/local/python3/bin/python3  
 # -*- encoding:utf-8 -*-
-# Filename: python3实例手册.py
+# Filename: python3_learn_man.py
 # Author  : litao
 # Python  : 3.6
 # Time    : 2018/4/22 21:14
 # Version : 1
 
 def 更新日志():
+    log_2018_05_01 = '''
+        完善一些知识点，完成re正则、random随机模块。完成namedtuple,补充字符串的对齐，format函数
+        '''
     log_2018_04_31 = '''
         完善一些知识点包括数学运算，序列相关的内置函数,完成流程控制，完成一些常用模块，补充使用技巧模块。
         '''
@@ -31,7 +34,6 @@ def 更新日志():
 
 def 更新备忘录():
     '''
-    namedtuple
     python书籍补充。
     python2实例手册补充。
     '''
@@ -204,9 +206,31 @@ def 基础():
                 %f 格式化浮点数字，可指定小数点后的精度。如 %0.2f 表示保留小数点后两位。
 
                 msg = 'my name is %(name)s, age is %(age)s' % {"name": "lisi", "age": "18"} # 使用字典的方式
+                msg = 'my name is %(name)s, age is %(age)s' % vars()                        # 还可以这样写，或者用 globals()
                 msg = 'name:{},age:{},sex:{}'.format('haiyan', 18, 'girl')                  # 按顺序
                 msg = 'name:{0},age:{1},sex:{0}'.format('aaaaaa', 'bbbbbb')                 # 按索引
                 msg = 'name:{x},age:{y},sex:{z}'.format(x='haiyan', y='18', z='women')      # 赋值的方式
+                msg = 'name:{x},age:{y},sex:{z}'.format_map({'x':'haiyan', 'y':'18', 'z':'women'})  # 使用format_map 传入字典
+                字符串拼接
+                直接写 a='hello' 'word'   这样就会拼接在以前 a:   'helloword'
+                '''
+
+            字符串的对齐 = '''
+                text = "hello"
+                ljust,rjust,center接收一个可选的填充字符。
+                text.ljust(20)
+                text.rjust(20,'-')
+                text.center(20)
+                format函数可以完成对齐字符串。利用 > 右对齐、 < 左对齐、 ^ 居中对齐。这里不是字符串的format方法。是format函数。通过在对齐符前面指定填充符。
+                format(text,'>20')
+                format(text,'<20')
+                format(text,'^20')
+                format(text,'->20')
+                format(text,'#<20')
+                format(text,'*^20')
+                format函数还可以对 浮点数操作
+                x=1.2345
+                format(x,'>10.2f')
                 '''
 
             字符编码 = '''
@@ -232,8 +256,16 @@ def 基础():
 
             字符串方法 = '''
                 'test'.count('t',beg,end)        # 返回 str 在 string 里面出现的次数,可以指定查找开始和结束的位置。
-                'test'.startswith(str, beg,end)  # 检查字符串是否是以 str 开头，可以指定查找开始和结束的位置,返回bool值。
-                'test'.endswith('t', beg, end)   # 检查字符串是否以指定的字符串结束，可以指定查找开始和结束的位置，返回bool值。
+                'test'.startswith(str, beg,end) 
+                    检查字符串是否是以 str 开头，可以指定查找开始和结束的位置,返回bool值。
+                    startswith可以接收多个后缀匹配，但多个匹配项必须放在一个元组里面。
+                    strs=['mysql.db','zabbix.py','run.bat','test','haproxy.cfg','nginx.log']
+                    [s for s in strs if s.startswith(('my','ha','ng','za'))]
+                'test'.endswith('t', beg, end)
+                    检查字符串是否以指定的字符串结束，可以指定查找开始和结束的位置，返回bool值。
+                    endswith可以接收多个后缀匹配，但多个匹配项必须放在一个元组里面。
+                    strs=['mysql.db','zabbix.py','run.bat','test','haproxy.cfg','nginx.log']
+                    [s for s in strs if s.endswith(('.db','.bat','.cfg','.log'))]
                 'te\tst'.expandtabs(tabsize=8)                   # 把字符串 string 中的 tab 符号转为空格，tab 符号默认的空格数是 8 ,也可以指定其他空格数。
                 'test'.find(str,beg,end)                         # 检测 str 是否包含在字符串中，可以指定查找开始和结束的位置，正常返回开始的索引值，未找到返回-1。
                 'test'.index(str, beg,end)                       # 跟find()方法一样，只不过如果str不在字符串中会报一个异常。
@@ -269,7 +301,9 @@ def 基础():
                 'test'.zfill(9)         # 返回长度为 width 的字符串，原字符串右对齐，前面填充0
                 'test'.isdecimal()      # 检查字符串是否只包含十进制字符，如果是返回 true，否则返回 false。
                 'test'.splitlines(True) # 按照行('\r', '\r\n', \n')分隔，返回一个包含各行作为元素的列表，如果参数 keepends 为 False，不包含换行符，如果为 True，则保留换行符。
-                '+'.join([1,2,3])       # join,以指定的字符并将一个容器类型的数据。接收一个可迭代对象，返回拼接后的字符串。可以直接将生成器表达式作为参数传入到join，不用加圆括号。
+                '+'.join([1,2,3])       # join,以指定的字符并将一个容器类型的数据。接收一个可迭代对象，返回拼接后的字符串。可以直接将生成器表达式作为参数传入到join，不用加圆括号。join 里面可以直接传入生成器。
+                'test {}'.format('2')   # 用于字符串格式化，详见字符串格式化。
+                'test {name}'.format_map({'name':'lisli})  # 用于字符串格式化,与format不同的是format_map接收的是一个映射关系，如字典，字典的键是字符中的指定名字,键是你要传入的值。
                 '''
 
             索引与切片 = '''
@@ -586,7 +620,11 @@ def 基础():
                     sum 可以接收两个参数，第一个式可迭代对象，第二个参数是，从哪个值开始计算总和，不是指可迭代对象的索引，返回值: iterable的和加上start的值，start默认等于 0 .
                     生成器表达式可以作为单独的参数传入到sum,不需要在加圆括号，例如: sum(x for x in range(10))
                 round()
-                    返回浮点数x的四舍五入值。
+                    返回浮点数x的四舍五入值。可以指定精确到小数点以后几位。默认是取整，也就是小数点以后0位.也可以为负数，相应的取 十位，百位，千位。
+                    round(1.23,1) -----> 1.2
+                    round(-1.27,1) -----> -1.3
+                    round(1.2536,3) -----> 1.254
+                    round(12536,-2) -----> 12500
                 pow(x,y)
                     方法返回 xy（x的y次方） 的值。
                 divmod(x,y)
@@ -623,7 +661,7 @@ def 基础():
                 str()
                     将对象转化为适于人阅读的形式。 
                 format()
-                    字符串格式化的功能。详见字符串格式化。
+                    字符串格式化的功能。见字符串对齐。
                 bytes()
                     返回一个新的 bytes 对象，该对象是一个 0 <= x < 256 区间内的整数不可变序列。它是 bytearray 的不可变版本。 
                 bytearray()
@@ -1076,11 +1114,28 @@ def 常用模块():
             d ----> Counter({'b': 1, 'c': 1})
             '''
 
-        namedtuple = '''
-        
-        '''
+        namedtuple方法 = '''
+            命名元组，可以通过属性访问数据，同时具有普通元组的一些特性，可以通过索引取值。
+            可以作为字典的替代。但命名元组是不可变的。
+            from collections import namedtuple
+            
+            named_tp1=namedtuple('info',('name','age'))  创建一个命名元组实例 属性名也可以是列表的形式named_tp1=namedtuple('info',['name','age'])
+            nt1=named_tp1('lisi',22)  -----> info(name='lisi', age=22)    实例化，插入一条数据
+            nt1.name                  -----> 'lisi'     通过属性name取值
+            nt1.age                   -----> 22         通过属性age 取值
+            len(nt1)                  -----> 2          获取元素个数
+            name,age=nt1              -----> name is 'lisi',age is 22   可以进行解包操作
+            nt1[0]                    -----> 通过索引取值
+            
+            _replace()方法 
+            nt1.age = 23 这种方法是错误的，但可以通过_replace方法来实现。该方法不会修改本身的元组，而是返回一个新的命名元组。
+            nt1._replace(age=23)     nt1不会改变，返回info(name='lisi', age=23),可以这样实现更改 nt1=nt1._replace(age=23)
+             _replace()方法 还可以接受通过解包一个字典作为参数去修改
+            d1={'age': 33, 'name': 'nana'}
+            nt1=nt1._replace(**d1)   -----> info(name='nana', age=33)  并且是有序的。
+            '''
 
-        ChainMap = '''
+        ChainMap方法 = '''
             将多个字典或者关系映射，在逻辑上合并为一个字典或关系映射
             a={'x':1,'z':3}
             b={'y':2,'z':4}
@@ -1100,26 +1155,232 @@ def 常用模块():
 
     def re模块():
 
-        match = '''
-        '''
-        findall = '''
-        '''
-        compile = '''
-        '''
+        正则基础 = '''
+            元字符       
+                . 	        匹配除换行符以外的任意字符，匹配除 "\n" 之外的任何单个字符。要匹配包括 '\n' 在内的任何字符，请使用象 '[.\n]' 的模式。
+                \w	        匹配字母或数字或下划线，匹配任何字母数字字符，相当与[a-zA-Z0-9]
+                \W          匹配非字母或数字或下划线，匹配任何非字母数字字符，相当与[^a-zA-Z0-9]]
+                \s	        匹配任意的空白符  匹配任何空白字符，相当与[ \t\n\r\f\v]  #注意前面有个空格
+                \S          匹配非空白符，匹配任何非空白字符，相当与[^ \t\n\r\f\v]
+                \d	        匹配数字，匹配任何是十进制数，相当与[0-9]
+                \D          匹配非数字，匹配任何是非数字字符，相当与[^0-9]
+                \n	        匹配一个换行符
+                \t	        匹配一个制表符
+                \b	        匹配一个单词的结尾，匹配一个单词边界，也就是指单词和任何特殊字符的边界。
+                ^	        匹配字符串的开始 以某个字符开始。
+                $	        匹配字符串的结尾
+                a|b         匹配字符a或字符b
+                ()          匹配括号内的表达式，表示分组,将括号里面的内容整体匹配。圆括号表示分组，里面的东西是一个整体。
+                [...]       匹配字符组中的字符，元字符 [] 字符集 匹配里面的字符 或的关系,字符集取消元字符的特殊功能 (除了这三个\ ^ -)
+                [^...]      匹配除了字符组中字符的所有字符,字符集取消元字符的特殊功能 (除了这三个\ ^ -)
+                \           元字符 \ 转义 反斜杠后边跟元字符去除特殊功能。反斜杠后边跟普通字符实现特殊功能。
+                \A	        匹配字符串开始
+                \z	        匹配字符串结束
+                \Z	        匹配字符串结束，如果是存在换行，只匹配到换行前的结束字符串。
+                \G	        匹配最后匹配完成的位置。
+                \B	        匹配非单词边界。'er\B' 能匹配 "verb" 中的 'er'，但不能匹配 "never" 中的 'er'。
+                \1...\9	    匹配第n个分组的内容。
+                \10	        匹配第n个分组的内容，如果它经匹配。否则指的是八进制字符码的表达式。
+                (?P<name>...)    分组，同时起一个别名
+                (?P=name)        引用别名为name的分组匹配到的字符串
+                \<number>        引用编号为number的分组匹配到的字符串
+                            
+            贪婪匹配
+                量词         用法说明
+                *	        重复零次或更多次
+                +	        重复一次或更多次
+                ?	        重复零次或一次
+                {n}	        重复n次
+                {n,}	    重复n次或更多次
+                {n,m}	    重复n到m次
+            
+            非贪婪匹配
+                量词         用法说明
+                *?          重复任意次，但尽可能少重复
+                +?          重复1次或更多次，但尽可能少重复
+                ??          重复0次或1次，但尽可能少重复
+                {n,m}?      重复n到m次，但尽可能少重复
+                {n,}?       重复n次以上，但尽可能少重复
+            
+            捕获组与非捕获组
+                如果想用 () 对正则表达式进行分组，但想看到整体的匹配结果， 请用非捕获组  (?:正则表达式) 这里来取消组的优先级。   
+                print(re.findall('www.(\w+).com','www.baidu.com'))    #['baidu'] 因为 () 的优先级比较高所以会优先显示组里面的内容。
+                print(re.findall('www.(?:\w+).com','www.baidu.com'))  #['www.baidu.com'] 用 ?: 取消组的优先级。
+                非捕获组意味着这个组只做匹配，但不捕获结果，也不会分配组号。
+               
+                ret=re.split("\d+","eva3egon4yuan")
+                print(ret) -----> ['eva', 'egon', 'yuan']
+                ret=re.split("(\d+)","eva3egon4yuan")
+                print(ret) -----> ['eva', '3', 'egon', '4', 'yuan']
+                ret=re.split("(?:\d+)","eva3egon4yuan")
+                print(ret) -----> ['eva', 'egon', 'yuan']
+                在匹配部分加上 () 之后所切出的结果是不同的，
+                没有 () 的没有保留所匹配的项，但是有 () 的却能够保留了匹配的项。
+
+            分组命名
+                语法 (?P<name>) 注意先命名，后正则,可以在group中指定分组名，来获取匹配到的内容。 特别注意P是大写的。
+                re_select=re.compile(r'select\s+(?P<limit>.*)\s+from\s+(?P<table_name>.*)\s+where\s+(?P<part>.*)')
+                sql='select * from a.b where id<=1 '
+                print(re_select.search(sql).group('limit','part'))
+
+            转义符 \
+                如匹配元字符，\d和\s等，如果要在正则中匹配"\d"字符,而不是"数字"就需要对"\"进行转义，变成'\\'。
+                python中，无论是正则表达式，还是待匹配的内容，都是以字符串的形式出现的，在字符串中\也有特殊的含义，本身还需要转义。
+                所以如果匹配一次"\d",字符串中要写成'\\d'，那么正则里就要写成"\\\\d"。
+                用r'\d'，表示是r'\\d' 。在字符串之前加r，让整个字符串不转义
+                
+            .*?的用法
+                . 是任意字符
+                * 是取 0 至 无限长度
+                ? 是非贪婪模式。
+                何在一起就是 取尽量少的任意字符，一般不会这么单独写，他大多用在：
+                .*?x
+                就是取前面任意长度的字符，直到一个x出现
+            
+            group、groups、groupdict、start、end、span
+                Match对象代表匹配的结果，包含匹配的相关信息。
+                group() 返回一个或多个组匹配的子串，不填写参数默认为group(0)，代表整个匹配的子串。
+                ()里面的参数可以是编号，也可以是组的别名。没匹配到的组返回None，匹配到多个子串的组返回最后一个。
+                groups()返所有组匹配的子串。当组没有匹配到子串时候返回None
+                groupdict():    返回字典，键为组的别名，值为该组匹配到的子串。没有别名的组不返回。
+                当一个匹配对象成功返回后，可以用start、end、span去查看他们的匹配位置,假如一个匹配对象是values.
+                values.start() 指匹配的开始字符位置,返回指定组匹配的子串在string中的开始下标，没有匹配则返回-1 
+                values.end()   指匹配的结束字符位置,返回指定组匹配的子串在string中的结束下标，没有匹配则返回-1 
+                values.span()  指匹配的字符范围
+                也可以在括号里通过指定分组的名字或编号的方式来指定第几个分组的的位置。
+                values.start(1)
+                values.span('part')
+                详见 compile 方法。
+            修饰符 - 可选标志    
+                re.I	使匹配对大小写不敏感
+                re.L	做本地化识别（locale-aware）匹配
+                re.M	多行匹配，影响 ^ 和 $
+                re.S	re.DOTALL   都可以使 . 匹配包括换行在内的所有字符
+                re.U	根据Unicode字符集解析字符。这个标志影响 \w, \W, \b, \B.
+                re.X	该标志通过给予你更灵活的格式以便你将正则表达式写得更易于理解。
+            匹配多行
+                text="/*  this is a 
+                          multiline coment  */"
+                comment = re.compile(r'/\*((?:.|\n)*?)\*/') 或 comment = re.compile(r'/\*(.*?)\*/',re.DOTALL)
+                comment.findall(text) -----> ['  this is a\nmultiline coment ']
+            '''
+
+        split方法 = '''
+            用一对[]指定多个分隔符，以字符串分组.
+            如:
+            line='asf sdf,sdf;  fdssdf,sf:dsfs,  sdfds fsasdf sdf'
+            re.split(r'[,:;\s]\s*',line) -----> ['asf', 'sdf', 'sdf', 'fdssdf', 'sf', 'dsfs', 'sdfds', 'fsasdf', 'sdf']
+            '''
+
+        match方法 = '''
+            函数语法
+            re.match(pattern, string, flags=0)
+            从字符串的起始位置匹配一个模式，如果不是起始位置匹配成功的话，match()就返回none。
+            相当于search()加^，只匹配字符串开头，返回第一个匹配到的对象，否则返回None。对象可以调用group()得到返回结果。
+            ret = re.match('a', 'abc').group()  # 同search,不过尽在字符串开始处进行匹配
+            print(ret) -----> 'a'
+            '''
+
+        search方法 = '''
+            函数语法：
+            re.search(pattern, string, flags=0)
+            扫描整个字符串并返回第一个成功的匹配。
+            返回匹配到的第一个，是一个对象,对象可以调用group()得到返回结果。,如果字符串没有匹配，则返回None。
+            ret = re.search('a', 'eva egon yuan').group()
+            print(ret) -----> 'a'
+            '''
+
+        rmatch与rsearch的区别 = '''
+            re.match只匹配字符串的开始，如果字符串开始不符合正则表达式，则匹配失败，函数返回None；而re.search匹配整个字符串，直到找到一个匹配。
+            '''
+
+        findall方法 = '''
+            返回所有满足匹配条件的结果,放在列表里,在字符串中找到正则表达式所匹配的所有子串，并返回一个列表，如果没有找到匹配的，则返回空列表。
+            语法格式
+            findall(string[, pos[, endpos]]) 可以通过pos,endpos 来指定查找字符串的起始结束位置。
+            '''
+
+        compile方法 = '''
+            用于编译正则表达式，生成一个正则表达式（ Pattern ）对象，供 match() 和 search() 这两个函数使用。
+            语法格式
+            re.compile(pattern[, flags])
+            
+            re_insert=re.compile(r'insert\s+into\s+(?P<table_name>.+)\s{0,}(?P<part>\(.+\))')
+            sql="insert into test.t1(name,id,age)"
+            values=re_insert.search(sql)
+            print(values.group('table_name','part')) -----> ('test.t1', '(name,id,age)')
+            print(values.start()) -----> 0 指匹配的开始字符位置
+            print(values.end()) ----->  32 指匹配的结束字符位置
+            print(values.span()) ----->  (0, 32) 指匹配的字符范围
+            '''
+
+        sub方法 = '''
+            语法格式
+            re.sub(pattern, repl, string, count=0)
+            pattern : 正则中的模式字符串。
+            repl : 替换的字符串，也可为一个函数。
+            string : 要被查找替换的原始字符串。
+            count : 模式匹配后替换的最大次数，默认 0 表示替换所有的匹配。
+            字符串替换,用于替换字符串中的匹配项
+            ret = re.sub('\d', 'H', 'eva3egon4yuan4', 1)   将数字替换成'H'，参数1表示只替换1个
+            print(ret) -----> evaHegon4yuan4
+            
+            如果 repl是一个函数
+            def func1(matched):
+                v=int(matched.group('values'))
+                return str(v*2)
+            strs="ab24cd67"
+            print(re.sub(r'(?P<values>\d+)',func1,strs)) -----> ab48cd134
+            '''
+
+        subn方法 = '''
+            ret = re.subn('\d', 'H', 'eva3egon4yuan4') 将数字替换成'H'，返回元组(替换的结果,替换了多少次)
+            '''
+
+        finditer方法 = '''
+            在字符串中找到正则表达式所匹配的所有子串，并把它们作为一个迭代器返回
+            ret = re.finditer('\d', 'ds3sy4784a')   #finditer返回一个存放匹配结果的迭代器
+            print(ret)  # <callable_iterator object at 0x10195f940>
+            print(next(ret).group())  #查看第一个结果
+            print(next(ret).group())  #查看第二个结果
+            print([i.group() for i in ret])  #查看剩余的左右结果
+            '''
+
+        零宽断言 = '''
+            str = 'aaa111aaa , bbb222&, 333ccc'
+            re.compile('\d+(?=[a-z]+)').findall(str)          # 前向界定 (?=exp) 找出连续的数字并且最后一个数字跟着至少一个a-z ['111', '333']
+            re.compile(r"\d+(?![a-z]+)").findall(str)         # 前向否定界定 (?!exp)  找出连续数字，且最后一个数字后不能跟a-z  ['11', '222', '33']
+            re.compile(r"(?<=[a-z])\d+").findall(str)         # 反向界定 (?<=exp) 逆序环视 找出连续的数字，且第一个数字前面是a-z  ['111', '222']
+            re.compile(r"(?<![a-z])\d+").findall(str)         # 反向否定界定 (?<!exp) 否定逆序环视  找出连续的数字，且第一个数字前不能是a-z  ['11', '22', '333']
+            re.compile(r"(?:\d+)").findall(str)               # 无捕获的匹配 (?:exp)
+            s= 'Tom:9527 , Sharry:0003 '
+            re.match( r'(?P<name>\w+):(?P<num>\d+)' , s).group(0)   # 捕获组 <num>第二个标签变量[9527] 获取 group("num") 等同 group(2)[9527], group(0)全部[Tom:9527]
+            '''
+
+        例子 = '''
+            re.findall(r'a[be]c','123abc456eaec789')         # 返回匹配对象列表 ['abc', 'aec']
+            re.findall("(.)12[34](..)",a)                    # 取出匹配括号中内容   a='qedqwe123dsf'
+            re.search("(.)123",a ).group(1)                  # 搜索匹配的取第1个标签
+            re.match("^(1|2) *(.*) *abc$", str).group(2)     # 取第二个标签
+            re.match("^(1|2) *(.*) *abc$", str).groups()     # 取所有标签
+            re.sub('[abc]','A','alex')                       # 替换
+            for i in re.finditer(r'\d+',s):                  # 迭代
+                print i.group(),i.span()                     #
+            '''
 
     def fnmatch模块():
 
-        fnmatch = '''
+        fnmatch方法 = '''
         '''
-        fnamtchcase = '''
+        fnamtchcase方法 = '''
         '''
 
     def heapq模块():
         '''
-        堆是一种特殊的数据结构，它的通常的表示是它的根结点的值最大或者是最小。
-        堆最重要的特性就是heap[0],总是最小的元素。
-        可以接收一个可哈希的序列，以序列的第一元素作为关键字去比较，如果序列的第一个元素相同，就以第二个元素作为关键字去比较。以此类推
-        '''
+            堆是一种特殊的数据结构，它的通常的表示是它的根结点的值最大或者是最小。
+            堆最重要的特性就是heap[0],总是最小的元素。
+            可以接收一个可哈希的序列，以序列的第一元素作为关键字去比较，如果序列的第一个元素相同，就以第二个元素作为关键字去比较。以此类推
+            '''
 
         list1 = [{'name':'a','price':2},{'name':'b','price':8},{'name':'a','price':1},{'name':'a','price':22},{'name':'a','price':32}]
         heap = [2, 4, 3, 5, 7, 8, 9, 6]
@@ -1128,6 +1389,7 @@ def 常用模块():
             从堆中找出最大的N个数,接收一个n值,表示想要获取值得个数，接收一个可迭代对象，接收一个函数key，用于筛选数据，用列表元素的某个属性和函数作为关键字。返回一个结果集 list
             heapq.nlargest(2,list1,key=lambda x:x['price'])
             '''
+
         nsmallest方法 = '''
             从堆中找出最小的N个数,接收一个n值,表示想要获取值得个数，接收一个可迭代对象，接收一个函数key，用于筛选数据，用列表元素的某个属性和函数作为关键字。返回一个结果集 list
             heapq.nsmallest(2,list1,key=lambda x:x['price'])
@@ -1197,7 +1459,7 @@ def 常用模块():
 
     def itertools模块():
 
-        groupby = '''
+        groupby方法 = '''
             对字典列表，以字典中某个键来分组，分组的前提是，相对于这个键的字典，在列表中是有序的。
             list1 = [{'name':'lisi','id':1,'age':22},{'name':'lili','id':2,'age':22},{'name':'lina','id':1,'age':20},{'name':'nan','id':2,'age':33},{'name':'mimi','id':4,'age':20}]
             from operator import itemgetter
@@ -1211,7 +1473,7 @@ def 常用模块():
                 print(*groups)
             '''
 
-        compress = '''
+        compress方法 = '''
             接收一个可迭代对象，以及一个布尔选择器，返回所有为真的迭代对象的元素，返回的是一个迭代器。
             把一个序列的筛选结果作用于另一个相关序列
             a=(i if i > 0 else 0 for i in [1,-1,2,-2])
@@ -1220,8 +1482,50 @@ def 常用模块():
             list(compress(b,a))  -----> ['a', 'v']
             '''
 
-        warps = '''
+        warps方法 = '''
         '''
+
+    def random模块():
+        '''用于随机数，随机选择,import random'''
+        v = [1,2,3,4,5,6,7]
+
+        choice方法 = '''
+            随机取列表一个参数，传入的序列可以是任意序列。
+            random.choice(v) 
+            '''
+
+        sample方法 = '''
+            不重复抽取n个,返回的是一个列表无论传入的哪种序列
+            random.sample(v,3)
+            '''
+
+        random方法 = '''
+            返回0-1间的随机浮点数
+            random.random()
+            '''
+
+        shuffle方法 = '''
+            将序列原地随机打乱顺序，传入的必须是列表。
+            random.shuffle(v)  修改序列无返回值
+            '''
+
+        randint方法 = '''
+            返回指定范围内的随机整数
+            random.randint(0,99)
+            '''
+
+        randrange方法 = '''
+            随机整数范围
+            random.randrange(6)
+            '''
+
+        uniform方法 = '''
+            计算均匀分布值
+            '''
+
+        gauss方法 = '''
+            计算正态分布值
+            '''
 
 def 生产工具():
 
@@ -1353,6 +1657,26 @@ def 题目详解():
         lambda x:(x<0,abs(x)) 此匿名函数返回的是一个元组，第一个元素是False 或 True,第二个元素是绝对值。False在前面,以绝对值排序,True在后面,以绝对值排序.
         '''
 
+    def globals_locals_dir_vars区别():
+
+        globals函数 = '''
+            函数会以字典类型返回当前位置的全部全局变量。globals不会有局部变量的值，如果你在def或class中定义了某个变量，在全局中式没有的，即使你执行了函数，除非使用global 参数声明。
+            '''
+        locals函数 = '''
+            会以字典类型返回当前位置的全部局部变量。 获取执行本方法所在命名空间内的局部变量的字典
+            '''
+        vars函数 = '''
+            返回对象object的属性和属性值的字典对象。
+            '''
+        dir函数 = '''
+            不带参数时，默认查看全局空间内的属性,返回当前范围内的变量、方法和定义的类型列表;带参数时，返回参数的属性、方法列表。如果参数包含方法__dir__()，该方法将被调用。如果参数不包含__dir__()，该方法将最大限度地收集参数信息。
+            '''
+        区别 = '''
+            在全局执行这三个函数时没有区别,print(globals() is locals() is vars()) ----> True
+            在局部空间里执行vars()和local(),返回的结果是一样的,在任何地方执行globals() 返回的结果都和全局一样。
+            一个类实例化与未实例化的var(对象) 是不一样的，此处待完善。
+            dir 与其他三者的区别,dir 返回的是 一个列表,并且实例化之后的属性列表包含未实例化的所有属性。'''
+
 def 使用技巧():
 
     def 去除序列中的重复元素保持元素顺序不变():
@@ -1396,6 +1720,12 @@ def 使用技巧():
             return case(*args,**kwargs)
 
         switch(func1,1,2)
+
+    def format_map与vars():
+        n='lisi'
+        num=2
+        s='{name} has {num} egg.'
+        s.format_map(vars())      #vars() 返回对象object的属性和属性值的字典对象。
 
 def 例子():
     pass
