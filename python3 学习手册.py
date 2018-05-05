@@ -7,6 +7,9 @@
 # Version : 1
 
 def 更新日志():
+    log_2018_05_05 = '''
+        补充functools.partial方法.补充函数的属性、回调函数.分离出闭包。
+        '''
     log_2018_05_03 = '''
         完成sys模块.完善一些知识点.
         '''
@@ -798,6 +801,10 @@ def 基础():
                 关键字参数.必须一一对应,不分顺序.
                 混合参数.一一对应 且 关键字参数必须在位置参数后面.
                 顺序：位置参数,*args,关键字参数,**args
+                *args 后面可以再跟一个参数,但传参时*args的参数必须以关键的方式指定。
+                def add(*args,num):
+                    print(sum(args)+num)
+                add(1,2,3,4,num=5)
                 
                 a=[1,2,3]
                 b='test'
@@ -852,6 +859,40 @@ def 基础():
                 
                 test(1,2)
                 '''
+
+            函数的文档字符串 = '''
+                通常函数的第一句话,会使用文档字符串，用于描述函数的用途
+                可以通过__doc__属性获取。
+                在装饰器中,可能获取不到。
+                解决方法如下:
+                1,手动编写
+                def wrap(func):
+                    def call(*args,**kwargs):
+                        return func()
+                    call.__doc__ = func.__doc__
+                    call.__name__ = func.__name__
+                    return call
+                2,使用functools.wraps函数，详见下面的装饰器。
+                '''
+
+            函数的属性 = '''
+            可以给函数添加任意属性
+            def add():
+                pass
+            add.num=1
+            add.msg='test'
+            函数的属性保存在函数的 __dict__ 属性中。
+            如果函数在装饰器中,可能获取不到。
+            1,手动编写
+            def wrap(func):
+                def call(*args,**kwargs):
+                    return func()
+                call.__doc__ = func.__doc__
+                call.__name__ = func.__name__
+                call.__dict__.update(func.__dict__)
+                return call
+            2,使用functools.wraps函数，详见下面的装饰器。
+            '''
 
         def 装饰器():
             '''为已存在的功能添加额外的功能,只在初始化脚本的时候执行一次.本质是函数, 用于装饰其他函数'''
@@ -934,6 +975,39 @@ def 基础():
                     inner1()
                 inner2()
             '''
+
+        def 闭包():
+
+            闭包的定义 = '''
+                闭包： 内层函数对外层函数非全局变量的引用,叫做闭包 
+                闭包的好处：如果python 检测到闭包,函数的局部作用域不会随着函数的结束而结束 
+                判断是不是闭包print(内层的函数名.__closure__)
+                一般来讲，在闭包内层定义的变量，对外部来说是隔离的。 
+                '''
+
+            闭包的应用 = '''
+                例1:详见装饰器
+                例2:
+                访问定义在闭包内的的变量，通过存取函数，将变量最为函数的属性附加到闭包，提供对内层函数的访问的支持。
+                def sample():
+                    n=0
+                    def func():
+                        print(n)
+                    def get_n():
+                        return n
+                    def set_n(v):
+                        nonlocal n
+                        n=v
+                    func.get_n=get_n
+                    func.set_n=set_n
+                    return func
+                
+                f=sample()
+                f() -----> 0
+                f.set_n(10)
+                f() -----> 10
+                f.get_n() -----> 10
+                '''
 
         def 迭代器生成器():
 
@@ -1102,6 +1176,74 @@ def 基础():
                 4,过滤除偶数
                 a=[1, 4, 6, 7, 9, 12, 17]
                 b=filter(lambda x:x if x%2==0 else False,a)
+                '''
+
+        def 回调函数():
+
+            回调函数的定义 = '''
+                编程分为两类：
+                系统编程,所谓系统编程，简单来说，就是编写库.
+                应用编程,利用写好的各种库来编写具某种功用的程序，也就是应用。
+                在这里我们把调用回调函数的函数，称为中间函数。把调用中间函数的函数称为起始函数。
+                回调机制提供了非常大的灵活性。在回调中，用某种方式，把回调函数像参数一样传入中间函数。
+                在传入一个回调函数之前，中间函数是不完整的。通过传入不同的回调函数，来决定、改变中间函数的行为。这就比简单的函数调用要灵活。
+                回调函数可以携带额外的状态。
+                中间函数和回调函数是回调的两个必要部分，给中间函数传入什么样的回调函数，是在起始函数里决定的。
+                回调有两种：
+                阻塞式回调和延迟式回调。两者的区别在于：阻塞式回调里，回调函数的调用一定发生在起始函数返回之前；
+                而延迟式回调里，回调函数的调用有可能是在起始函数返回之后。待完善。
+                '''
+
+            回调函数的举例 = '''
+                例1:
+                def f1(x):
+                    return x*2**1
+    
+                def f2(x):
+                    return x*2**2
+    
+                def f3(x):
+                    return x*2**3
+    
+                #中间函数
+                #接受一个函数作为参数
+                def main(func,num):
+                    return 1+func(num)
+    
+                #起始函数
+                def start():
+                    print(main(f1,3)) -----> 7
+                    print(main(f2,3)) -----> 13
+                    print(main(f3,3)) -----> 25
+                    print(main(lambda x:x*5,3))  -----> 16
+    
+                例2:
+                def add(*args):
+                    return sum(args)
+    
+                def echo(msg):
+                    print(msg)
+    
+                def apply(func,*args,callback):
+                    ret=func(*args)
+                    callback(ret)
+    
+                apply(add,1,2,3,4,echo)
+    
+                使用闭包在回调函数里附加其他信息。
+                def make():
+                    seq=0
+                    def handler(ret):
+                        nonlocal seq
+                        seq += 1
+                        print('{} for {}'.format(seq,ret))
+                    return handler
+    
+                handler=make()
+                apply(add,1,2,3,4,callback=handler) -----> 1 for 10
+                apply(add,6,7,8,callback=handler) -----> 2 for 21
+                apply(add,11,12,13,14,callback=handler) -----> 3 for 50
+                因为闭包的特性，seq的值不会随函数的调用完毕而丢弃。
                 '''
 
 def 常用模块():
@@ -1527,71 +1669,34 @@ def 常用模块():
                 print i.group(),i.span()                     #
             '''
 
-    def itertools模块():
+    def functools模块():
 
-        groupby方法 = '''
-            对字典列表,以字典中某个键来分组,分组的前提是,相对于这个键的字典,在列表中是有序的.
-            list1 = [{'name':'lisi','id':1,'age':22},{'name':'lili','id':2,'age':22},{'name':'lina','id':1,'age':20},{'name':'nan','id':2,'age':33},{'name':'mimi','id':4,'age':20}]
-            from operator import itemgetter
-            from itertools import groupby
-            list1.sort(key=itemgetter('age'))     也可以用  list1.sort(key=lambda d:d['age'])
-            groupby(list1,key=itemgetter('age'))  也可以用  groupby(list1,key=lambda d:d['age'])
-            groupby返回的是一个迭代器.每次迭代返回一个值和一个子迭代器.子迭代器里面包含该组的全部成员.返回的是一个itertools.groupby对象,该对象里面是一个个元组.
-            元组的第一个值是每个分组指定的键的值,本例中的键是age,第二个值是一个itertools._grouper对象,该对象是一个元组,里面包含该组的全部成员.
-            for group_name,groups in  groupby(list1,key=itemgetter('age')):
-                print(group_name)
-                print(*groups)
-            '''
-
-        compress方法 = '''
-            接收一个可迭代对象,以及一个布尔选择器,返回所有为真的迭代对象的元素,返回的是一个迭代器.
-            把一个序列的筛选结果作用于另一个相关序列
-            a=(i if i > 0 else 0 for i in [1,-1,2,-2])
-            b=['a', 'b', 'v', 'd']
-            from itertools import compress
-            list(compress(b,a))  -----> ['a', 'v']
-            '''
-
-        warps方法 = '''
-            '''
-
-        islice方法 = '''
-            可以实现对生成器切片.islice本身是一个迭代器,通过接收一个生成器对象,一个起始值,默认为0,一个结束值,步长,默认为1,来实现对生成器切片.
-            原理是通过丢弃不需要的值来实现的.这样会消耗生成器的数据,也就是说,之前的数据无法再次访问.
-            也可用于跳过指定个数的元素.
-            def test(n):
-                while n:
-                    yield n
-                    n+=1
-
-            from itertools import islice
-            t=test(1)
-            for x in islice(t,2,10):
-                print(x)
-            '''
-
-        dropwhile方法 = '''
-            丢弃跳过可迭代对象的前几个元素,dropwhile 接收一个布尔选择器函数,一个可迭代对象.布尔选择器返回true,就会丢弃元素,直到遇到第一个false,停止丢弃.
-            一旦停止丢弃,就不会再次丢弃,即使在接下来的迭代中遇到true条件.
-            from itertools import dropwhile
-            with open('/etc/passwd') as f:
-                for line in dropwhile(lambda line: line.startswith('#'),f):
-                    print(line,end='')
-            只会丢弃文件前几行以#开头的行、
-            with open('/etc/passwd') as f:
-                lines=(for line in f if line not startswith('#'))
-                for line in lines:
-                    print(line)
-            这种方法的缺点是,是会遍历所有的行.
-            '''
-
-        chain方法 = '''
-            可以把一组迭代对象串联起来,形成一个更大的迭代器,可以传入不同类型的迭代对象.
-            a=[1,2,3]
-            b=[4,5,6]
-            from itertools import chain
-            for x in chain(a,b):
-                print(x)
+        partial方法 = '''
+            生成一个固定参数的新函数，偏函数。接收一个函数，一些该函数的参数。
+            partial 对特定的参数赋值，返回了一个新的可调用对象。新的可调用对象，仍然需要指定未被赋值的参数来调用。
+            def spam(a,b,c,d):
+                print(a,b,c,d)
+                
+            from functools import partial
+            s1=partial(spam,1,2)
+            s1(3,4) -----> 1 2 3 4
+            s1(6,7) -----> 1 2 6 7
+            s2=partial(spam,1,2,d=4)
+            s2(3) -----> 1 2 3 4
+            应用:
+            列表的sort方法可以接受一个函数用来排序，但该函数只接受一个参数。如果根据另一个参数来排序。
+            import math
+            points=[(1,2),(3,4),(5,6),(7,8),(9,10)]
+            def distance(p1,p2):
+                x1,y1=p1
+                x2,y2=p2
+                return math.hypot(x2-x1,y2-y1)
+            
+            pt=(4,3)
+            func=partial(distance,pt)
+            points.sort(key=func)   # 也可以直接points.sort(key=partial(distanc,pt))
+            print(points) -----> [(3, 4), (1, 2), (5, 6), (7, 8), (9, 10)]
+            
             '''
 
     def fnmatch模块():
