@@ -7,10 +7,12 @@
 # Version : 1
 
 def 更新日志():
-    1180
+    log_2018_05_03 = '''
+        完成sys模块.完善一些知识点.
+        '''
     log_2018_05_02 = '''
-            添加与生成器有关的模块方法.部分完成os模块,完成datetime模块.完善一些知识点.
-            '''
+        添加与生成器有关的模块方法.完成os模块,完成datetime模块.完善一些知识点.
+        '''
     log_2018_05_01 = '''
         完善一些知识点,完成re正则、random随机模块.完成namedtuple,补充字符串的对齐,format函数
         '''
@@ -46,7 +48,6 @@ def 说明():
     '''
     作者：涛
     仅用于自学python3,其中借鉴python2版的实例手册中的一些内容.
-    python2版的实例手册地址: https://github.com/liquanzhou/ops_doc
     请使用"pycharm"打开此文档, "Ctrl+Shift+NumPad+/-"将函数展开或折叠后方便查阅
     错误在所难免, 还望指正！
     不定期更新地址：https://github.com/332000640/python3_learn_man
@@ -524,7 +525,7 @@ def 基础():
             f.encoding        # 文件所使用的编码  当unicode字符串被写入数据时,它将自动使用file.encoding转换为字节字符串;若file.encoding为None时使用系统默认编码
             f.mode            # Access文件打开时使用的访问模式
             f.name            # 文件名
-            fe.newlines        # 读取行分隔符,未读取到行分隔符时为None,只有一种行分隔符时为一个字符串,当文件有多种类型的行结束符时,则为一个包含所有当前所遇到的行结束符的列表
+            fe.newlines       # 读取行分隔符,未读取到行分隔符时为None,只有一种行分隔符时为一个字符串,当文件有多种类型的行结束符时,则为一个包含所有当前所遇到的行结束符的列表
             f.softspace       # 为0表示在输出一数据后,要加上一个空格符,1表示不加
             '''
 
@@ -784,6 +785,7 @@ def 基础():
                     return a if a > 0 else 4
                     return a or b
                     return a and b
+                    return a,b,c  可以返回多个值，但值之间必须由','分割.
                     '''
 
             函数的参数 = '''
@@ -809,6 +811,18 @@ def 基础():
                 传入函数的和函数返回的都是同一个对象的引用.
                 函数的默认参数应该是不可变类型的.如果一定要使用可变类型的,在函数外部声明 _no_value=object()  将_no_value作为默认参数的值传入函数.在函数里判断 if 默认参数 is _no_value:默认参数=？
                 object()是一个内存地址,独特的私有实例,可以用这个特殊值判断用户是否提供了参数.
+                如果函数的默认参数是可变类型的话，应该把None作为默认值。
+                def spam(a,b=None):
+                    if b is None:    # 这里只能用is,不能用 if not b:这种语句，如果b=其他布尔值是false的参数呢？
+                        b=list()
+                默认参数的赋值只会在函数定义的时候绑定一次。
+                x=42
+                def spam(a,b=x):
+                    print(a,b)
+                spam(1) -----> 1,42
+                x=23
+                spam(1) -----> 1,42
+                默认值在函数定义时就已经确认好了。默认值应该时不可变类型的。
                 '''
 
             函数作用域 = '''
@@ -828,6 +842,15 @@ def 基础():
                 函数名可以当成函数的返回值 
                 函数是第一类对象
                 第一类对象:可在运行期创建,可用作函数参数或返回值,可存入变量的实体.
+                '''
+
+            函数的注解 = '''
+                函数的注解没有任何的语法意义。只会保存在函数的__annotations__属性中。
+                def test(x:int,y:int) -> int:
+                    print(x)
+                    print(y)
+                
+                test(1,2)
                 '''
 
         def 装饰器():
@@ -1061,7 +1084,7 @@ def 基础():
                 功能简单的函数
                 函数名 = lambda 参数 ：返回值
                 lambda表达式中的变量,不是定义的时候去绑定,而是运行的时候去绑定.
-                lambda可以定义默认参数,如果要给lambd传入外部的变量,lambda x,y=n:x+y  这样就把n穿进去了.
+                lambda可以定义默认参数,如果要给lambd传入外部的变量,lambda x,y=n:x+y  这样就把n传进去了.
                 '''
 
             匿名函数应用 = '''
@@ -1194,13 +1217,24 @@ def 常用模块():
             os.listdir('dirname')       列出指定目录下的所有文件和子目录,包括隐藏文件,并以列表方式打印
             os.remove()  删除一个文件
             os.rename("oldname","newname")  重命名文件/目录
-            os.stat('path/filename')        获取文件/目录信息
+            os.stat('path/filename')
+                获取文件/目录信息
+                st_mode: inode 保护模式
+                st_ino: inode 节点号。
+                st_dev: inode 驻留的设备。
+                st_nlink: inode 的链接数。
+                st_uid: 所有者的用户ID。
+                st_gid: 所有者的组ID。
+                st_size: 普通文件以字节为单位的大小；包含等待某些特殊文件的数据。
+                st_atime: 上次访问的时间。
+                st_mtime: 最后一次修改的时间。
+                st_ctime: 由操作系统报告的"ctime"。在某些系统上（如Unix）是最新的元数据更改的时间
             os.sep                  输出操作系统特定的路径分隔符,win下为"\\",Linux下为"/"
             os.linesep              输出当前平台使用的行终止符,win下为"\t\n",Linux下为"\n"
             os.pathsep              输出用于分割文件路径的字符串 win下为;,Linux下为:
             os.name                 输出字符串指示当前使用平台.win->'nt'; Linux->'posix'
             os.system("bash command")       运行shell命令,直接显示,得到返回状态 返回无法截取
-            os.popen("bash command).read()  运行shell命令,获取执行结果
+            os.popen("bash command) 运行shell命令,获取执行结果,当需要得到外部程序的输出结果时，返回一个类文件对象，调用该对象的read()或readlines()方法可以读取输出内容。
             os.environ              获取系统环境变量
             os.access(path, mode)   检验权限模式
             os.chmod(path, mode)    更改权限
@@ -1215,7 +1249,15 @@ def 常用模块():
             os.tempnam([dir[, prefix]])             返回唯一的路径名用于创建临时文件。         
             os.getenv()             读取环境变量
             os.putenv()             设置环境变量
-            os.walk('/root/')       递归路径
+            os.walk('/root/')
+                os.walk() 方法用于通过在目录树种游走输出在目录中的文件名，向上或者向下。
+                walk()方法语法格式如下：
+                os.walk(top[, topdown=True[, onerror=None[, followlinks=False]]])
+                参数
+                top -- 根目录下的每一个文件夹(包含它自己), 产生3-元组 (dirpath, dirnames, filenames)【文件夹路径, 文件夹名字, 文件名】。
+                topdown --可选，为True或者没有指定, 一个目录的的3-元组将比它的任何子文件夹的3-元组先产生 (目录自上而下)。如果topdown为 False, 一个目录的3-元组将比它的任何子文件夹的3-元组后产生 (目录自下而上)。
+                onerror -- 可选，是一个函数; 它调用时有一个参数, 一个OSError实例。报告这错误后，继续walk,或者抛出exception终止walk。
+                followlinks -- 设置为 true，则通过软链接访问目录。
             os.environ['HOME']      看系统环境变量
             os.statvfs("/")         获取磁盘信息
             '''
@@ -1242,9 +1284,33 @@ def 常用模块():
             os.path.expanduser(path)        把path中包含的"~"和"~user"转换成用户目录
             os.path.getatime(path)          返回path所指向的文件或者目录的最后访问时间
             os.path.getmtime(path)          返回path所指向的文件或者目录的最后修改时间
-            os.path.getsize(path)           返回path的大小
+            os.path.getsize(path)           返回path的大小 单位：bytes,本质上是 os.stat(path).st_size
             os.path.walk(path, visit, arg)  遍历path，进入每个目录都调用visit函数，visit函数必须有3个参数(arg, dirname, names)，dirname表示当前目录的目录名，names代表当前目录下的所有文件名，args则为walk的第三个参数
             '''
+
+    def sys模块():
+
+        方法 = '''
+        sys.argv        命令行参数List，第一个元素是程序本身路径
+        sys.exit(n)     退出程序，正常退出时exit(0), 错误退出sys.exit(1)
+        sys.version     获取Python解释程序的版本信息
+        sys.path
+            初始化时使用PYTHONPATH环境变量的值,获取指定模块搜索路径的字符串集合.
+            可以将写好的模块放在得到的某个路径下，就可以在程序中import时正确找到。
+            或 sys.path.append("自定义模块路径")
+        sys.platform    返回操作系统平台名称
+        sys.modules
+            sys.modules是一个全局字典，该字典是python启动后就加载在内存中。
+            每当导入新的模块，sys.modules将自动记录该模块。
+            当第二次再导入该模块时，python会直接到字典中查找，从而加快了程序运行的速度。它拥有字典所拥有的一切方法。
+        sys.getdefaultencoding()    获取系统当前编码，一般默认为ascii。
+        sys.setdefaultencoding()    设置系统默认编码，执行dir（sys）时不会看到这个方法，在解释器中执行不通过，可以先执行reload(sys)，在执行 setdefaultencoding('utf8')，此时将系统默认编码设置为utf8。（见设置系统默认编码 ）
+        sys.getfilesystemencoding() 获取文件系统使用编码方式，Windows下返回'mbcs'，mac下返回'utf-8'.
+        sys.stdin,sys.stdout,sys.stderr:
+            stdin , stdout , 以及stderr 变量包含与标准I/O 流对应的流对象.
+            如果需要更好地控制输出,而print 不能满足你的要求, 它们就是你所需要的.
+            你也可以替换它们, 这时候你就可以重定向输出和输入到其它设备( device ), 或者以非标准的方式处理它们。
+        '''
 
     def re模块():
 
@@ -1673,6 +1739,9 @@ def 常用模块():
             计算正态分布值
             '''
 
+    def time模块():
+        pass
+
     def datatime模块():
 
         timedelta方法 = '''
@@ -1725,6 +1794,15 @@ def 常用模块():
             z=datetime.now()
             datetime.strftime(z,"%Y-%m-%d %H:%M:%S") -----> '2018-05-02 18:18:31'
             '''
+
+    def subprocess模块():
+        pass
+
+    def commands模块():
+        '''commands.getstatusoutput(cmd)         返回(status, output)
+        *   commands.getoutput(cmd)                   仅仅返回输出结果
+        *   commands.getstatus(file)                     返回ls -ld file的运行结果字符串，调用了getoutput。不建议使用此方法'''
+        pass
 
 def 生产工具():
 
@@ -1947,6 +2025,9 @@ def 使用技巧():
                     yield item
         items=[1,2,[3,4,[5,6],7],8,9]
         for i in flatten(items):print(i)
+
+    def python中执行shell命令():
+        '''os.system、 os.popen和subprocess.pope commands.getstatusoutput()'''
 
 def 例子():
     pass
