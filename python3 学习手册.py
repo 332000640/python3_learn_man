@@ -340,7 +340,7 @@ def 基础():
                 list.pop(obj=list[-1])  # 移除列表中的一个元素（默认最后一个元素）,并且返回该元素的值
                 list.remove(obj)        # 移除列表中某个值的第一个匹配项 无返回值
                 list.reverse()          # 反向列表中元素,无返回值,改变列表本身,但reversed()不改变列表本身,返回反向的列表,列表中不能出现不同类型的数据.
-                list.sort([func])       # 对原列表进行排序,无返回值 ,改变列表本身,但sorted()不改变列表本身,返回反向的列表,列表中不能出现不同类型的数据.可以用key=func 来指定一个可调用对象来进行排序.
+                list.sort([func])       # 对原列表进行排序,无返回值 ,改变列表本身,但sorted()不改变列表本身,返回反向的列表,列表中不能出现不同类型的数据.可以用key=func 来指定一个可调用对象来进行排序,只接受单个参数的函数.
                 list.clear()            # 清空列表 无返回值 
                 list.copy()             # 复制列表 无返回值,属于浅拷贝
                 del                     # 语句可以删除列表中的元素,也可以在内存空间删除整个列表.
@@ -1527,10 +1527,78 @@ def 常用模块():
                 print i.group(),i.span()                     #
             '''
 
+    def itertools模块():
+
+        groupby方法 = '''
+            对字典列表,以字典中某个键来分组,分组的前提是,相对于这个键的字典,在列表中是有序的.
+            list1 = [{'name':'lisi','id':1,'age':22},{'name':'lili','id':2,'age':22},{'name':'lina','id':1,'age':20},{'name':'nan','id':2,'age':33},{'name':'mimi','id':4,'age':20}]
+            from operator import itemgetter
+            from itertools import groupby
+            list1.sort(key=itemgetter('age'))     也可以用  list1.sort(key=lambda d:d['age'])
+            groupby(list1,key=itemgetter('age'))  也可以用  groupby(list1,key=lambda d:d['age'])
+            groupby返回的是一个迭代器.每次迭代返回一个值和一个子迭代器.子迭代器里面包含该组的全部成员.返回的是一个itertools.groupby对象,该对象里面是一个个元组.
+            元组的第一个值是每个分组指定的键的值,本例中的键是age,第二个值是一个itertools._grouper对象,该对象是一个元组,里面包含该组的全部成员.
+            for group_name,groups in  groupby(list1,key=itemgetter('age')):
+                print(group_name)
+                print(*groups)
+            '''
+
+        compress方法 = '''
+            接收一个可迭代对象,以及一个布尔选择器,返回所有为真的迭代对象的元素,返回的是一个迭代器.
+            把一个序列的筛选结果作用于另一个相关序列
+            a=(i if i > 0 else 0 for i in [1,-1,2,-2])
+            b=['a', 'b', 'v', 'd']
+            from itertools import compress
+            list(compress(b,a))  -----> ['a', 'v']
+            '''
+
+        warps方法 = '''
+            '''
+
+        islice方法 = '''
+            可以实现对生成器切片.islice本身是一个迭代器,通过接收一个生成器对象,一个起始值,默认为0,一个结束值,步长,默认为1,来实现对生成器切片.
+            原理是通过丢弃不需要的值来实现的.这样会消耗生成器的数据,也就是说,之前的数据无法再次访问.
+            也可用于跳过指定个数的元素.
+            def test(n):
+                while n:
+                    yield n
+                    n+=1
+
+            from itertools import islice
+            t=test(1)
+            for x in islice(t,2,10):
+                print(x)
+            '''
+
+        dropwhile方法 = '''
+            丢弃跳过可迭代对象的前几个元素,dropwhile 接收一个布尔选择器函数,一个可迭代对象.布尔选择器返回true,就会丢弃元素,直到遇到第一个false,停止丢弃.
+            一旦停止丢弃,就不会再次丢弃,即使在接下来的迭代中遇到true条件.
+            from itertools import dropwhile
+            with open('/etc/passwd') as f:
+                for line in dropwhile(lambda line: line.startswith('#'),f):
+                    print(line,end='')
+            只会丢弃文件前几行以#开头的行、
+            with open('/etc/passwd') as f:
+                lines=(for line in f if line not startswith('#'))
+                for line in lines:
+                    print(line)
+            这种方法的缺点是,是会遍历所有的行.
+            '''
+
+        chain方法 = '''
+            可以把一组迭代对象串联起来,形成一个更大的迭代器,可以传入不同类型的迭代对象.
+            a=[1,2,3]
+            b=[4,5,6]
+            from itertools import chain
+            for x in chain(a,b):
+                print(x)
+            '''
+
     def fnmatch模块():
 
         fnmatch方法 = '''
         '''
+
         fnamtchcase方法 = '''
         '''
 
