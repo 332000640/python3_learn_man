@@ -7,6 +7,9 @@
 # Version : 1
 
 def 更新日志():
+    log_2018_05_08 = '''
+        完善字符串格式化精讲。面向对象开始。
+        '''
     log_2018_05_06 = '''
         完善time模块.
         '''
@@ -251,6 +254,7 @@ def 基础():
                 msg = 'name:{0},age:{1},sex:{0}'.format('aaaaaa', 'bbbbbb')                 # 按索引
                 msg = 'name:{x},age:{y},sex:{z}'.format(x='haiyan', y='18', z='women')      # 赋值的方式
                 msg = 'name:{x},age:{y},sex:{z}'.format_map({'x':'haiyan', 'y':'18', 'z':'women'})  # 使用format_map 传入字典
+                更多内容见 字符串格式精讲.
                 字符串拼接
                 直接写 a='hello' 'word'   这样就会拼接在以前 a:   'helloword'
                 '''
@@ -908,23 +912,23 @@ def 函数():
             '''
 
         函数的属性 = '''
-        可以给函数添加任意属性
-        def add():
-            pass
-        add.num=1
-        add.msg='test'
-        函数的属性保存在函数的 __dict__ 属性中.
-        如果函数在装饰器中,可能获取不到.
-        1,手动编写
-        def wrap(func):
-            def call(*args,**kwargs):
-                return func()
-            call.__doc__ = func.__doc__
-            call.__name__ = func.__name__
-            call.__dict__.update(func.__dict__)
-            return call
-        2,使用functools.wraps函数,详见下面的装饰器.
-        '''
+            可以给函数添加任意属性
+            def add():
+                pass
+            add.num=1
+            add.msg='test'
+            函数的属性保存在函数的 __dict__ 属性中.
+            如果函数在装饰器中,可能获取不到.
+            1,手动编写
+            def wrap(func):
+                def call(*args,**kwargs):
+                    return func()
+                call.__doc__ = func.__doc__
+                call.__name__ = func.__name__
+                call.__dict__.update(func.__dict__)
+                return call
+            2,使用functools.wraps函数,详见下面的装饰器.
+            '''
 
     def 装饰器():
         '''为已存在的功能添加额外的功能,只在初始化脚本的时候执行一次.本质是函数, 用于装饰其他函数'''
@@ -1041,6 +1045,7 @@ def 函数():
             '''
 
     def 迭代器生成器():
+
         迭代器 = '''
             凡是可以使用for循环取值的都是可迭代的
             可迭代协议 ：内部含有__iter__方法的都是可迭代的
@@ -1059,6 +1064,15 @@ def 函数():
 
         生成器 = '''
             一个包含yield关键字的函数就是一个生成器函数.yield可以为我们从函数中返回值,但是yield又不同于return.
+            生成器和迭代器本质上是一样的
+            yield函数
+                执行生成器函数 会得到一个生成器 不会执行这个函数中的代码
+                有几个yield,就能从中取出多少个值
+            生成器表达式
+                生成器表达式也会返回一个生成器 也不会直接被执行
+                for循环里有几个符合条件的值生成器就返回多少值
+            每一个生成器都会从头开始取值,当取到最后的时候,生成器中就没有值了
+                一个生成器只能用一次
             return的执行意味着程序的结束,调用生成器函数不会得到返回的具体的值,而是得到一个可迭代的对象.
             每一次获取这个可迭代对象的值,就能推动函数的执行,获取新的返回值.直到函数执行结束.
             生成器函数的调用不会触发代码的执行,而是会返回一个生成器(迭代器).generator object.
@@ -1277,6 +1291,90 @@ def 函数():
             '''
 
 def 类与对象():
+
+    初识面向对象 = '''
+        面向过程：面向过程的程序设计的核心是过程（流水线式思维），过程即解决问题的步骤。
+        优点：极大地降低了写成学的复杂度，只需要顺着执行的步骤，堆叠代码即可
+        缺点：一套流水线或者流程就是用来解决一个问题，如果修改代码就都得改变
+    
+        面向对象：面向对象的程序设计语言必须有描述对象及其相互之间关系的语言成分。
+        这些程序设计语言可以归纳为以下几类：
+            系统中一切事物皆为对象；
+            对象是属性及其操作的封装体；
+            对象可按其性质划分为类，对象成为类的实例；
+            实例关系和继承关系是对象之间的静态关系；
+            消息传递是对象之间动态联系的唯一形式，也是计算的唯一形式；方法是消息的序列。
+        优点：解决了程序的扩展性。对某一个对象单独修改，会立刻反映到整个体系中，如对游戏中一个人物参数的特征和技能修改都很容易。
+        缺点：可控性差，无法向面向过程的程序设计流水线式的可以很精准的预测问题的处理流程与结果，面向对象的程序一旦开始就由对象之间的交互解决问题，无法预测最终结果。
+        类:
+        具有相同或相似性质的对象的抽象就是类。因此，对象的抽象是类，类的具体化就是对象，也可以说类的实例是对象。
+        类具有属性，它是对象的状态的抽象，用数据结构来描述类的属性。
+        类具有操作，它是对象的行为的抽象，用操作名和实现该操作的方法来描述。
+        实例化就是类到对象的过程.
+        一组数据结构和处理它们的方法组成对象（object），
+        把相同行为的对象归纳为类（class）,
+        通过类的封装（encapsulation）隐藏内部细节,
+        通过继承（inheritance）实现类的特化（specialization）／泛化（generalization），
+        通过多态polymorphism）实现基于对象类型的动态分派（dynamic dispatch）。
+        在python中，用变量表示属性，用函数表示功能，因而具有相同的属性和功能的，就是‘类’。
+        实例化：类名加括号就是实例化，会自动触发__init__函数的运行，可以用它来为每个实例定制自己的特征
+        '''
+
+    类与对象= '''
+        类的两种作用：属性引用和实例化
+        对象是关于类而实际存在的一个例子，即实例
+        对象/实例只有一种作用：属性引用 
+        
+        class person:
+            role='man'
+            def __init__(self,name,age):
+                self.name = name
+                self.age = age
+            def talk(self):
+                print('hehe')
+        person.role     # 查看类属性
+        person.talk     # 查看类方法,是内存地址
+        
+        obj=person('lisi',22)       # 实例化,等于在执行person.__init__()
+        obj.name                    # 查看属性
+        obj.talk()                  # 调用方法
+        
+        self：在实例化时自动将对象/实例本身传给__init__的第一个参数。
+        注意：def  __init__(self):   这句话可以写也可以不写，只要有参数参进来的时候就必须得写。
+　　     def  方法名（self）：这里的self必须得写。
+        '''
+
+    类的属性 = '''
+        查看定义的类的属性
+        dir(类名)：返回的是一个名字列表
+        类名.__dict__:返回的是一个字典，key为属性名，value为属性值
+        类有两种属性：静态属性和动态属性
+        静态属性就是直接在类中定义的变量
+        动态属性就是定义在类中的方法
+        其中类的静态属性是共享给所有对象的,而类的动态属性是绑定到所有对象的
+        创建一个对象/实例就会创建一个对象/实例的名称空间，存放对象/实例的名字，称为对象/实例的属性,
+        在obj.name会先从obj自己的名称空间里找name，找不到则去类中找，类也找不到就找父类...最后都找不到就抛出异常
+
+        特殊的类属性
+        类名.__name__     # 类的名字(字符串)
+        类名.__doc__      # 类的文档字符串
+        类名.__base__     # 类的第一个父类
+        类名.__bases__    # 类所有父类构成的元组
+        类名.__dict__     # 类的字典属性
+        类名.__module__   # 类定义所在的模块
+        类名.__class__    # 实例对应的类(仅新式类中)
+        '''
+
+    面向对象的组合用法 = '''
+    组合指的是，在一个类中以另外一个类的对象作为静态属性，称为类的组合
+    
+    class 
+    
+    '''
+
+
+
+
     pass
 
 def 常用模块():
@@ -1492,8 +1590,8 @@ def 常用模块():
         正则基础 = '''
             元字符       
                 . 	        匹配除换行符以外的任意字符,匹配除 "\n" 之外的任何单个字符.要匹配包括 '\n' 在内的任何字符,请使用象 '[.\n]' 的模式.
-                \w	        匹配字母或数字或下划线,匹配任何字母数字字符,相当与[a-zA-Z0-9]
-                \W          匹配非字母或数字或下划线,匹配任何非字母数字字符,相当与[^a-zA-Z0-9]]
+                \w	        匹配字母或数字或下划线,匹配任何字母数字字符,相当与[a-zA-Z0-9_]
+                \W          匹配非字母或数字或下划线,匹配任何非字母数字字符,相当与[^a-zA-Z0-9_]]
                 \s	        匹配任意的空白符  匹配任何空白字符,相当与[ \t\n\r\f\v]  #注意前面有个空格
                 \S          匹配非空白符,匹配任何非空白字符,相当与[^ \t\n\r\f\v]
                 \d	        匹配数字,匹配任何是十进制数,相当与[0-9]
@@ -1503,7 +1601,7 @@ def 常用模块():
                 \b	        匹配一个单词的结尾,匹配一个单词边界,也就是指单词和任何特殊字符的边界.
                 ^	        匹配字符串的开始 以某个字符开始.
                 $	        匹配字符串的结尾
-                a|b         匹配字符a或字符b
+                a|b         匹配字符a或字符b,如 abc|abcd 这样写只会匹配abc,abcd是匹配不到的,abcd|abc 这样才能匹配到.如果有一短一长2个相似的的正则表达式,一定要把长的放在前面。
                 ()          匹配括号内的表达式,表示分组,将括号里面的内容整体匹配.圆括号表示分组,里面的东西是一个整体.
                 [...]       匹配字符组中的字符,元字符 [] 字符集 匹配里面的字符 或的关系,字符集取消元字符的特殊功能 (除了这三个\ ^ -)
                 [^...]      匹配除了字符组中字符的所有字符,字符集取消元字符的特殊功能 (除了这三个\ ^ -)
@@ -1518,6 +1616,7 @@ def 常用模块():
                 (?P<name>...)    分组,同时起一个别名
                 (?P=name)        引用别名为name的分组匹配到的字符串
                 \<number>        引用编号为number的分组匹配到的字符串
+                \w\W        表示全集匹配所有的，另外还有\s\S、\d\D
                             
             贪婪匹配
                 量词         用法说明
@@ -1562,6 +1661,9 @@ def 常用模块():
                 python中,无论是正则表达式,还是待匹配的内容,都是以字符串的形式出现的,在字符串中\也有特殊的含义,本身还需要转义.
                 所以如果匹配一次"\d",字符串中要写成'\\d',那么正则里就要写成"\\\\d".
                 用r'\d',表示是r'\\d' .在字符串之前加r,让整个字符串不转义
+                详解:
+                如果要匹配字符串\d 而不是正则中具有特殊意义的,代表数字的\d,匹配的正则表达式应该写成 \\d.
+                但是如果要在python中表示 字符串 \\d ,本身的\\在python中只表示一个\,所有需要对每个\\,进行转义,即\\\\.
                 
             .*?的用法
                 . 是任意字符
@@ -1624,7 +1726,7 @@ def 常用模块():
             print(ret) -----> 'a'
             '''
 
-        rmatch与rsearch的区别 = '''
+        match与search的区别 = '''
             re.match只匹配字符串的开始,如果字符串开始不符合正则表达式,则匹配失败,函数返回None；而re.search匹配整个字符串,直到找到一个匹配.
             '''
 
@@ -1993,6 +2095,8 @@ def 常用模块():
             '''
 
         方法应用 = '''
+            字符串时间无法直接转成时间戳，需要格式化时间在中间转换。
+            字符串时间转结构化时间需要指定字符串的格式。
             time.time() #时间戳
             time.strftime('%Y-%m-%d') -----> '2018-05-05'   返回字符类型的时间格式
             time.localtime() -----> time.struct_time(tm_year=2018, tm_mon=5, tm_mday=6, tm_hour=0, tm_min=0, tm_sec=54, tm_wday=6, tm_yday=126, tm_isdst=0)  时间元组:localtime将一个时间戳转换为当前时区的struct_time返回元组类型的时间格式
@@ -2010,17 +2114,17 @@ def 常用模块():
             time.strftime("%Y-%m-%d %X") -----> '2018-05-06 00:09:38'
             time.strftime("%Y-%m-%d",time.localtime(1500000000))
             
-            字符串时间-->结构化时间
+            字符串时间-------------->结构化时间
             time.strptime(时间字符串,字符串对应格式)
             time.strptime("2017-03-16","%Y-%m-%d") -----> time.struct_time(tm_year=2017, tm_mon=3, tm_mday=16, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=3, tm_yday=75, tm_isdst=-1)
             time.strptime("07/24/2017","%m/%d/%Y") -----> time.struct_time(tm_year=2017, tm_mon=7, tm_mday=24, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=0, tm_yday=205, tm_isdst=-1)
             
-            结构化时间 --> %a %b %d %H:%M:%S %Y串
+            结构化时间--------------> %a %b %d %H:%M:%S %Y串
             time.asctime(结构化时间) 如果不传参数，直接返回当前时间的格式化串
             time.asctime(time.localtime(1500000000)) -----> 'Fri Jul 14 10:40:00 2017'
             time.asctime() -----> 'Sun May  6 00:12:49 2018'
             
-            时间戳 --> %a %d %d %H:%M:%S %Y串
+            时间戳--------------> %a %d %d %H:%M:%S %Y串
             time.ctime(时间戳)  如果不传参数，直接返回当前时间的格式化串
             time.ctime() -----> 'Sun May  6 00:13:39 2018'
             time.ctime(1500000000) -----> 'Fri Jul 14 10:40:00 2017' 
@@ -2264,6 +2368,138 @@ def 生产工具():
 
 def 题目详解():
 
+    def 字符串格式化精讲():
+        '''官方文档地址 https://docs.python.org/3/library/string.html 以下是官方文档的内容。'''
+        '''格式字符串包含由花括号包裹的 {替换字段}。任何不包含在花括号中的内容都将被视为普通字符串，并将其原样输出。
+        如果输出中要包含花括号，则可以通过使用两对花括号来表示，{{str}}。
+        格式化之前，转换字段会导致类型的强制转换。
+        通常，格式化操作是通过对象本身的__format__()方法完成的。
+        但是，在某些情况下，希望强制将某个类型格式化为字符串。在填充前先用对应的函数来处理参数。通过在调用之前将该值转换为字符串__format__()。
+        目前支持三种转换符：'!s'使用str()强转，'!r'使用repr()，'!a'使用ascii()。
+        例子：
+        "Harold's a clever {0!s}"        # 在第一个参数上调用 str()
+        "Bring out the holy {name!r}"    # 在第一个参数上调用 repr()
+        "More {!a}"                      # 在第一个参数上调用 ascii()
+        
+        以下在字符串中花括号的写法。
+        替换字段格式(replacement_field)      {[field_name] [!conversion] [:format_spec]}
+        字段对象(field_name)                arg_name('.' attribute_name | '[' element_index ']')*
+        位置名称(arg_name)                  [identifier | digit+]
+        属性名(attribute_name)              identifier
+        元素索引(element_index)             digit+ | index_string
+        字符串索引(index_string)            <any source character except "]"> +
+        转换符(conversion)                 "r" | "s" | "a"
+        格式(format_spec)                  <described in the next section>
+        field_name该字段指定要格式化其值的对象，是一个带属性的对象。并将其插入到输出中而不是替换字段中。
+        field_name后面可以选择跟转换符!s或!r或!a，用对应的函数来处理.可以用:指定值得输出格式。
+        字段对象(field_name)可以使用.来指定属性名。field_name.attribute_name 也可以用元素索引来指定  field_name[element_index]
+        在field_name 本身是位置参数，可以是位置参数或关键字参数。类似于{1}，{name} 这种。
+        如果field_name是一个对象，attribute_name是field_name的一个属性，属于关键字参数。如果field_name是一个序列，使用索引值或字典的键来指定。
+        arg_name不能在格式字符串中以字典的方式指定键(key:values),arg_name可以跟多个索引或属性表达式。field_name.name使用getattr()获取指定的属性，field_name[index] 使用__getitem__()查找索引。
+        :format_spec，冒号format_spec表示输出的格式。
+        举例:
+        "First, thou shalt count to {0}"  # 引用第一个位置参数
+        "Bring me a {}"                   # 隐式引用第一个位置参数
+        "From {} to {}"                   # 从0到1,按顺序引用
+        "My quest is {name}"              # 引用关键字参数'name'
+        "Weight in tons {0.weight}"       # 引用第一个位置参数的'weight'属性
+        "Units destroyed: {players[0]}"   # 引用关键字参数'players'的第一个元素。
+        def func():pass
+        func.x=1
+        func.y=2
+        '{a.x},{a.y}'.format(a=func)            -----> '1,2'
+        {0.x},{0.y}'.format(func)               -----> '1,2'
+        b={'x':1,'y':2}
+        '{0[x]},{0[y]}'.format(b)               -----> '1,2'
+        '{d[x]},{d[y]}'.format(d=b)             -----> '1,2'
+        
+        按位置访问参数：
+        '{0}, {1}, {2}'.format('a', 'b', 'c')   -----> 'a, b, c'
+        '{}, {}, {}'.format('a', 'b', 'c')      -----> 'a, b, c'
+        '{2}, {1}, {0}'.format('a', 'b', 'c')   -----> 'c, b, a'
+        '{2}, {1}, {0}'.format(*'abc')          -----> 'c, b, a'      # 解包参数序列
+        '{0}{1}{0}'.format('abra', 'cad')       -----> 'abracadabra'   # 参数可以重复
+
+        按名称访问参数：
+        'Coordinates: {latitude}, {longitude}'.format(latitude='37.24N', longitude='-115.81W')  -----> 'Coordinates: 37.24N, -115.81W'
+        coord = {'latitude': '37.24N', 'longitude': '-115.81W'}
+        'Coordinates: {latitude}, {longitude}'.format(**coord)                                  -----> 'Coordinates: 37.24N, -115.81W'
+
+        访问参数的属性：
+        c = 3-5j
+        ('The complex number {0} is formed from the real part {0.real} and the imaginary part {0.imag}.').format(c)  -----> 'The complex number (3-5j) is formed from the real part 3.0 and the imaginary part -5.0.'
+        
+        class Point:
+            def __init__(self, x, y):
+                self.x, self.y = x, y
+            def __str__(self):
+                return 'Point({self.x}, {self.y})'.format(self=self)
+        
+        str(Point(4, 2)) -----> 'Point(4, 2)'
+
+        访问参数的项目：
+        coord = (3, 5)
+        'X: {0[0]};  Y: {0[1]}'.format(coord)
+        'X: 3;  Y: 5'
+        
+        替换%s和%r：
+        "repr() shows quotes: {!r}; str() doesn't: {!s}".format('test1', 'test2') -----> "repr() shows quotes: 'test1'; str() doesn't: test2"
+        
+        对齐文本并指定宽度：
+        '{:<30}'.format('left aligned')     -----> 'left aligned                  '
+        '{:>30}'.format('right aligned')    -----> '                 right aligned'
+        '{:^30}'.format('centered')         -----> '           centered           '
+        '{:*^30}'.format('centered')        -----> '***********centered***********'  # 使用'*'作为填充字符
+        
+        更换%+f，%-f以及与指定的标志：% f
+        '{:+f}; {:+f}'.format(3.14, -3.14)          -----> '+3.140000; -3.140000'  # 始终显示
+        '{: f}; {: f}'.format(3.14, -3.14)          -----> ' 3.140000; -3.140000'  # 显示正数的空间
+        '{:-f}; {:-f}'.format(3.14, -3.14)          -----> '3.140000; -3.140000'   # 只显示减号
+
+        替换%x并将%o值转换为不同的基础：
+        "int: {0:d}; hex: {0:x}; oct: {0:o}; bin: {0:b}".format(42)     -----> 'int: 42;  hex: 2a;  oct: 52;  bin: 101010'          # 格式也支持二进制数字
+        "int: {0:d}; hex: {0:#x}; oct: {0:#o}; bin: {0:#b}".format(42)  -----> 'int: 42;  hex: 0x2a;  oct: 0o52;  bin: 0b101010'    # 以0x，0o或0b作为前缀
+
+        使用逗号作为千位分隔符：
+         '{:,}'.format(1234567890)          -----> '1,234,567,890'
+        
+        表示一个百分比：
+        points = 19
+        total = 22
+        'Correct answers: {:.2%}'.format(points/total)      -----> 'Correct answers: 86.36%'
+
+        使用特定于类型的格式：
+        import datetime
+        d = datetime.datetime(2010, 7, 4, 12, 15, 58)
+        '{:%Y-%m-%d %H:%M:%S}'.format(d)                    -----> '2010-07-04 12:15:58'
+
+        嵌套论据和更复杂的例子：
+        for align, text in zip('<^>', ['left', 'center', 'right']):
+            '{0:{fill}{align}16}'.format(text, fill=align, align=align)
+            
+        'left<<<<<<<<<<<<'
+        '^^^^^center^^^^^'
+        '>>>>>>>>>>>right'
+        
+        octets = [192, 168, 0, 1]
+        '{:02X}{:02X}{:02X}{:02X}'.format(*octets)-----> 'C0A80001'
+        int(_, 16)3232235521
+
+        width = 5
+        for num in range(5,12): 
+            for base in 'dXob':
+                print('{0:{width}{base}}'.format(num, base=base, width=width), end=' ')
+            print()
+
+        5     5     5   101
+        6     6     6   110
+        7     7     7   111
+        8     8    10  1000
+        9     9    11  1001
+       10     A    12  1010
+       11     B    13  1011
+        '''
+
     def 生成器相关():
 
         题一 = '''
@@ -2373,6 +2609,9 @@ def 题目详解():
         凡是可以for循环的,都是Iterable,都有 __iter__ 属性.
         凡是可以next()的,都是Iterator,都有  __iter__ __next__ 属性.
         '''
+
+    def __repr__和__str__区别():
+        pass
 
 def 使用参考():
 
