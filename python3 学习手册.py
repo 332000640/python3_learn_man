@@ -7,6 +7,12 @@
 # Version : 1
 
 def 更新日志():
+    log_2018_05_12 = '''
+        完善面向对象的高级用法。
+        '''
+    log_2018_05_11 = '''
+        完善面向对象的三大特性。
+        '''
     log_2018_05_08 = '''
         完善字符串格式化精讲。面向对象开始。
         '''
@@ -1292,90 +1298,870 @@ def 函数():
 
 def 类与对象():
 
-    初识面向对象 = '''
-        面向过程：面向过程的程序设计的核心是过程（流水线式思维），过程即解决问题的步骤。
-        优点：极大地降低了写成学的复杂度，只需要顺着执行的步骤，堆叠代码即可
-        缺点：一套流水线或者流程就是用来解决一个问题，如果修改代码就都得改变
+    def 面向对象():
+
+        初识面向对象 = '''
+            面向过程：面向过程的程序设计的核心是过程（流水线式思维），过程即解决问题的步骤。
+            优点：极大地降低了写成学的复杂度，只需要顺着执行的步骤，堆叠代码即可
+            缺点：一套流水线或者流程就是用来解决一个问题，如果修改代码就都得改变
+        
+            面向对象：面向对象的程序设计语言必须有描述对象及其相互之间关系的语言成分。
+            这些程序设计语言可以归纳为以下几类：
+                系统中一切事物皆为对象；
+                对象是属性及其操作的封装体；
+                对象可按其性质划分为类，对象成为类的实例；
+                实例关系和继承关系是对象之间的静态关系；
+                消息传递是对象之间动态联系的唯一形式，也是计算的唯一形式；方法是消息的序列。
+            优点：解决了程序的扩展性。对某一个对象单独修改，会立刻反映到整个体系中，如对游戏中一个人物参数的特征和技能修改都很容易。
+            缺点：可控性差，无法向面向过程的程序设计流水线式的可以很精准的预测问题的处理流程与结果，面向对象的程序一旦开始就由对象之间的交互解决问题，无法预测最终结果。
+            类:
+            具有相同或相似性质的对象的抽象就是类。因此，对象的抽象是类，类的具体化就是对象，也可以说类的实例是对象。
+            类具有属性，它是对象的状态的抽象，用数据结构来描述类的属性。
+            类具有操作，它是对象的行为的抽象，用操作名和实现该操作的方法来描述。
+            实例化就是类到对象的过程.
+            一组数据结构和处理它们的方法组成对象（object），
+            把相同行为的对象归纳为类（class）,
+            通过类的封装（encapsulation）隐藏内部细节,
+            通过继承（inheritance）实现类的特化（specialization）／泛化（generalization），
+            通过多态polymorphism）实现基于对象类型的动态分派（dynamic dispatch）。
+            在python中，用变量表示属性，用函数表示功能，因而具有相同的属性和功能的，就是‘类’。
+            实例化：类名加括号就是实例化，会自动触发__init__函数的运行，可以用它来为每个实例定制自己的特征
+            '''
+
+        类与对象= '''
+            类的两种作用：属性引用和实例化
+            对象是关于类而实际存在的一个例子，即实例
+            对象/实例只有一种作用：属性引用 
+            
+            class person:
+                role='man'
+                def __init__(self,name,age):
+                    self.name = name
+                    self.age = age
+                def talk(self):
+                    print('hehe')
+            person.role     # 查看类属性
+            person.talk     # 查看类方法,是内存地址
+            
+            obj=person('lisi',22)       # 实例化,等于在执行person.__init__()
+            obj.name                    # 查看属性
+            obj.talk()                  # 调用方法
+            
+            self：在实例化时自动将对象/实例本身传给__init__的第一个参数。
+            注意：def  __init__(self):   这句话可以写也可以不写，只要有参数参进来的时候就必须得写。
+    　　     def  方法名（self）：这里的self必须得写。
+            '''
+
+        类的属性 = '''
+            查看定义的类的属性
+            dir(类名)：返回的是一个名字列表
+            类名.__dict__:返回的是一个字典，key为属性名，value为属性值
+            类有两种属性：静态属性和动态属性
+            静态属性就是直接在类中定义的变量
+            动态属性就是定义在类中的方法
+            其中类的静态属性是共享给所有对象的,而类的动态属性是绑定到所有对象的
+            创建一个对象/实例就会创建一个对象/实例的名称空间，存放对象/实例的名字，称为对象/实例的属性,
+            在obj.name会先从obj自己的名称空间里找name，找不到则去类中找，类也找不到就找父类...最后都找不到就抛出异常
     
-        面向对象：面向对象的程序设计语言必须有描述对象及其相互之间关系的语言成分。
-        这些程序设计语言可以归纳为以下几类：
-            系统中一切事物皆为对象；
-            对象是属性及其操作的封装体；
-            对象可按其性质划分为类，对象成为类的实例；
-            实例关系和继承关系是对象之间的静态关系；
-            消息传递是对象之间动态联系的唯一形式，也是计算的唯一形式；方法是消息的序列。
-        优点：解决了程序的扩展性。对某一个对象单独修改，会立刻反映到整个体系中，如对游戏中一个人物参数的特征和技能修改都很容易。
-        缺点：可控性差，无法向面向过程的程序设计流水线式的可以很精准的预测问题的处理流程与结果，面向对象的程序一旦开始就由对象之间的交互解决问题，无法预测最终结果。
-        类:
-        具有相同或相似性质的对象的抽象就是类。因此，对象的抽象是类，类的具体化就是对象，也可以说类的实例是对象。
-        类具有属性，它是对象的状态的抽象，用数据结构来描述类的属性。
-        类具有操作，它是对象的行为的抽象，用操作名和实现该操作的方法来描述。
-        实例化就是类到对象的过程.
-        一组数据结构和处理它们的方法组成对象（object），
-        把相同行为的对象归纳为类（class）,
-        通过类的封装（encapsulation）隐藏内部细节,
-        通过继承（inheritance）实现类的特化（specialization）／泛化（generalization），
-        通过多态polymorphism）实现基于对象类型的动态分派（dynamic dispatch）。
-        在python中，用变量表示属性，用函数表示功能，因而具有相同的属性和功能的，就是‘类’。
-        实例化：类名加括号就是实例化，会自动触发__init__函数的运行，可以用它来为每个实例定制自己的特征
+            特殊的类属性
+            类名.__name__     # 类的名字(字符串)
+            类名.__doc__      # 类的文档字符串
+            类名.__base__     # 类的第一个父类
+            类名.__bases__    # 类所有父类构成的元组
+            类名.__dict__     # 类的字典属性
+            类名.__module__   # 类定义所在的模块
+            类名.__class__    # 实例对应的类(仅新式类中)
+            '''
+
+        面向对象的组合用法 = '''
+            组合指的是，在一个类中以另外一个类的对象作为静态属性，称为类的组合
+            class C1:
+                def f1(self,args):
+                    print(args)
+                    args+=1
+                    return args
+                    
+            class C2:
+                def __init__(self):
+                    self.func=C1()
+                    
+            obj1=C2()
+            obj1.func.f1(1)
         '''
 
-    类与对象= '''
-        类的两种作用：属性引用和实例化
-        对象是关于类而实际存在的一个例子，即实例
-        对象/实例只有一种作用：属性引用 
-        
-        class person:
-            role='man'
-            def __init__(self,name,age):
-                self.name = name
-                self.age = age
-            def talk(self):
-                print('hehe')
-        person.role     # 查看类属性
-        person.talk     # 查看类方法,是内存地址
-        
-        obj=person('lisi',22)       # 实例化,等于在执行person.__init__()
-        obj.name                    # 查看属性
-        obj.talk()                  # 调用方法
-        
-        self：在实例化时自动将对象/实例本身传给__init__的第一个参数。
-        注意：def  __init__(self):   这句话可以写也可以不写，只要有参数参进来的时候就必须得写。
-　　     def  方法名（self）：这里的self必须得写。
+        类成员的修饰符 = '''
+            公有成员，在任何地方都能访问
+            私有成员，只有在类的内部才能方法
+            私有成员和公有成员的定义不同：私有成员命名时，前两个字符是下划线。（特殊成员除外，例如：__init__、__call__、__dict__等）
+            
+            class C:
+             
+                def __init__(self):
+                    self.name = '公有字段'
+                    self.__foo = "私有字段"
+            私有成员和公有成员的访问限制不同：
+            静态字段
+                公有静态字段：类可以访问；类内部可以访问；派生类中可以访问
+                私有静态字段：仅类内部可以访问；
+
+            class C:
+                name = "公有静态字段"
+                def func(self):
+                    print (C.name)
+            
+            class D(C):
+                def show(self):
+                    print (C.name)
+            
+            C.name         # 类访问
+            obj = C()
+            obj.func()     # 类内部可以访问
+            
+            obj_son = D()
+            obj_son.show() # 派生类中可以访问
+            
+            class C:
+                __name = "公有静态字段"
+                def func(self):
+                    print (C.__name)
+            
+            class D(C):
+                def show(self):
+                    print (C.__name)
+            
+            
+            C.__name       # 类访问            ==> 错误
+            obj = C()
+            obj.func()     # 类内部可以访问     ==> 正确
+            obj_son = D()
+            obj_son.show() # 派生类中可以访问   ==> 错误
+            
+            普通字段
+                公有普通字段：对象可以访问；类内部可以访问；派生类中可以访问
+                私有普通字段：仅类内部可以访问；
+                如果想要强制访问私有字段，可以通过 【对象._类名__私有字段明 】访问（如：obj._C__foo），不建议强制访问私有成员。
+            
+            公有字段
+            私有字段
+            方法、属性的访问于上述方式相似，即：私有成员只能在类内部使用
+            非要访问私有属性的话，可以通过 对象._类__属性名
+            '''
+
+    def 面向对象三大特性():
+        '''
+        面向对象的三大特性是指：封装、继承和多态。
+        Python 2.x中默认都是经典类，只有显式继承了object才是新式类.
+        Python 3.x中默认都是新式类，不必显式的继承object
+        新式类对象可以直接通过__class__属性获取自身类型
+        新式类增加了__slots__内置属性, 可以把实例属性的种类锁定到__slots__规定的范围之中
+        新式类增加了__getattribute__方法
         '''
 
-    类的属性 = '''
-        查看定义的类的属性
-        dir(类名)：返回的是一个名字列表
-        类名.__dict__:返回的是一个字典，key为属性名，value为属性值
-        类有两种属性：静态属性和动态属性
-        静态属性就是直接在类中定义的变量
-        动态属性就是定义在类中的方法
-        其中类的静态属性是共享给所有对象的,而类的动态属性是绑定到所有对象的
-        创建一个对象/实例就会创建一个对象/实例的名称空间，存放对象/实例的名字，称为对象/实例的属性,
-        在obj.name会先从obj自己的名称空间里找name，找不到则去类中找，类也找不到就找父类...最后都找不到就抛出异常
+        封装 = '''
+            封装，就是将内容封装到某个地方，以后再去调用被封装在某处的内容所以，在使用面向对象的封装特性时，需要：
+            将内容封装到某处
+            从某处调用被封装的内容
+            
+            class foo:
+                def __init__(self,name,age):
+                    self.name=name
+                    self.age=age
+            self 是一个形式参数，当执行 obj1 = Foo('lisi', 18 ) 时，self 等于 obj1,当执行 obj2 = Foo('nana', 78 ) 时，self 等于 obj2
+            所以，内容其实被封装到了对象 obj1 和 obj2 中，每个对象中都有 name 和 age 属性.
+            
+            从某处调用被封装的内容,调用被封装的内容时，有两种情况：
+            通过对象直接调用
+            通过self间接调用
+            通过对象直接调用被封装的内容
+            通过 对象.属性名 的方式直接调用，对象的属性和方法。
+            obj1 = Foo('lisi', 18 )
+            obj1.name -----> 'lisi'     # 直接调用obj1对象的name属性
+            obj1.age  -----> 18         # 直接调用obj1对象的age属性
 
-        特殊的类属性
-        类名.__name__     # 类的名字(字符串)
-        类名.__doc__      # 类的文档字符串
-        类名.__base__     # 类的第一个父类
-        类名.__bases__    # 类所有父类构成的元组
-        类名.__dict__     # 类的字典属性
-        类名.__module__   # 类定义所在的模块
-        类名.__class__    # 实例对应的类(仅新式类中)
+            class foo:
+                def __init__(self,name,age):
+                    self.name=name
+                    self.age=age
+                def echo(self):
+                    print(self.name)
+                    print(self.age)
+                    
+            obj2 = Foo('nana', 78 )
+            obj2.echo()     # Python默认会将obj2传给self参数，即：obj1.echo(obj2)，所以，此时方法内部的 self ＝ obj2，即：self.name 是 nana；self.age 是 78
+            面向对象的封装，其实就是使用构造方法将内容封装到 对象 中，然后通过对象直接或者self间接获取被封装的内容。
+                        
+            任何以但下划线_开头的方法名字只属于内部实现。
+            class A:
+                def _add(self):
+                    pass
+                    
+            python本身并不会阻止他人访问内部名称。
+            以双下划线开头的方法会导致实现名称重整。类的私有属性会被重命名为 _B__private 和 _B__method.意义在于属性不会因为继承而被覆盖。
+            封装类属性的私有属性（类属性前面加__）
+            class A:
+                __num=10
+                def __init__(self):
+                    self.__num+=1
+                    
+            a=A()
+            print(a.__dict__) -----> {'_A__num': 11}
+            a._A__num           # 通过 对象._类名__属性名调用
+            A._A__num           # 通过 类名._类名__属性名调用
+            
+            class B:
+                def __init__(self):
+                    self.__private=0
+                def __method(self):
+                    pass
+                def pub(self):
+                    self.__method(self)
+                    pass
+            
+            class C(B):
+                def __init__(self):
+                    super().__init__()
+                    self.__private=1
+                def __method(self):
+                    pass
+            d=C()
+            d._B__private -----> 0
+            d._C__private -----> 1
+            
+            非公有名称使用但下划线开头。隐藏属性以双像下划线开头。
+            
+            *** property的方法详见 类的特殊方法
+            '''
+
+        继承 = '''
+            1.继承是一种创建新类的方式
+            2.新建的类可以继承一个或多个父类，父类有称为基类或者超类
+            3.新建的类称为派生类或者子类
+            在python中类的继承分为：单继承或多继承
+            Python的类可以继承多个类
+            Python的类如果继承了多个类，那么其寻找方法的方式有两种，分别是：深度优先和广度优先
+            当类是经典类时，多继承情况下，会按照深度优先方式查找
+            当类是新式类时，多继承情况下，会按照广度优先方式查找
+            经典类和新式类，从写法上区分的话，如果 当前类或者父类继承了object类，那么该类便是新式类，否则便是经典类。
+            
+            class A:
+                def __init__(self):
+                    pass
+                def echo(self):
+                    print("This is from A")
+            
+            class B(A):
+                def __init__(self):
+                    pass
+                    
+            class C(A):
+                def __init__(self):
+                    pass
+                def echo(self):
+                    print("This is from C")
+                    
+            class D(B,C):
+                def __init__(self):
+                    pass
+            
+            obj=D()
+            obj.echo()
+            
+            如果在经典类中，obj.echo() 显示 This is from A. 深度优先，查找顺序是 D -> B -> A
+            如果在新式类中，obj.echo() 显示 This is from C. 广度优先，查找顺序是 D -> B -> C
+            在查找echo方法的过程中，一旦找到，则寻找过程立即中断，便不会再继续找.
+            
+            查看继承(还是上面的例子)
+            C.__bases__ -----> (__main__.A,)            # __bases__则是查看所有继承的父类,返回的是一个元组，即使只有一个父类。
+            D.__bases__ -----> (__main__.B, __main__.C)
+            D.__base__  -----> __main__.B               # __base__只查看从左到右继承的第一个子类,返回的是一个 类。
+            
+            如果没有指定基类，python的类会默认继承object类，object是所有python类的基类，它提供了一些常见方法（如__str__）的实现.
+            A.__bases__ -----> (object,)
+            
+            派生:
+        　　在父类的基础上产生子类，产生的子类就叫做派生类
+        　　在子类中含有的父类中没有的方法，这样的方法就叫做派生方法。
+        　　父类里有，子类也有的方法，就叫做方法的重写
+            
+            *** 关于super 子类可以使用父类的所有属性和方法,详见类的特殊方法。
+            '''
+
+        多态 = '''
+            pass
+            '''
+
+    def 类的特殊方法():
+
+        def super方法():
+
+            子类可以使用父类的所有属性和方法 = '''
+                子类可以使用父类的所有属性和方法
+                如果子类有自己的方法，就执行自己的；如果子类没有自己的方法，就会找父类的。
+                如果子类里面没有找到，父类里也没有找到，就会报错
+                如果子类中实现了调用父类的方法
+                在类内：super(子类，self).方法名（）  supper().__init__(参数)     # ??? super 里面的参数
+                在类外：super(子类名，对象名).方法名（）
+                实例:
+                class A:
+                    def __init__(self,name,age):
+                        self.name=name
+                        self.age=age
+                    def add(self):
+                        self.age+=1
+                    def clear(self):
+                        self.age=-1
+                        
+                class B(A):
+                    def __init__(self,name,age,money):
+                        super().__init__(name,age)      # 调用父类的构造方法
+                        self.money=money
+                    def sub(self):
+                        self.age-=1
+                    def clear(self):
+                        self.age=0
+                
+                b=B('lisi',22,100)
+                b.age   -----> 22       # 继承了父类的属性
+                b.add()                 # 使用父类的add方法
+                b.age   -----> 23       
+                b.sub()                 # 使用派生的sub方法
+                b.age   -----> 22
+                b.clear()               # 使用重写的clear方法
+                b.age   -----> 0
+                super(B,b).clear()      # 强至使用父类的clear方法
+                b.age   -----> -1
+                在继承中，如果子类有的方法就执行子类的,如果子类没有的方法就执行父类的.
+                '''
+            
+            在子类中调用父类的某个已经被覆盖的方法 = ''' 
+                class proxy:
+                    def __init__(self,obj):
+                        self._obj = obj
+                    def __getattr__(self,name):
+                        return getattr(self._obj,name)
+                    def __setattr__(self,name,value):
+                        if name.startswith('_'):
+                            super().__setattr__name(name,value)
+                        else:
+                            setattr(self._obj,name,value)
+                
+                在上面代码中，__setattr__() 的实现包含一个名字检查。
+                如果某个属性名以下划线(_)开头，就通过 super() 调用原始的 __setattr__() ，
+                否则的话就委派给内部的代理对象 self._obj 去处理。
+                python3中的类默认是新式类，隐式的继承了object,所以即使没有显示指名父类 super() 仍然可以使用。
+                
+                class Base:
+                    def __init__(self):
+                        print('Base.__init__')
+                
+                class A(Base):
+                    def __init__(self):
+                        super().__init__()    # ???这个地方有没有找到 __init__
+                        print('A.__init__')
+                
+                class B(Base):
+                    def __init__(self):
+                        super().__init__()
+                        print('B.__init__')
+                
+                class C(A,B):
+                    def __init__(self):
+                        super().__init__()  # Only one call to super() here
+                        print('C.__init__')
+                        
+                c = C() ----->  Base.__init__
+                                B.__init__   # ??? 这里为什么会有 B.__init__
+                                A.__init__
+                                C.__init__
+                
+                Python是如何实现继承的。每一个定义的类，Python会计算出一个方法解析顺序(MRO)列表。MRO列表就是一个简单的所有基类的线性顺序表。
+                例如：
+                C.__mro__ -----> (__main__.C, __main__.A, __main__.B, __main__.Base, object)   # 通过 __mro__ 获取 Mro 列表。
+                Python3只存在新式类，采用的MRO是C3算法。
+                为了实现继承，Python会在MRO列表上从左到右开始查找基类，直到找到第一个匹配这个属性的类为止。
+                MRO列表的构造是通过一个C3线性化算法来实现的。它实际上就是合并所有父类的MRO列表并遵循如下三条准则：
+                子类会先于父类被检查
+                多个父类会根据它们在列表中的顺序被检查
+                如果对下一个类存在两个合法的选择，选择第一个父类
+                类的继承是按照MRO列表中的类顺序来进行的。
+    
+                使用 super() 函数时，Python会在MRO列表上继续搜索下一个类。
+                只要每个重定义的方法使用 super() 调用其父类的该方法，python就会遍历整个MRO列表，每个方法也只会被调用一次。
+                这也是为什么不会调用两次 Base.__init__() 的原因。
+                理解Python中MRO算法 详见 http://python.jobbole.com/85685/
+                MRO列表               # ???
+                '''
+
+            调用没有直接父类的类的方法 = '''
+                super() 并不一定去查找某个类在MRO中下一个直接父类，即使没有直接父类的类也可以调用。
+                
+                class A:
+                    def spam(self):
+                        print('A.spam')
+                        super().spam()     # ???这个地方是直接找到B,还是没找到
+                        
+                class B:
+                    def spam(self):
+                        print('B.spam')
+                
+                class C(A,B):
+                    pass
+                    
+                c=C()
+                c.spam() -----> A.spam
+                                B.spam
+                                
+                C.__mro__ -----> (__main__.C, __main__.A, __main__.B, object)
+                类A中使用 super().spam() 实际上调用的是跟类A毫无关系的类B中的 spam() 方法。这个用类C的MRO列表就可以完全解释清楚了
+                
+                使用 super() 时，注意在继承体系中所有相同名字的方法要拥有可兼容的参数(比如相同的参数个数和参数名称)。这样可以确保 super() 调用一个非直接父类方法时不会出错。
+                最好确保最顶层的类提供了这个方法，在MRO上查找时，肯定可以找到你想要的方法。
+                '''
+
+        def property方法():
+            '''
+            属性的定义和调用：
+            定义时，在普通方法的基础上添加 @property 装饰器；
+            定义时，属性仅有一个self参数
+            调用时，无需括号
+            属性存在意义是：访问属性时可以制造出和访问字段完全相同的假象
+            属性由方法变种而来，如果Python中没有属性，方法完全可以代替其功能。
+
+            属性的定义有两种方式：分别是【装饰器】和【静态字段】
+            装饰器 即：在方法上应用装饰器
+            静态字段 即：在类中定义值为property对象的静态字段
+            装饰器方式，新式类中的属性有三种访问方式，并分别对应了三个被@property、@方法名.setter、@方法名.deleter修饰的方法,三个方法定义为对同一个属性：获取、修改、删除
+            静态字段方式，创建值为property对象的静态字段
+            first_name = property(get_first_name, set_first_name, del_first_name,'description')
+            属性名      = property(get方法,set方法,del方法,'描述')
+            '''
+
+            创建可管理的属性 = '''
+                创建可管理的属性
+                下述代码中有三个相关联的方法，这三个方法的名字都必须一样。
+                第一个方法是一个 getter 函数，它使得 first_name 成为一个属性。
+                其他两个方法给 first_name 属性添加了 setter 和 deleter 函数。
+                只有在 first_name 属性被创建后，后面的两个装饰器 @first_name.setter 和 @first_name.deleter 才能被定义。
+                property的一个关键特征是它看上去跟普通的attribute没有区别，但是访问它的时候会自动触发 getter 、setter 和 deleter 方法。
+                
+                class person:
+                    def __init__(self,first_name):
+                        self.first_name=first_name
+                    
+                    #getter function
+                    @property
+                    def first_name(self):
+                        return self._first_name
+                    
+                    #setter function
+                    @first_name.setter
+                    def first_name(self,value):
+                        if not isinstance(value,str):
+                            raise TypeError('Expected a string')
+                        self._first_name = value
+                        
+                    #deleter function
+                    @first_name.deleter
+                    def first_name(self):
+                        raise AttributeError("Can't delete attrbute")
+                        
+                在实现一个property的时候，底层数据需要存储在某个地方。
+                因此，在getter和setter方法中，对 _first_name 属性的操作，这是实际数据保存的地方。
+                为什么 __init__() 方法中设置了 self.first_name 而不是 self._first_name 。
+                我们创建一个property的目的就是在设置attribute的时候进行检查。
+                如果想在初始化的时候也进行这种类型检查。通过设置 self.first_name ，自动调用 setter 方法，这个方法里面会进行参数的检查。
+                当创建实例的时候调用类的构造方法，__init__().self.first_name=first_name 实际调用的是 first_name.setter方法，
+                构造方法 __init__(self,first_name) 括号中的first_name 就是 first_name.setter方法中 value的实参。
+                当使方式的使用调用的是 first_name.getter方法。返回self._first_name。
+                
+                a=person('lisi')        # 调用first_name.setter
+                a.first_name            # 调用first_name.getter
+                del a.first_name        # 调用first_name.deleter
+                '''
+
+            在已存在的get和set方法基础上定义property = '''
+                还能在已存在的get和set方法基础上定义property。
+                例如：
+                class person:
+                    def __init__(self,first_name):
+                        self.first_name=first_name
+                    
+                    #getter function
+                    def get_first_name(self):
+                        return self._first_name
+                    
+                    #setter function
+                    def set_first_name(self, value):
+                        if not isinstance(value, str):
+                            raise TypeError('Expected a string')
+                        self._first_name = value
+                    
+                    #deleter function
+                    def del_first_name(self):
+                        raise AttributeError("Can't delete attribute")
+                    
+                    #从现有的get / set方法中创建一个属性
+                    first_name = property(get_first_name,set_first_name,del_first_name)   # ??? 此参数是该属性的描述信息
+                
+                property属性其实就是一系列相关绑定方法的集合。
+                如果你去查看拥有property的类，就会发现property本身的fget、fset和fdel属性就是类里面的普通方法。
+                在使用frist_name = property(get_first_name,set_first_name,del_first_name) 创建property属性时。
+                括号里面的顺序不能变，分别对应的是 (fget,fset,fdel) 属性。通过指定property属性名字来调用。
+                比如：
+                person.first_name.fget -----> <function __main__.person.get_first_name>
+                person.first_name.fset -----> <function __main__.person.set_first_name>
+                person.first_name.fdel -----> <function __main__.person.del_first_name>
+                调用方法
+                a=person('lili')
+                a.first_name           -----> 'lili'    # 相当于执行 a.get_first_name 
+                a.first_name='nana'                     # 相当于执行 a.set_first_name('nana')
+                del a.first_name                        # 相当于执行 a.del_first_name
+                
+                property还是一种定义动态计算attribute的方法。这种类型的attributes并不会被实际的存储，而是在需要的时候计算出来。
+                比如：
+                import math
+                class Circle:
+                    def __init__(self, radius):
+                        self.radius = radius
+                
+                    @property
+                    def area(self):
+                        return math.pi * self.radius ** 2
+                
+                    @property
+                    def diameter(self):
+                        return self.radius ** 2
+                
+                    @property
+                    def perimeter(self):
+                        return 2 * math.pi * self.radius
+                
+                c = Circle(4.0)
+                c.radius        -----> 4.0
+                c.area          -----> 50.26548245743669
+                c.perimeter     -----> 25.132741228718345
+                通过使用property，将所有的访问接口形式统一起来，
+                对半径、直径、周长和面积的访问都是通过属性访问，就跟访问简单的attribute是一样的。
+                如果不这样做的话，那么就要在代码中混合使用简单属性访问和方法调用。
+                '''
+
+            在子类扩展父类property = '''
+                在子类中，扩展定义在父类中的property的功能。
+                class person:
+                    def __init__(self,name):
+                        self.name=name
+                    
+                    # getter function
+                    @property
+                    def name(self):
+                        return self._name
+                        
+                    # setter function
+                    @name.setter
+                    def name(self,value):
+                        if not isinstance(value,str):
+                            raise TypeError('Expected a string')
+                        self._name=value
+                        
+                    # deleter function
+                    @name.deleter
+                    def name(self):
+                        raise AttributeError("Can't delete attribute")
+                        
+                class subson(person):
+                    @property
+                    def name(self):
+                        print('getting name')
+                        return super().name
+                    
+                    @name.setter
+                    def name(self,value):
+                        print('setting name to',value)
+                        super(subson,subson).name.__set__(self,value)       # ??? 为什么要用 __set__
+                        
+                    @name.deleter
+                    def name(self):
+                        print('delete name')
+                        super(subson,subson).name.__delete__(self)
+                        
+                s=subson('lisi') -----> 打印 setting name to lisi
+                s.name           -----> 打印 getting name ,返回 lisi.
+                s.name='nana'    -----> 打印 setting name to nana
+                例子中，所有的property方法都被重新定义。在每一个方法中，使用了 super() 来调用父类的实现。
+                在 setter 函数中使用 super(subson, subson).name.__set__(self, value) 的语句是为了委托给之前定义的setter方法，需要将控制权传递给之前定义的name属性的 __set__() 方法。
+                获取这个方法的只能使用类变量而不是实例变量。这也是要使用 super(subson, subson) 的原因。
+                
+                只扩展property的一个方法。
+                class subson(person):
+                    @person.name.getter
+                    def name(self):
+                        print('getting name')
+                        return super().name
+                
+                class subson(person):
+                    @person.name.setter
+                    def name(self,value):
+                        print('setting name')
+                        super(SubPerson, SubPerson).name.__set__(self, value)
+                property其实是 getter、setter 和 deleter 方法的集合，而不是单个方法。扩展一个property时，先确定是否要重新定义所有的方法还是只修改其中某一个方法。
+                只重定义其中一个方法，如果只使用 @property 。比如，下面的代码就会出错：
+                class subson(person):
+                    @property
+                    def name(self):
+                        print('error')
+                        return super().name
+                如果不知道到底是哪个基类定义了property，那只能通过重新定义所有property并使用 super() 来将控制权传递给前面的实现。
+            '''
+
+            以描述器类的形式来定义的功能 = '''
+                创建一个新的拥有一些额外功能的实例属性类型，比如类型检查。
+                通过一个描述器类的形式来定义它的功能。下面是一个例子：
+                class integer:
+                    def __int__(self,name):
+                        self.name=name
+                    def __get__(self,instance,cls):
+                        if instance is none:
+                            return self
+                        else:
+                            return instance.__dict__[self.name]
+                    def __set__(self,instance,value):
+                        if not isinstance(value,int):
+                            raise TypeError('Expected an int')
+                        instance.__dict__[self.name] = value
+                    def __delete__(self,instance):
+                        del instance.__dict__[self.name]
+                
+                描述器就是一个实现了三个核心的属性访问操作(get, set, delete)的类，分别为 __get__() 、__set__() 和 __delete__() 这三个特殊的方法。
+                这些方法接受一个实例作为输入，之后相应的操作实例底层的字典。
+                使用一个描述器，需将这个描述器的实例作为类属性放到一个类的定义中。
+                
+                class Point:
+                    x = Integer('x')
+                    y = Integer('y')        # ??? 不懂原理
+                
+                    def __init__(self, x, y):
+                        self.x = x
+                        self.y = y
+                        
+                所有对描述器属性(比如x或y)的访问会被__get__() 、__set__() 和 __delete__() 方法捕获到。
+                p = Point(2, 3)
+                p.x -----> 2        # 调用 Point.x.__get__(p,Point)
+                p.y = 5             # 调用 Point.y.__set__(p, 5)
+                p.x = 2.3           # 调用 Point.x.__set__(p, 2.3)
+                作为输入，描述器的每一个方法会接受一个操作实例。
+                为了实现请求操作，会相应的操作实例底层的字典(__dict__属性)。描述器的 self.name 属性存储了在实例字典中被实际使用到的key。
+                
+                描述器可实现大部分Python类特性中的底层魔法，包括 @classmethod 、@staticmethod 、@property ，甚至是 __slots__ 特性。
+                通过定义一个描述器，可以在底层捕获核心的实例操作(get, set, delete)，并且自定义它们的行为。
+                可以实现很多高级功能，并且它也是很多高级库和框架中的重要工具之一。
+                描述器只能在类级别被定义，定义为类的属性，而不能为每个实例单独定义。
+    
+                # 错误示例
+                class Point:
+                    def __init__(self, x, y):
+                        self.x = Integer('x') # No! Must be a class variable
+                        self.y = Integer('y')
+                        self.x = x
+                        self.y = y
+    
+                __get__() 有点复杂的原因是实例变量和类变量的不同。如果一个描述器被当做一个类变量来访问，那么 instance 参数被设置成 None 。
+                这种情况下，标准做法就是简单的返回这个描述器本身即可(尽管你还可以添加其他的自定义操作)。例如：
+    
+                class Integer:
+                    def __get__(self, instance, cls):
+                        if instance is None:
+                            return self
+                        else:
+                            return instance.__dict__[self.name]
+    
+                p.x -----> 2        # 调用 Point.x.__get__(p,Point)
+                Point.x -----> <__main__.Integer object at 0x100671890>    # 调用 Point.x.__get__(None, Point)
+    
+                描述器通常是那些使用到装饰器或元类的大型框架中的一个组件。
+                同时它们的使用也被隐藏在后面。举个例子，下面是一些更高级的基于描述器的代码，并涉及到一个类装饰器：
+                
+                # Descriptor for a type-checked attribute
+                class Typed:
+                    def __init__(self, name, expected_type):
+                        self.name = name
+                        self.expected_type = expected_type
+                    def __get__(self, instance, cls):
+                        if instance is None:
+                            return self
+                        else:
+                            return instance.__dict__[self.name]
+                
+                    def __set__(self, instance, value):
+                        if not isinstance(value, self.expected_type):
+                            raise TypeError('Expected ' + str(self.expected_type))
+                        instance.__dict__[self.name] = value
+                    def __delete__(self, instance):
+                        del instance.__dict__[self.name]
+                
+                # Class decorator that applies it to selected attributes
+                def typeassert(**kwargs):
+                    def decorate(cls):
+                        for name, expected_type in kwargs.items():
+                            # Attach a Typed descriptor to the class
+                            setattr(cls, name, Typed(name, expected_type))
+                        return cls
+                    return decorate
+                
+                # Example use
+                @typeassert(name=str, shares=int, price=float)
+                class Stock:
+                    def __init__(self, name, shares, price):
+                        self.name = name
+                        self.shares = shares
+                        self.price = price
+                如果只是想简单的自定义某个类的单个属性访问的话就不用去写描述器了。这种情况下使用property会更加容易。
+                当程序中有很多重复代码的时候描述器就很有用了(比如你想在你代码的很多地方使用描述器提供的功能或者将它作为一个函数库特性)。
+                '''
+
+        __slots__ = '''
+            对于使用简单数据结构的类，通常在类的定义中增加__slots__属性，来大量减少内存的使用。
+            class Date:
+                __slots__ = ['year','month','day']
+                def __init__(self,year,month,day):
+                    self.year, self.month, self.day = year, month, day
+            当定义了__slots__属性时，python会针对实例采用更加紧凑的内部表示。不在让每个实例都创建一个__dict__字典。实例时使用类似于列表元组的数组来构建的。
+            缺点是，不能对实例添加任何新的属性。只允许使用__slots__中列出的属性名。python内很多部分基于传统的字典来实现。
+            定义了__slots__的属性的类不支持某些特定的功能，如多重继承。__slots__可以阻止用户为实例添加新的属性。但__slots__更适合优化程序。
+            '''
+
+        __str__ = '''
+            如果一个类中定义了__str__方法，那么在打印 对象 时，默认输出该方法的返回值。
+            对象 = 类名()
+            print(对象)   即调用该方法 
+            '''
+
+        __repr__ = '''
+        pass
         '''
 
-    面向对象的组合用法 = '''
-    组合指的是，在一个类中以另外一个类的对象作为静态属性，称为类的组合
-    
-    class 
-    
-    '''
+        __format__ = '''
+        pass'''
 
+        __del__ = '''
+            析构方法，当对象在内存中被释放时，自动触发执行。
+            '''
 
+        __delete__ = '''
+        pass'''
 
+        __set__ = '''
+        pass'''
 
-    pass
+        __getitem__ = '''
+            例:
+            class Foo():
+                def __getitem__(self,key):
+                    pass
+                def __setitem__(self,key,value):
+                    pass
+                def __delitem__(self,key):
+                    pass
+            用于索引操作，如字典。以上分别表示获取数据
+            obj=Foo()
+            obj['k']            # 自动触发执行 __getitem__
+            '''
+
+        __setitem__ = '''
+            用于索引操作，如字典。以上分别表示设置数据
+            obj['k'] = values   # 自动触发执行 __setitem__
+            '''
+
+        __delitem__ = '''
+            用于索引操作，如字典。以上分别表示获取删除数据
+            del obj['k']        # 自动触发执行 __delitem__
+            '''
+
+        __new__ = '''
+        pass'''
+
+        __call__ = '''
+            __call__ 方法的执行是由对象后加括号触发的执行.
+            对象 = 类名() 
+            对象() 或者 类()()
+            '''
+
+        __hash__ = '''
+        pass'''
+
+        __eq__ = '''
+        pass'''
+
+        __metaclass__ = '''
+        pass'''
+
+        __new__ = '''
+        pass'''
+
+        __iter__ = '''
+            用于迭代器
+            class Foo:
+                def __init__(self, sq):
+                    self.sq = sq
+            
+                def __iter__(self):
+                    return iter(self.sq)
+            obj = Foo([11,22,33,44])
+            for i in obj:
+                print i
+            '''
+
+        __getslice__ = '''
+            用于分片操作
+            例:
+            class Foo():
+                def __getslice__(self, i, j):
+                    pass
+                def __setslice__(self, i, j, sequence):
+                    pass
+                def __delslice__(self, i, j):
+                    pass
+            obj = Foo()
+            obj[-1:1]                   # 自动触发执行 __getslice__
+            '''
+
+        __setslice__ = '''
+            用于分片操作
+            obj[0:1] = [11,22,33,44]    # 自动触发执行 __setslice__
+            '''
+
+        __delslice__ = '''
+            用于分片操作
+            del obj[0:2]                # 自动触发执行 __delslice__
+            '''
+
+        __dict__ = '''
+            类或对象中的所有成员
+            类的普通字段属于对象,类中的静态字段和方法等属于lei.
+            '''
+
+        __init__ = '''
+            构造方法，通过类创建对象时，自动触发执行。
+            '''
+
+        __module__ = '''
+            表示当前操作的对象在那个模块
+            '''
+
+        __class__ = '''
+            表示当前操作的对象的类是什么
+            '''
+
+        __doc__ = '''
+            表示类的描述信息
+            '''
+
+        staticmethod语法糖 = '''
+            pass
+        '''
+
+        classmethod语法糖 = '''
+            pass
+        '''
 
 def 常用模块():
 
