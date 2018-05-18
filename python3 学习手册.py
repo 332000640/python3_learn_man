@@ -2336,8 +2336,20 @@ def 类与对象():
         __str__ = '''
             如果要把一个类的实例变成 str，就需要实现特殊方法__str__()
             如果一个类中定义了__str__方法，那么在打印 对象 时，或者 str(该对象)时，默认输出该方法的返回值。
+            __str__方法必须有返回值。且返回的必须是一个字符串类型的数据。
             对象 = 类名()
             print(对象)   即调用该方法 
+            例:
+            class Person:
+                def __init__(self,name,age):
+                    self.name,self.age = name,age
+                def __str__(self):
+                    return 'this is person'
+            p=Person('lisi',22)
+            str(p) -----> 'this is person'
+            print(p) -----> 'this is person'
+            p -----> <__main__.Person at 0x25eb6584b38>
+            直接 输入对象是不能调用 __str__ 方法的。
             '''
 
         __repr__ = '''
