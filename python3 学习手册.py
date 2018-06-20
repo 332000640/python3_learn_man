@@ -7,8 +7,15 @@
 # Version : 1
 
 def 更新日志():
-    log_2018_05_22 = '''
-        补充了字典的一点内容，补充了类的应用笔记。开始socket编程。'''
+    log_2018_06_14 = '''
+        补充并发编程。
+        '''
+    log_2018_05_27 = '''
+        补充异常处理，补充模块与包，开始socket编程。
+        '''
+    log_2018_05_26 = '''
+        补充了字典的一点内容，补充了类的应用笔记。开始socket编程。
+        '''
     log_2018_05_22 = '''
         基本完成面向对象，补充hashlib,序列化模块。
         '''
@@ -66,7 +73,6 @@ def 更新日志():
 
 def 更新备忘录():
     '''
-    常用模块二，hashlib
     补充类的描述符，类的特殊成员。类的题目
     python书籍补充.
     python2实例手册补充.
@@ -596,6 +602,82 @@ def 基础():
             f.name            # 文件名
             fe.newlines       # 读取行分隔符,未读取到行分隔符时为None,只有一种行分隔符时为一个字符串,当文件有多种类型的行结束符时,则为一个包含所有当前所遇到的行结束符的列表
             f.softspace       # 为0表示在输出一数据后,要加上一个空格符,1表示不加
+            '''
+
+    def 异常处理():
+        '''异常是由程序的错误引起的，语法上的错误跟异常处理无关，必须在程序运行前就修正'''
+
+        常见异常 = '''
+            AttributeError 试图访问一个对象没有的树形，比如foo.x，但是foo没有属性x
+            IOError 输入/输出异常；基本上是无法打开文件
+            ImportError 无法引入模块或包；基本上是路径问题或名称错误
+            IndentationError 语法错误（的子类） ；代码没有正确对齐
+            IndexError 下标索引超出序列边界，比如当x只有三个元素，却试图访问x[5]
+            KeyError 试图访问字典里不存在的键
+            KeyboardInterrupt Ctrl+C被按下
+            NameError 使用一个还未被赋予对象的变量
+            SyntaxError Python代码非法，代码不能编译(个人认为这是语法错误，写错了）
+            TypeError 传入对象类型与要求的不符合
+            UnboundLocalError 试图访问一个还未被设置的局部变量，基本上是由于另有一个同名的全局变量，
+            导致你以为正在访问它
+            ValueError 传入一个调用者不期望的值，即使值的类型是正确的
+            '''
+
+        语法 = '''
+            s1= 'lisi'
+            try:
+                int(s1)
+            except IndexError as e:
+                print(e)
+            except KeyError as e:
+                print(e)
+            except ValueError as e:
+                print(e)
+            except Exception as e:      #其他错误异常。
+                print(e)
+            else:
+                print('try内代码块没有异常则执行')
+            finally:
+                print('无论异常与否,都会执行该模块,通常是进行清理工作')
+
+            在一个函数中 finally 的优先级要比 return的高。finally会在return前执行。
+            def func():
+                try:
+                    f = open('aaa','w')
+                    ret = f.read()
+                    return ret
+                except:
+                    print('error')
+                finally:
+                    f.close()
+
+            这个例子会在 return 之前去关闭 文件。
+            '''
+
+        主动触发异常 = '''
+            try:
+                raise TypeError('类型错误')
+            except Exception as e:
+                print(e) 
+            '''
+
+        自定义异常 = '''
+            class MyException(BaseException):       # 自定义一个类继承BaseException
+                def __init__(self,msg):
+                    self.msg=msg
+                def __str__(self):
+                    return self.msg
+
+            try:
+                raise MyaException('类型错误')
+            except MyaException as e:
+                print(e)
+            '''
+
+        断言 = '''
+            asscrt 条件       # 如果条件为真就接着执行下面的代码，如果条件不为真就触发 AssertionError  断言错误
+            assert 1 == 1
+            assert 1 == 2
             '''
 
 def 函数():
@@ -1955,6 +2037,7 @@ def 类与对象():
             返回对象是否具有给定名称的属性.
             hasattr(obj,属性名)
             '''
+
             例 = '''
                 class A:
                     __a='b'
@@ -2132,7 +2215,7 @@ def 类与对象():
                 如果不这样做的话,那么就要在代码中混合使用简单属性访问和方法调用.
                 '''
 
-            在子类扩展父类property = '''
+            在子类扩展重定义父类property = '''
                 在子类中,扩展定义在父类中的property的功能.
                 class person:
                     def __init__(self,name):
@@ -2184,20 +2267,24 @@ def 类与对象():
                     def name(self):
                         print('getting name')
                         return super().name
-
+                或
                 class subson(person):
                     @person.name.setter
                     def name(self,value):
                         print('setting name')
-                        super(SubPerson, SubPerson).name.__set__(self, value)
+                        super(subson, subson).name.__set__(self, value)
+                使用super(subson,subson).name.__set__(self,value)的原因是只能使用__set__取设置该属性，但__set__ 可以理解为一个私有的方法。
+                实例对象是无法调用的，只能通过类去调用。那super(subson,subson) 获得的就是 一个 unbound 的类.
                 property其实是 getter、setter 和 deleter 方法的集合,而不是单个方法.扩展一个property时,先确定是否要重新定义所有的方法还是只修改其中某一个方法.
-                只重定义其中一个方法,如果只使用 @property .比如,下面的代码就会出错:
+                
+                只重定义其中一个方法,如果只使用 @property 应该这么写:
                 class subson(person):
-                    @property
+                    # @property 只有 property会报错
+                    @person.getattr
                     def name(self):
                         print('error')
                         return super().name
-                如果不知道到底是哪个基类定义了property,那只能通过重新定义所有property并使用 super() 来将控制权传递给前面的实现.
+                如果不知道到底是哪个基类定义了property,那只能通过重新定义所有property并使用 super() 来调用之前的实现.
             '''
 
             以描述器类的形式来定义的功能 = '''
@@ -2263,46 +2350,10 @@ def 类与对象():
 
                 p.x -----> 2        # 调用 Point.x.__get__(p,Point)
                 Point.x -----> <__main__.Integer object at 0x100671890>    # 调用 Point.x.__get__(None, Point)
+                '''
 
-                描述器通常是那些使用到装饰器或元类的大型框架中的一个组件.
-                同时它们的使用也被隐藏在后面.举个例子,下面是一些更高级的基于描述器的代码,并涉及到一个类装饰器:
-
-                # Descriptor for a type-checked attribute
-                class Typed:
-                    def __init__(self, name, expected_type):
-                        self.name = name
-                        self.expected_type = expected_type
-                    def __get__(self, instance, cls):
-                        if instance is None:
-                            return self
-                        else:
-                            return instance.__dict__[self.name]
-
-                    def __set__(self, instance, value):
-                        if not isinstance(value, self.expected_type):
-                            raise TypeError('Expected ' + str(self.expected_type))
-                        instance.__dict__[self.name] = value
-                    def __delete__(self, instance):
-                        del instance.__dict__[self.name]
-
-                # Class decorator that applies it to selected attributes
-                def typeassert(**kwargs):
-                    def decorate(cls):
-                        for name, expected_type in kwargs.items():
-                            # Attach a Typed descriptor to the class
-                            setattr(cls, name, Typed(name, expected_type))
-                        return cls
-                    return decorate
-
-                # Example use
-                @typeassert(name=str, shares=int, price=float)
-                class Stock:
-                    def __init__(self, name, shares, price):
-                        self.name = name
-                        self.shares = shares
-                        self.price = price
-                如果只是想简单的自定义某个类的单个属性访问的话就不用去写描述器了.这种情况下使用property会更加容易.
-                当程序中有很多重复代码的时候描述器就很有用了(比如你想在你代码的很多地方使用描述器提供的功能或者将它作为一个函数库特性).
+            类的装饰器与描述器 = '''
+                详见 类的使用
                 '''
 
         def classmethod方法():
@@ -2729,7 +2780,17 @@ def 类与对象():
 
         __setattr__ = '''
             在进行属性设置时调用。name是属性名称，value是要分配给它的值。
+            setattr(obj,name,value)相当于 obj.name=value 
+            而作为函数可以更方便调用，通常用于 name 为变动值时。 
+            __setattr__(self,name,value)是自定义对象方法， 
+            用来重新定义对像的 obj.name=value 时操作 
+            默认行为为 self.__dict__[name]=value, 
+            通常用于设置检查 value 是否合法的情况。
             如果__setattr__()想给实例设置属性，它应该调用具有相同名称的基类方法，例如 object.__setattr__(self, name, value)
+            
+            __setattr__ 与 __set__ 的区别在于:
+            __setattr__(self,name,value)是自定义对象方法，可以无中生有，自定义属性。
+            __set__ 作为数据描述器必须绑定到类的属性才能修改。关键是描述器。
             '''
 
         __delattr__ = '''
@@ -2737,7 +2798,7 @@ def 类与对象():
             '''
 
         __get__ = '''
-            将对象作为数据描述符,这就是 __get__ 的作用，将整个对象都作为数据描述符.
+            将对象作为数据描述器,这就是 __get__ 的作用，将整个对象都作为数据描述符.
             __get__ 作为数据描述符，那么此对象只能作为类属性，作为实例属性则无效.
             例:
             class Dept(object):
@@ -2756,6 +2817,14 @@ def 类与对象():
             x = Company()
             x.dept -----> 'Dept'
             '''
+
+        __set__ = '''
+            详见 类的描述器
+            '''
+
+        __delete__ = '''
+                    详见 类的描述器
+                    '''
 
         __dir____= '''
             dir()在对象上调用时调用。必须返回一个序列。dir()将返回的序列转换为列表并对其进行排序。
@@ -2938,50 +3007,57 @@ def 类与对象():
             print(len(a))
             '''
 
-        __delete__ = '''
-            详见 类的描述符
+        __missing__ = '''
+            详见 https://www.kancloud.cn/kancloud/python3-cookbook/47170
+            用于格式化字符串中处理丢失的值。
+            class safesub(dict):
+                """防止key找不到"""
+                def __missing__(self, key):
+                    return '{' + key + '}'
             '''
 
-        __set__ = '''
-            详见 类的描述符
-            '''
-
-        __get__ = '''
-            详见 类的描述符
-            '''
-
-    def 类的描述符():
+    def 类的描述器():
         '''
         详见 https://blog.csdn.net/leafage_m/article/details/54960432
-        描述符是具有 绑定行为 的对象属性,其属性访问被描述符协议中的方法重写.
-        这些方法是__get__(),__set__()和__delete__().如果对象中定义了这些方法中的任何一种,则称它为描述符.
+        https://www.kancloud.cn/kancloud/python3-cookbook/47262
+        描述器是具有 绑定行为 的对象属性,其属性访问被描述器协议中的方法重写.
+        必须绑定到另一个类的属性上。才能使用
+        这些方法是__get__(),__set__()和__delete__().如果对象中定义了这些方法中的任何一种,则称它为描述器.
+        并且只能用 __特殊方法__ 不能有普通方法。
         属性访问的默认是从对象的字典中获取,设置或删除属性.
         例如,a.x有一个以a.__dict__['x']开始的查找链,接着是type(a).__dict__['x'],然后是除了元类之外的type(a)的基类.
-        如果对象定义其中一个描述符方法,则Python可以调用描述符方法重写默认行为.
-        描述符是一个强大的通用协议.它们是属性,方法,静态方法,类方法和super()的工作机制.
+        如果对象定义其中一个描述器方法,则Python可以调用描述器方法重写默认行为.
+        描述器是一个强大的通用协议.它们是属性,方法,静态方法,类方法和super()的工作机制.
+        直接用类访问 描述器 描述器是个属性，直接用类访问 描述器就是直接用类访问类的属性，obj的值是None。
+        type是obj的类型，，如果直接通过类访问描述器，obj是None，此时type就是类本身。
 
         descr.__get__(self, obj, type=None) --> value
         descr.__set__(self, obj, value) --> None
         descr.__delete__(self, obj) --> None
-        这就是所有的描述符方法.定义这些方法中的任何一个,就将对象视为描述符,并且可以在查找属性时重写默认行为.
-        如果一个对象同时定义了__get__()和__set__(),它就是一个数据描述符.
-        只定义__get__()的描述符被称为非数据描述符.
+        这就是所有的描述器方法.定义这些方法中的任何一个,就将对象视为描述器,并且可以在查找属性时重写默认行为.
+        如果一个对象同时定义了__get__()和__set__(),它就是一个数据描述器.
+        只定义__get__()的描述器被称为非数据描述器.
 
-        数据和非数据描述符不同在于它们在对象字典中的优先级.
-        如果对象的字典中有一个与数据描述符同名的条目,则数据描述符优先.
-        如果对象的字典中有一个与非数据描述符名称相同的条目,则字典条目优先.
-        要创建一个只读数据描述符,同时定义__get __和__set__,并且定义__set__时引发AttributeError异常.
+        数据和非数据描述器不同在于它们在对象字典中的优先级.
+        如果对象的字典中有一个与数据描述器同名的条目,则数据描述器优先.
+        如果对象的字典中有一个与非数据描述器名称相同的条目,则字典条目优先.
+        要创建一个只读数据描述器,同时定义__get __和__set__,并且定义__set__时引发AttributeError异常.
 
-        调用描述符
-        描述符可以通过其方法名直接调用.例如,d.__get__(obj).
-        另外,更为常见的是描述符在属性访问时被自动调用.
+        调用描述器
+        描述器可以通过其方法名直接调用.例如,d.__get__(obj).
+        另外,更为常见的是描述器在属性访问时被自动调用.
         例如,obj.d在obj的字典中查找d.如果d定义了方法__get__(),则根据下面列出的优先规则d.__get__(obj)被调用.
         '''
+
+        例子 = '''
+            property方法 中的 以描述器类的形式来定义的功能
+            类的使用 中的 部分例子
+            '''
 
     def type和object的关系():
         '''pass'''
 
-    def 类的使用技巧():
+    def 类的使用():
 
         基类的公用__init__方法 = '''
         详见 https://www.kancloud.cn/kancloud/python3-cookbook/47264
@@ -3070,7 +3146,7 @@ def 类与对象():
                         return self
                     else:
                         value = self.func(instance)     #这里的 instance 就是Circle的实例对象中的self,返回值就是该方法的计算结果
-                        setattr(instance, self.func.__name__, value)    # 为 Circle的实例对象 设置一个与self.func方法同名的静态属性。
+                        setattr(instance, self.func.__name__, value)    # 为 Circle的实例对象 设置一个与self.func方法同名的静态属性。  
                         return value        # 返回就算结果
             
             import math
@@ -3084,7 +3160,8 @@ def 类与对象():
                 @myproperty
                 def area(self):
                     return math.pi * self.r ** 2
-            
+                # 描述器只能是在类中定义 装饰与普通的装饰器一样  peri=myporperty(Circle.peri)
+                # 即是一个装饰器又是一个 实例对象。
                 @myproperty
                 def peri(self):
                     return 2 * math.pi * self.r
@@ -3092,81 +3169,1016 @@ def 类与对象():
             c=Circle(3)
             print(c.area)  # 这里就相当于取 c的静态属性area
             print(c.peri)
+            描述器只能在类级别被定义
+            __get__() 看上去有点复杂的原因归结于实例变量和类变量的不同。
+            如果一个描述器被当做一个类变量来访问，那么 instance 参数被设置成 None 。
+            这种情况下，标准做法就是简单的返回这个描述器本身即可(尽管你还可以添加其他的自定义操作)。
+            '''
+
+        类的装饰器与描述器 = '''
+            class Typed:
+                def __init__(self, name, expected_type):
+                    self.name = name
+                    self.expected_type = expected_type
+                def __get__(self, instance, cls):
+                    if instance is None:
+                        return self
+                    else:
+                        print(instance)
+                        return instance.__dict__[self.name]
+            
+                def __set__(self, instance, value):
+                    print('s')
+                    if not isinstance(value, self.expected_type):
+                        raise TypeError('Expected ' + str(self.expected_type))
+                    instance.__dict__[self.name] = value
+            
+                def __delete__(self, instance):
+                    del instance.__dict__[self.name]
+            
+            # 类装饰器，将其应用于选定的属性
+            def typeassert(**kwargs):
+                def decorate(cls):
+                    for name, expected_type in kwargs.items():
+                        # 将类型描述器附加到类中
+                        # 将 cls 的name 属性设置为 Typed的一个实例对象。是一个描述器对象。
+                        setattr(cls, name, Typed(name, expected_type))
+                        # 如果你想打印 cls的属性。这里不能print(cls.name)
+                        # cls.name 这样只会调用类的name 属性。这里的name与for循环的name不是一个。
+                        # 应该是使用 print(getattr(cls,name))  #这里的name才是 for循环的name。 
+                    print(cls.__dict__)
+                    return cls
+                return decorate
+            
+            # 这里的装饰过程是 Stock=typeaccert(STOCK)(name=str, shares=int, price=float)
+            # typeaccert(STOCK) 返回的 decorate
+            # 在执行decorate(name=str, shares=int, price=float),所有这里的 装饰是执行了器里面的for 循环代码的。
+            @typeassert(name=str, shares=int, price=float)
+            class Stock:
+                def __init__(self, name, shares, price):
+                    #print(self.name,self.shares,self.price)        # ??? 如果这装饰器里为 类设置了三个属性name的化这里为啥打印不出来。
+                    self.name = name
+                    self.shares = shares
+                    self.price = price
+            print(Stock.__dict__)
+            
+            s=Stock('A',1,3.4)
+            如果只是想简单的自定义某个类的单个属性访问的话就不用去写描述器了.这种情况下使用property会更加容易.
+            当程序中有很多重复代码的时候描述器就很有用了(比如你想在你代码的很多地方使用描述器提供的功能或者将它作为一个函数库特性).
             '''
 
 def socket网络编程():
+    '''Socket是 应用层与TCP/IP协议族 中间 用于通信的抽象层，它是一组接口。'''
 
-    方法 = '''相关方法及参数介绍
-sk.bind(address)
+    套接字 = '''
+        基于文件类型的套接字家族
+            套接字家族的名字：AF_UNIX
+            unix一切皆文件，基于文件的套接字调用的就是底层的文件系统来取数据，两个套接字进程运行在同一机器，可以通过访问同一个文件系统间接完成通信
+        基于网络类型的套接字家族
+            套接字家族的名字：AF_INET
+        '''
 
-　　#s.bind(address) 将套接字绑定到地址。address地址的格式取决于地址族。在AF_INET下，以元组（host,port）的形式表示地址。
+    相关方法 = '''
+        服务端套接字函数:
+            sk.bind(address)
+            s.bind(address) 将套接字绑定到地址。address地址的格式取决于地址族。在AF_INET下，以元组（host,port）的形式表示地址。address=('127.0.0.1',9999)
+            
+            sk.listen(backlog)
+            开始监听传入连接。backlog指定在拒绝连接之前，可以挂起的最大连接数量。
+            backlog等于5，表示内核已经接到了连接请求，但服务器还没有调用accept进行处理的连接个数最大为5
+            这个值不能无限大，因为要在内核中维护连接队列
+            
+            sk.setblocking(bool)
+            是否阻塞（默认True），如果设置False，那么accept和recv时一旦无数据，则报错。
+            
+            sk.accept()
+            接受连接并返回（conn,address）,其中conn是新的套接字对象，可以用来接收和发送数据。address是连接客户端的地址。
+            接收TCP 客户的连接（阻塞式）等待连接的到来
+        
+        客户端套接字函数:   
+            sk.connect(address)
+            连接到address处的套接字。一般，address的格式为元组（hostname,port）,如果连接出错，返回socket.error错误。
+            
+            sk.connect_ex(address)
+            只不过会有返回值，连接成功时返回 0 ，连接失败时候返回编码，例如：10061
+        
+        公共的套接字函数:
+        
+            sk.close()
+            关闭套接字
+            
+            sk.recv(bufsize[,flag])
+            接受套接字的数据。数据以字符串形式返回，bufsize指定最多可以接收的数量。flag提供有关消息的其他信息，通常可以忽略。
+            
+            sk.recvfrom(bufsize[.flag])
+            与recv()类似，但返回值是（data,address）。其中data是包含接收数据的字符串，address是发送数据的套接字地址。
+            
+            sk.send(string[,flag])
+            将string中的数据发送到连接的套接字。返回值是要发送的字节数量，该数量可能小于string的字节大小。即：可能未将指定内容全部发送。
+            
+            sk.sendall(string[,flag])
+            将string中的数据发送到连接的套接字，但在返回之前会尝试发送所有数据。成功返回None，失败则抛出异常。
+            内部通过递归调用send，将所有内容发送出去。
+            
+            sk.sendto(string[,flag],address)
+            将数据发送到套接字，address是形式为（ipaddr，port）的元组，指定远程地址。返回值是发送的字节数。该函数主要用于UDP协议。
+        
+            s.getpeername()
+            连接到当前套接字的远端的地址
+            
+            s.getsockname()
+            当前套接字的地址
+                            
+            sk.getpeername()
+            返回连接套接字的远程地址。返回值通常是元组（ipaddr,port）。
+            
+            sk.getsockname()
+            返回套接字自己的地址。通常是一个元组(ipaddr,port)
+        
+        面向锁的套接字方法:
+            s.setblocking()
+            设置套接字的阻塞与非阻塞模式 
+            
+            s.settimeout(timeout)
+            设置套接字操作的超时期，timeout是一个浮点数，单位是秒。值为None表示没有超时期。一般，超时期应该在刚创建套接字时设置，因为它们可能用于连接的操作（如 client 连接最多等待5s ）
+            
+            s.gettimeout()
+            得到阻塞套接字操作的超时时间
 
-sk.listen(backlog)
+        
+        面向文件的套接字的函数:
+            s.fileno()
+            套接字的文件描述符
+            
+            s.makefile()
+            创建一个与该套接字相关的文件
+        '''
 
-　　#开始监听传入连接。backlog指定在拒绝连接之前，可以挂起的最大连接数量。
+    socket对象的参数 = '''
+        socket.socket(family=AF_INET,type=SOCK_STREAM,proto=0,fileno=None)
+        创建socket对象的参数说明：
+        family
+            地址系列应为AF_INET(默认值),AF_INET6,AF_UNIX,AF_CAN或AF_RDS。
+            （AF_UNIX 域实际上是使用本地 socket 文件来通信）
+        type
+            套接字类型应为SOCK_STREAM(默认值),SOCK_DGRAM,SOCK_RAW或其他SOCK_常量之一。
+            SOCK_STREAM 是基于TCP的，有保障的（即能保证数据正确传送到对方）面向连接的SOCKET，多用于资料传送。 
+            SOCK_DGRAM 是基于UDP的，无保障的面向消息的socket，多用于在网络上发广播信息。
+        proto
+            协议号通常为零,可以省略,或者在地址族为AF_CAN的情况下,协议应为CAN_RAW或CAN_BCM之一。
+        fileno
+            如果指定了fileno,则其他参数将被忽略,导致带有指定文件描述符的套接字返回。
+            与socket.fromfd()不同,fileno将返回相同的套接字,而不是重复的。
+            这可能有助于使用socket.close()关闭一个独立的套接字。
+        '''
 
-      #backlog等于5，表示内核已经接到了连接请求，但服务器还没有调用accept进行处理的连接个数最大为5
-      #这个值不能无限大，因为要在内核中维护连接队列
+    基于TCP的socket = '''
+        tcp是基于链接的，必须先启动服务端，然后再启动客户端去链接服务端
+        
+        server端:
+        import socket
+        from socket import SOL_SOCKET,SO_REUSEADDR
+        
+        sk = socket.socket()
+        
+        # 在bind前,setsockopt(level,optname,value)
+        # level通常情况下是SOL_SOCKET，意思是正在使用的socket选项。
+        # optname参数提供使用的特殊选项。
+        # value设置为1，表示将SO_REUSEADDR标记为TRUE，
+        # 表示操作系统会在服务器socket被关闭或服务器进程终止后马上释放该服务器的端口，否则操作系统会保留几分钟该端口。
+        sk.setsockopt(SOL_SOCKET,SO_REUSEADDR,1)
+        
+        sk.bind(('127.0.0.1',8898))     #把地址绑定到套接字
+        sk.listen()                     #监听链接
+        conn,addr = sk.accept()         #接受客户端链接
+        ret = conn.recv(1024)           #接收客户端发送来的信息
+        print(ret)                      #打印客户端信息
+        conn.send(b'hi')                #向客户端发送信息
+        conn.close()                    #关闭客户端套接字
+        sk.close()                      #关闭服务器套接字(可选)
+        
+        
+        client端:
+        import socket
+        sk = socket.socket()                # 创建客户套接字
+        sk.connect(('127.0.0.1',8898))      # 尝试连接服务器
+        sk.send(b'hello!')
+        ret = sk.recv(1024)                 # 对话(发送/接收)
+        print(ret)
+        sk.close()                          # 关闭客户套接字
+    '''
 
-sk.setblocking(bool)
+    基于UDP的socket = '''
+        server端:
+        import socket
+        udp_sk = socket.socket(type=socket.SOCK_DGRAM)   #创建一个服务器的套接字
+        udp_sk.bind(('127.0.0.1',9000))        #绑定服务器套接字
+        msg,addr = udp_sk.recvfrom(1024)
+        print(msg)
+        udp_sk.sendto(b'hi',addr)                 # 对话(接收与发送)
+        udp_sk.close()  
+        
+        client端:
+        import socket
+        ip_port=('127.0.0.1',9000)
+        udp_sk=socket.socket(type=socket.SOCK_DGRAM)
+        udp_sk.sendto(b'hello',ip_port)
+        back_msg,addr=udp_sk.recvfrom(1024)
+        print(back_msg.decode('utf-8'),addr)
+        '''
 
-　　#是否阻塞（默认True），如果设置False，那么accept和recv时一旦无数据，则报错。
+    黏包 = '''
+        黏包现象只发生在tcp协议中：
+        1.表面上，黏包问题主要是因为发送方和接收方的缓存机制、tcp协议面向流通信的特点。
+        2.实际上，主要还是因为接收方不知道消息之间的界限，不知道一次性提取多少字节的数据所造成的
+        
+        黏包的解决方法
+        import json,struct
+        #假设通过客户端上传1T:1073741824000的文件a.txt
+        
+        #为避免粘包,必须自定制报头
+        header={'file_size':1073741824000,'file_name':'/a/b/c/d/e/a.txt','md5':'8f6fbf8347faa4924a76856701edb0f3'} #1T数据,文件路径和md5值
+        
+        #为了该报头能传送,需要序列化并且转为bytes
+        head_bytes=bytes(json.dumps(header),encoding='utf-8') #序列化并转成bytes,用于传输
+        
+        #为了让客户端知道报头的长度,用struck将报头长度这个数字转成固定长度:4个字节
+        head_len_bytes=struct.pack('i',len(head_bytes)) #这4个字节里只包含了一个数字,该数字是报头的长度
+        
+        #客户端开始发送
+        conn.send(head_len_bytes) #先发报头的长度,4个bytes
+        conn.send(head_bytes) #再发报头的字节格式
+        conn.sendall(文件内容) #然后发真实内容的字节格式
+        
+        #服务端开始接收
+        head_len_bytes=s.recv(4) #先收报头4个bytes,得到报头长度的字节格式
+        x=struct.unpack('i',head_len_bytes)[0] #提取报头的长度
+        
+        head_bytes=s.recv(x) #按照报头长度x,收取报头的bytes格式
+        header=json.loads(json.dumps(header)) #提取报头
+        
+        #最后根据报头的内容提取真实的数据,比如
+        real_data_len=s.recv(header['file_size'])
+        s.recv(real_data_len)
+        '''
 
-sk.accept()
+def 并发():
 
-　　#接受连接并返回（conn,address）,其中conn是新的套接字对象，可以用来接收和发送数据。address是连接客户端的地址。
+    def 进程():
+        '''
+        操作系统 只负责管理调度进程
+        进程是运行中的程序，计算机中最小的资源分配单位
+        程序开始执行就会产生一个主进程
+        python中可以主进程中用代码启动一个进程 —— 子进程
+        同时主进程也被称为父进程
+        父子进程之间的代码执行是异步的，各自执行自己的
+        父子进程之间的数据不可以共享
+        主进程会等待子进程结束之后再结束
+        每一个运行中的程序都需要有自己的内存、资源
+        '''
 
-　　#接收TCP 客户的连接（阻塞式）等待连接的到来
+        def multiprocessing包():
+            from multiprocessing import Process
 
-sk.connect(address)
+            def Process模块():
+                '''
+                详见： http://www.cnblogs.com/Eva-J/articles/8253549.html
+                Process(target,name,args,kwargs,)
+                需要使用关键字的方式来指定参数
+                args指定的为传给target函数的位置参数，是一个元组形式，必须有逗号
 
-　　#连接到address处的套接字。一般，address的格式为元组（hostname,port）,如果连接出错，返回socket.error错误。
+                参数介绍：
+                target表示调用对象，即子进程要执行的任务
+                args表示调用对象的位置参数元组，args=(1,)
+                kwargs表示调用对象的字典,kwargs={'name':'egon','age':18}
+                name为子进程的名称，字符串类型
+                '''
 
-sk.connect_ex(address)
+                方法 = '''
+                    p.start()：启动进程，并调用该子进程中的p.run() 
+                    p.run():进程启动时运行的方法，正是它去调用target指定的函数，自定义类的类中一定要实现该方法  
+                    p.terminate():强制终止进程p，不会进行任何清理操作，如果p创建了子进程，该子进程就成了僵尸进程，使用该方法需要特别小心这种情况。如果p还保存了一个锁那么也将不会被释放，进而导致死锁
+                    p.is_alive():如果p是运行中的，返回True
+                    p.join([timeout]):主线程等待p终止（强调：是主线程处于等的状态，而p是处于运行的状态）。timeout是可选的超时时间，需要强调的是，p.join只能join住start开启的进程，而不能join住run开启的进程  
+                    '''
 
-　　#同上，只不过会有返回值，连接成功时返回 0 ，连接失败时候返回编码，例如：10061
+                属性 = '''
+                    p.daemon：默认值为False，如果设为True，代表p为后台运行的守护进程，当p的父进程终止时，p也随之终止，并且设定为True后，p不能创建自己的新进程，必须在p.start()之前设置
+                    p.name:进程的名称
+                    p.pid：进程的pid
+                    p.exitcode:进程在运行时为None、如果为–N，表示被信号N结束
+                    p.authkey:进程的身份验证键,默认是由os.urandom()随机生成的32字符的字符串。这个键的用途是为涉及网络连接的底层进程间通信提供安全性，这类连接只有在具有相同的身份验证键时才能成功
+                    '''
 
-sk.close()
+                注意 = '''
+                    在Windows操作系统中由于没有fork(linux操作系统中创建进程的机制).
+                    在创建子进程的时候会自动 import 启动它的这个文件，而在 import 的时候又执行了整个文件。
+                    因此如果将process()直接写在文件中就会无限递归创建子进程报错。
+                    必须把创建子进程的部分使用if __name__ =='__main__' 判断保护起来。
+                    '''
 
-　　#关闭套接字
+                使用process = '''
+                    from mulprocessing import Process
+                    
+                    单个子进程的启动:
+                    def func(name):
+                        print(name)
+                    
+                    if __name__ == '__main__':
+                        p = Process(target=func,args=(name,))
+                        p.start()
+                        
+                    多个子进程的启动:
+                    def func(name):
+                        print(name)
+                    
+                    if __name__ == '__main__':
+                        for i in range(4):
+                            p = Process(target=func,args=(name,))
+                            p.start()
+                    主进程等待多个子进程执行完毕
+                    def func(name):
+                        print(name)
+                    
+                    if __name__ == '__main__':
+                        l = list()
+                        for i in range(4):
+                            p = Process(target=func,args=(name,))
+                            p.start()
+                            l.append(p)
+                        for p in l:
+                            p.joine()
+                    '''
 
-sk.recv(bufsize[,flag])
+                继承Process类 = '''
+                    from multiprocessing import Process
+                    class Myprocess(Process):
+                        def __init__(self,name)
+                            self().__init__()
+                            self.name = name
+                        def run(self):      # 一定要实现run方法
+                            print(self.name)
+                            
+                    p1 = Myprocess('lisi')
+                    p2 = Myprocess('lili')
+                    p3 = Myprocess('lina')
+                    p1.start()
+                    p2.start()
+                    p2.run()        # run()并不能被join方法 hold主
+                    p3.start()
+                    
+                    p1.join()
+                    p2.join()
+                    p3.join()
+                    '''
 
-　　#接受套接字的数据。数据以字符串形式返回，bufsize指定最多可以接收的数量。flag提供有关消息的其他信息，通常可以忽略。
+                进程之间的数据是隔离的 = '''
+                    # 在子进程内修改的变量，不会影响主进程的变量
+                    from multiprocessing import Process
+                    def work():
+                        global n
+                        n=0
+                        print('子进程内: ',n)
+                    
+                    
+                    if __name__ == '__main__':
+                        n = 100
+                        p=Process(target=work)
+                        p.start()
+                        print('主进程内: ',n)
+                    '''
 
-sk.recvfrom(bufsize[.flag])
+                守护进程 = '''
+                    会随着主进程代码的结束而结束。
+                    主进程创建守护进程
+                    　　其一：守护进程会在主进程代码执行结束后就终止
+                    　　其二：守护进程内无法再开启子进程
+                    from multiprocessing import Process
+    
+                    def foo():
+                        print(123)
+                        time.sleep(1)
+                        print("end123")
+                    
+                    def bar():
+                        print(456)
+                        time.sleep(3)
+                        print("end456")
+                    
+                    
+                    p1=Process(target=foo)
+                    p2=Process(target=bar)
+                    
+                    p1.daemon=True
+                    p1.start()
+                    p2.start()
+                    time.sleep(0.1)
+                    print("main-------")
+                    
+                    当 执行完 print("main-------") 时，p1 就会结束。不会再执行 print("end123")。
+                    重点是，当主进程的代码执行完毕。
+                    '''
 
-　　#与recv()类似，但返回值是（data,address）。其中data是包含接收数据的字符串，address是发送数据的套接字地址。
+                进程锁 = '''
+                    # 加锁可以保证多个进程修改同一块数据时，同一时间只能有一个任务可以进行修改，即串行的修改，牺牲了速度却保证了数据安全。
+                    from multiprocessing import Process,Lock
+                    import time,json,random
+                    def search():
+                        dic=json.load(open('db'))
+                        print('\033[43m剩余票数%s\033[0m' % dic['count'])
+                    
+                    def get():
+                        dic=json.load(open('db'))
+                        time.sleep(random.random()) #模拟读数据的网络延迟
+                        if dic['count'] >0:
+                            dic['count']-=1
+                            time.sleep(random.random()) #模拟写数据的网络延迟
+                            json.dump(dic,open('db','w'))
+                            print('\033[32m购票成功\033[0m')
+                        else:
+                            print('\033[31m购票失败\033[0m')
+                    
+                    def task(lock):
+                        search()
+                        lock.acquire()      # 获得锁
+                        get()
+                        lock.release()      # 释放锁
+                                    
+                    if __name__ == '__main__':
+                        lock = Lock()
+                        for i in range(100): #模拟并发100个客户端抢票
+                            p=Process(target=task,args=(lock,))
+                            p.start()           
+                
+                    '''
 
-sk.send(string[,flag])
+                Event事件 = '''
+                    python进程的事件用于主线程控制其他进程的执行，事件主要提供了三个方法 set、wait、clear。
+                    事件处理的机制：全局定义了一个“Flag”，如果“Flag”值为 False，那么当程序执行 event.wait 方法时就会阻塞，如果“Flag”值为True，那么event.wait 方法时便不再阻塞。
+                    clear：将“Flag”设置为False
+                    set：将“Flag”设置为True
+                    is_set：用作判断 事件的状态。bool值
+                    一个事件在创建之初 内部的标志默认是False
+                    从 Flase 到 True set()
+                    从 True 到 False clear()
+                    
+                    def traffic_lights(e):        # 每隔三秒让事件在 true和false 之间切换
+                        while True:
+                            time.sleep(3)         # 先睡3秒
+                            if e.is_set():              # 标志是True
+                                e.clear()         # ---->将is_set()的值设置为False
+                            else:                 # 标志是False
+                                e.set()           # ---->将is_set()的值设置为True
+                    if __name__ == '__main__':
+                        e = Event()                 # e就是事件
+                        t = Process(target=traffic_lights, args=(e))        # 创建一个进程控制红绿灯
+                    '''
 
-　　#将string中的数据发送到连接的套接字。返回值是要发送的字节数量，该数量可能小于string的字节大小。即：可能未将指定内容全部发送。
+                Queue队列 = '''
+                    创建共享的进程队列，Queue是多进程安全的队列，可以使用Queue实现多进程之间的数据传递。
+                    Queue([maxsize]) 
+                        创建共享的进程队列。maxsize是队列中允许的最大项数。
+                        如果省略此参数，则无大小限制。底层队列使用管道和锁定实现。
+                        另外，还需要运行支持线程以便队列中的数据传输到底层管道中。 
+                    
+                    Queue的实例q具有以下方法：
+                    q.get( [ block [ ,timeout ] ] ) 
+                        返回q中的一个项目。
+                        如果q为空，此方法将阻塞，直到队列中有项目可用为止。
+                        block用于控制阻塞行为，默认为True. 如果设置为False，将引发Queue.Empty异常（定义在Queue模块中）。
+                        timeout是可选超时时间，用在阻塞模式中。如果在制定的时间间隔内没有项目变为可用，将引发Queue.Empty异常。
+                    
+                    q.get_nowait( ) 
+                        同q.get(False)方法。
+                    
+                    q.put(item [, block [,timeout ] ] ) 
+                        将item放入队列。如果队列已满，此方法将阻塞至有空间可用为止。
+                        block控制阻塞行为，默认为True。如果设置为False，将引发Queue.Empty异常（定义在Queue库模块中）。
+                        timeout指定在阻塞模式中等待可用空间的时间长短。超时后将引发Queue.Full异常。
+                    
+                    q.qsize() 
+                        返回队列中目前项目的正确数量。此函数的结果并不可靠，因为在返回结果和在稍后程序中使用结果之间，队列中可能添加或删除了项目。
+                        在某些系统上，此方法可能引发NotImplementedError异常。
+                    
+                    q.empty() 
+                        如果调用此方法时 q为空，返回True。
+                        如果其他进程或线程正在往队列中添加项目，结果是不可靠的。也就是说，在返回和使用结果之间，队列中可能已经加入新的项目。
+                    
+                    q.full() 
+                        如果q已满，返回为True. 由于线程的存在，结果也可能是不可靠的                
+                    '''
 
-sk.sendall(string[,flag])
+                生产者消费者模型 = '''
+                    from multiprocessing import Process,Queue
+                    import time,random,os
+                    def consumer(q):
+                        while True:
+                            res=q.get()
+                            if res==None:break
+                            time.sleep(random.randint(1,3))
+                            print('\033[45m%s 吃 %s\033[0m' %(os.getpid(),res))
+                    
+                    def producer(q):
+                        for i in range(10):
+                            time.sleep(random.randint(1,3))
+                            res='包子%s' %i
+                            q.put(res)
+                            print('\033[44m%s 生产了 %s\033[0m' %(os.getpid(),res))
+                    
+                    if __name__ == '__main__':
+                        q=Queue()
+                        p1=Process(target=producer,args=(q,))       #生产者们
+                        c1=Process(target=consumer,args=(q,))       #消费者们
+                        #开始
+                        p1.start()
+                        c1.start()
+                        p1.join()
+                        q.put(None) #发送结束信号
+                        print('主')
+                    '''
 
-　　#将string中的数据发送到连接的套接字，但在返回之前会尝试发送所有数据。成功返回None，失败则抛出异常。
+                进程间数据共享 = '''
+                    from multiprocessing import Manager,Process,Lock
+                    def work(dic,lock):
+                        with lock: #不加锁而操作共享的数据,会出现数据错乱  with locak:就是lock.acquire() 和 lock.release() 
+                            dic['count']-=1
+                    
+                    if __name__ == '__main__':
+                        lock=Lock()
+                        with Manager() as m:
+                            dic=m.dict({'count':100})
+                            p_l=[]
+                            for i in range(100):
+                                p=Process(target=work,args=(dic,lock))
+                                p_l.append(p)
+                                p.start()
+                            for p in p_l:
+                                p.join()
+                            print(dic)
+                    
+                    '''
 
-      #内部通过递归调用send，将所有内容发送出去。
+    def 线程():
+        '''
+        线程是CPU调度的最小单位.
+        线程和进程的关系 ：每一个进程中都至少有一个线程
 
-sk.sendto(string[,flag],address)
+        GIL锁
+        全局解释器锁 Cpython解释器
+        在同一个进程中 同一个时刻 只能有一个线程被CPU执行
+        导致高计算型 代码 不适合用python的多线程来解决
+        用多进程或者分布式来解决高计算型代码
 
-　　#将数据发送到套接字，address是形式为（ipaddr，port）的元组，指定远程地址。返回值是发送的字节数。该函数主要用于UDP协议。
+        线程的特点
+        　　在一个进程中包括多个线程，每个线程都是作为利用CPU的基本单位，是花费最小开销的实体。
+        　　在同一进程中的各个线程，都可以共享该进程所拥有的资源，所有线程都具有相同的进程id，这意味着，线程可以访问该进程的每一个内存资源；
+            此外，还可以访问进程所拥有的已打开文件、定时器、信号量机构等。由于同一个进程内的线程共享内存和文件，所以线程之间互相通信不必调用内核。
+        　　在一个进程中的多个线程之间，可以并发执行。
+        '''
 
-sk.settimeout(timeout)
+        '''http://www.cnblogs.com/Eva-J/articles/8306047.html'''
+        def threading模块():
 
-　　#设置套接字操作的超时期，timeout是一个浮点数，单位是秒。值为None表示没有超时期。一般，超时期应该在刚创建套接字时设置，因为它们可能用于连接的操作（如 client 连接最多等待5s ）
+            线程的创建 = '''
+                from threading import Thread
+                import time
+                def sayhi(name):
+                    time.sleep(2)
+                    print('%s say hello' %name)
+                
+                t=Thread(target=sayhi,args=('egon',))
+                t.start()
+                print('主线程')
+                
+                对于Thread类，它的定义如下：
+                threading.Thread(self, group=None, target=None, name=None,args=(), kwargs=None, *, daemon=None)
+ 
+                from threading import Thread
+                import time
+                class Sayhi(Thread):
+                    def __init__(self,name):
+                        super().__init__()
+                        self.name=name
+                    def run(self):
+                        time.sleep(2)
+                        print('%s say hello' % self.name)
+                
+                
+                if __name__ == '__main__':
+                    t = Sayhi('egon')
+                    t.start()
+                    print('主线程')
+                 
+                 《看源码》   
+                Thread实例对象的方法
+                    t.start(): 启动一个线程
+                    t.join(): 主线程等待子线程执行完毕后再执行。
+                    t.is_alive(): 返回线程是否活动的。
+                    t.getName(): 返回线程名。
+                    t.setName(): 设置线程名。
+                    t.setDaemon():设置为守护线程(默认是False)
+                    t.setDaemon(True)
+                    t.isDaemon():是否为守护线程
+                    
+                Thread实例对象的属性
+                    t.name      线程的名字有setter 属性
+                    t.daemon    是否是守护线程有setter 属性
+                    t.ident     线程的标识符,如果尚未启动，则为None。没有setter 属性
+                    
+                
+                threading模块提供的一些方法：
+                    threading.currentThread(): 返回当前的线程实例。
+                    threading.enumerate(): 返回一个包含正在运行的线程的list。正在运行指线程启动后、结束前，不包括启动前和终止后的线程。
+                    threading.activeCount(): 返回正在运行的线程数量，与len(threading.enumerate())有相同的结果。
+                '''
+            自定义线程类 = '''
+                对于threading模块中的Thread类，本质上是执行了它的run方法。因此可以自定义线程类，让它继承Thread类，然后重写run方法。
+    
+                import threading
+    
+                class MyThreading(threading.Thread):
+                    def __init__(self, func, arg):
+                        super(MyThreading, self).__init__()
+                        self.func = func
+                        self.arg = arg
+    
+                    def run(self):
+                        self.func(self.arg)
+    
+                def my_func(args):
+                    """
+                    你可以把任何你想让线程做的事定义在这里
+                    """
+                    pass
+    
+                obj = MyThreading(my_func, 123)
+                obj.start()
+                '''
 
-sk.getpeername()
 
-　　#返回连接套接字的远程地址。返回值通常是元组（ipaddr,port）。
+            守护线程 = '''
+                无论是进程还是线程，都遵循：守护xx会等待主xx运行完毕后被销毁。需要强调的是：运行完毕并非终止运行
+                1.对进程来说，守护进程会在主进程代码运行完毕后结束
+                2.对线程来说，守护线程会在主线程所在的进程内所有非守护线程统统运行完毕，才算结束。
+                
+                示例
+                from threading import Thread
+                import time
+                def foo():
+                    print(123)
+                    time.sleep(1)
+                    print("end123")
+                
+                def bar():
+                    print(456)
+                    time.sleep(3)
+                    print("end456")
+                
+                
+                t1=Thread(target=foo)
+                t2=Thread(target=bar)
+                
+                t1.daemon=True
+                t1.start()
+                t2.start()
+                print("main-------")        
+                            '''
 
-sk.getsockname()
+            锁 = '''
+                同一时间只有一个线程能执行 acquire() release() 里面的代码。
+                from threading import Thread,Lock
+                import os,time
+                def work():
+                    global n
+                    lock.acquire()
+                    temp=n
+                    time.sleep(0.1)
+                    n=temp-1
+                    lock.release()
+                
+                lock=Lock()
+                n=100
+                l=[]
+                for i in range(100):
+                    p=Thread(target=work)
+                    l.append(p)
+                    p.start()
+                for p in l:
+                    p.join()
 
-　　#返回套接字自己的地址。通常是一个元组(ipaddr,port)
+                print(n)
+                
+                互斥锁与join的区别:    
+                加锁会让运行变成串行,在start之后立即使用join,也是串行
+                start后立即join:任务内的所有代码都是串行执行的,而加锁,只是加锁的部分即修改共享数据的部分是串行的
+                '''
 
-sk.fileno()
+            Event事件 = '''
+                event.isSet()：返回event的状态值；
+                event.wait()：如果 event.isSet()==False将阻塞线程；
+                event.set()： 设置event的状态值为True，所有阻塞池的线程激活进入就绪状态， 等待操作系统调度；
+                event.clear()：恢复event的状态值为False。
+                '''
 
-　　#套接字的文件描述符'''
+        def concurrent的futures模块():
+
+            介绍 = '''
+                concurrent.futures：模块提供了高度封装的异步调用接口
+                ThreadPoolExecutor：线程池，提供异步调用
+                ProcessPoolExecutor: 进程池，提供异步调用
+                '''
+
+            基本方法 = '''
+                submit(fn, *args, **kwargs)     # 异步提交任务
+                
+                map(func, *iterables, timeout=None, chunksize=1)        # 取代for循环submit的操作
+                
+                shutdown(wait=True)         # 相当于进程池的pool.close()+pool.join()操作
+                    wait=True，等待池内所有任务执行完毕回收完资源后才继续
+                    wait=False，立即返回，并不会等待池内的任务执行完毕
+                    但不管wait参数为何值，整个程序都会等到所有任务执行完毕
+                    submit和map必须在shutdown之前
+                
+                result(timeout=None)        # 取得结果
+                
+                add_done_callback(fn)       # 回调函数
+                '''
+
+            ProcessPoolExecutor =  '''
+                ProcessPoolExecutor类是一个Executor子类，它使用一个进程池异步执行调用。 
+                concurrent.futures.ProcessPoolExecutor（max_workers = None，mp_context = None）
+                 一个Executor子类，它使用最多max_workers进程池异步执行调用。 
+                如果max_workers是None或没有给出，它将默认为机器上的处理器数量。 
+                如果max_workers小于或等于0，则会引发ValueError。
+                
+                from concurrent.futures import ThreadPoolExecutor,ProcessPoolExecutor
+                
+                import os,time,random
+                def task(n):
+                    print('%s is runing' %os.getpid())
+                    time.sleep(random.randint(1,3))
+                    return n**2
+                
+                if __name__ == '__main__':
+                    executor=ProcessPoolExecutor(max_workers=3)
+                    futures=[]
+                    for i in range(11):
+                        future=executor.submit(task,i)
+                        futures.append(future)
+                    executor.shutdown(True)
+                    print('+++>')
+                    for future in futures:
+                        print(future.result())
+                '''
+
+            ThreadPoolExecutor = '''
+                是一个Executor子类，它使用线程池异步执行调用。
+                class concurrent.futures.ThreadPoolExecutor（max_workers = None，thread_name_prefix =''）
+                一个Executor子类，它使用最多max_workers线程池来异步执行调用。
+                在版本3.5中进行了更改：如果max_workers为None或没有给出，它将默认为机器上的处理器数乘以5，
+                假定ThreadPoolExecutor通常用于I / O而不是高计算型工作，并且工作人员的数量应该 高于ProcessPoolExecutor的工作人员数量。
+                3.6版新增功能：添加了thread_name_prefix参数，以允许用户控制由池创建的工作线程的线程。线程名称，以便于调试。
+                用法与ProcessPoolExecutor相同
+                '''
+
+            map的用法 = '''
+                from concurrent.futures import ThreadPoolExecutor,ProcessPoolExecutor
+                
+                import os,time,random
+                def task(n):
+                    print('%s is runing' %os.getpid())
+                    time.sleep(random.randint(1,3))
+                    return n**2
+                
+                if __name__ == '__main__':
+                
+                    executor=ThreadPoolExecutor(max_workers=3)
+                
+                    # for i in range(11):
+                    #     future=executor.submit(task,i)
+                
+                    executor.map(task,range(1,12)) #map取代了for+submit
+                '''
+
+            回调函数 = '''
+                from concurrent.futures import ThreadPoolExecutor,ProcessPoolExecutor
+                from multiprocessing import Pool
+                import requests
+                import json
+                import os
+                
+                def get_page(url):
+                    print('<进程%s> get %s' %(os.getpid(),url))
+                    respone=requests.get(url)
+                    if respone.status_code == 200:
+                        return {'url':url,'text':respone.text}
+                
+                def parse_page(res):
+                    res=res.result()
+                    print('<进程%s> parse %s' %(os.getpid(),res['url']))
+                    parse_res='url:<%s> size:[%s]\n' %(res['url'],len(res['text']))
+                    with open('db.txt','a') as f:
+                        f.write(parse_res)
+                
+                
+                if __name__ == '__main__':
+                    urls=[
+                        'https://www.baidu.com',
+                        'https://www.python.org',
+                        'https://www.openstack.org',
+                        'https://help.github.com/',
+                        'http://www.sina.com.cn/'
+                    ]
+                
+                    # p=Pool(3)
+                    # for url in urls:
+                    #     p.apply_async(get_page,args=(url,),callback=pasrse_page)
+                    # p.close()
+                    # p.join()
+                
+                    p=ProcessPoolExecutor(3)
+                    for url in urls:
+                        p.submit(get_page,url).add_done_callback(parse_page) #parse_page拿到的是一个future对象obj，需要用obj.result()拿到结果
+                '''
+
+    def 协程():
+        '''
+        对于单线程下，不可避免程序中出现io操作.
+        如果能在自己的程序中（即用户程序级别，而非操作系统级别）控制单线程下的多个任务能在一个任务遇到io阻塞时就切换到另外一个任务去计算，
+        这样就保证了该线程能够最大限度地处于就绪态，即随时都可以被cpu执行的状态，
+        相当于我们在用户程序级别将自己的io操作最大限度地隐藏起来，表现出该线程好像是一直在计算，io比较少，从而更多的将cpu的执行权限分配给我们的线程。
+
+        协程的本质就是在单线程下，由用户自己控制一个任务遇到io阻塞了就切换另外一个任务去执行，以此来提升效率。
+        为了实现它，我们需要找寻一种可以同时满足以下条件的解决方案：
+        1. 可以控制多个任务之间的切换，切换之前将任务的状态保存下来，以便重新运行时，可以基于暂停的位置继续执行。
+        2. 作为1的补充：可以检测io操作，在遇到io操作的情况下才发生切换
+
+        协程：是单线程下的并发，又称微线程，协程是一种用户态的轻量级线程，即协程是由用户程序自己控制调度的。
+        1. python的线程属于内核级别的，即由操作系统控制调度（如单线程遇到io或执行时间过长就会被迫交出cpu执行权限，切换其他线程运行）
+        2. 单线程内开启协程，一旦遇到io，就会从应用程序级别（而非操作系统）控制切换，以此来提升效率（！！！非io操作的切换与效率无关）
+
+        对比操作系统控制线程的切换，用户在单线程内控制协程的切换
+        优点如下：
+        1. 协程的切换开销更小，属于程序级别的切换，操作系统完全感知不到，因而更加轻量级
+        2. 单线程内就可以实现并发的效果，最大限度地利用cpu
+        缺点如下：
+        1. 协程的本质是单线程下，无法利用多核，可以是一个程序开启多个进程，每个进程内开启多个线程，每个线程内开启协程
+        2. 协程指的是单个线程，因而一旦协程出现阻塞，将会阻塞整个线程
+
+        总结协程特点：
+        必须在只有一个单线程里实现并发
+        修改共享数据不需加锁
+        用户程序里自己保存多个控制流的上下文栈
+        一个协程遇到IO操作自动切换到其它协程（如何实现检测IO，yield、greenlet都无法实现，就用到了gevent模块（select机制））
+        '''
+
+        def Gevent模块():
+            '''安装：pip3 install gevent'''
+            介绍 = '''
+                Gevent 是一个第三方库，可以轻松通过gevent实现并发同步或异步编程，
+                在gevent中用到的主要模式是Greenlet, 它是以C扩展模块形式接入Python的轻量级协程。 
+                Greenlet全部运行在主程序操作系统进程的内部，但它们被协作式地调度。
+                '''
+
+            用法介绍 = '''
+                g1=gevent.spawn(func,1,,2,3,x=4,y=5)    # 创建一个协程对象g1，spawn括号内第一个参数是函数名，后面可以有多个参数，可以是位置实参或关键字实参，都是传给函数的
+                
+                g2=gevent.spawn(func2)
+                
+                g1.join() # 等待g1结束
+                
+                g2.join() # 等待g2结束
+                
+                gevent.joinall([g1,g2]) # 上述两步合作一步
+                
+                g1.value #拿到func1的返回值
+                '''
+
+            gevent点sleep = '''
+                #gevent.sleep(2)模拟的是gevent可以识别的io阻塞
+                import gevent
+                def eat(name):
+                    print('%s eat 1' %name)
+                    gevent.sleep(2)
+                    print('%s eat 2' %name)
+                
+                def play(name):
+                    print('%s play 1' %name)
+                    gevent.sleep(1)
+                    print('%s play 2' %name)
+                
+                
+                g1=gevent.spawn(eat,'egon')
+                g2=gevent.spawn(play,name='egon')
+                g1.join()
+                g2.join()
+                #或gevent.joinall([g1,g2])
+                print('主')
+                '''
+
+            monkey点patch_all = '''
+                time.sleep(2)或其他的阻塞,gevent是不能直接识别的需要用
+                from gevent import monkey;monkey.patch_all()必须放到被打补丁者的前面，如time，socket模块之前
+                或者将from gevent import monkey;monkey.patch_all()放到文件的开头
+                
+                from gevent import monkey;monkey.patch_all()
+                
+                import gevent
+                import time
+                def eat():
+                    print('eat food 1')
+                    time.sleep(2)
+                    print('eat food 2')
+                
+                def play():
+                    print('play 1')
+                    time.sleep(1)
+                    print('play 2')
+                
+                g1=gevent.spawn(eat)
+                g2=gevent.spawn(play)
+                gevent.joinall([g1,g2])
+                print('主')
+                '''
+
+            查看协程实例 = '''
+                用threading.current_thread().getName()来查看每个协程实例，查看的结果为DummyThread-n，即假线程
+                
+                from gevent import monkey;monkey.patch_all()
+                import threading
+                import gevent
+                import time
+                def eat():
+                    print(threading.current_thread().getName())
+                    print('eat food 1')
+                    time.sleep(2)
+                    print('eat food 2')
+                
+                def play():
+                    print(threading.current_thread().getName())
+                    print('play 1')
+                    time.sleep(1)
+                    print('play 2')
+                
+                g1=gevent.spawn(eat)
+                g2=gevent.spawn(play)
+                gevent.joinall([g1,g2])
+                print('主')
+                '''
+
+            同步与异步 = '''
+                from gevent import spawn,joinall,monkey;monkey.patch_all()
+                
+                import time
+                def task(pid):
+                    """
+                    Some non-deterministic task
+                    """
+                    time.sleep(0.5)
+                    print('Task %s done' % pid)
+                
+                
+                def synchronous():  # 同步
+                    for i in range(10):
+                        task(i)
+                
+                def asynchronous(): # 异步
+                    g_l=[spawn(task,i) for i in range(10)]
+                    joinall(g_l)
+                    print('DONE')
+                    
+                if __name__ == '__main__':
+                    print('Synchronous:')
+                    synchronous()
+                    print('Asynchronous:')
+                    asynchronous()
+                    
+                # synchronous会按顺序每0.5秒打印出来
+                # Asynchronous 会0.5秒后一起打印出来
+                '''
+
+            应用一 = '''
+                from gevent import monkey;monkey.patch_all()
+                import gevent
+                import requests
+                import time
+                
+                def get_page(url):
+                    print('GET: %s' %url)
+                    response=requests.get(url)
+                    if response.status_code == 200:
+                        print('%d bytes received from %s' %(len(response.text),url))
+                
+                
+                start_time=time.time()
+                gevent.joinall([
+                    gevent.spawn(get_page,'https://www.python.org/'),
+                    gevent.spawn(get_page,'https://www.yahoo.com/'),
+                    gevent.spawn(get_page,'https://github.com/'),
+                ])
+                stop_time=time.time()
+                print('run time is %s' %(stop_time-start_time))
+                '''
 
 def 常用模块():
 
@@ -4432,21 +5444,48 @@ def 常用模块():
     def inspect模块():
         '''https://blog.csdn.net/freeking101/article/details/52458647'''
 
+    def struct模块():
+        pass
+
+    def requests模块():
+        '''
+        requests.get()
+        用于请求目标网站，类型是一个HTTPresponse类型
+        '''
+
+    def bs4模块():
+        pass
+
+    def html5lib模块():
+        pass
+        #html5解析器
+
+    def bs4模块():
+        pass
+        '''
+        BeautifulSoup模块()
+        '''
+
+    def seocketserver模块():
+        pass
+
     def 模块和包():
         '''
+        详见 http://www.cnblogs.com/Eva-J/articles/7292109.html#_label7
         模块就是一个py文件
         所谓的模块导入 就是执行了这个文件而已
         import加载的模块分为四个通用类别：　
         　　1 使用python编写的代码（.py文件）
         　　2 已被编译为共享库或DLL的C或C++扩展
         　　3 包好一组模块的包
-        　　4 使用C编写并链接到python解释器的内置模块
+        　　4 内置模块
 
         import
         模块可以包含可执行的语句和函数的定义.
         它们只在模块名第一次遇到导入import语句时才执行.
         import语句是可以在程序中的任意位置使用的,且针对同一个模块可以import多次.
         第一次导入后就将模块名加载到内存了，后续的import语句仅是对已经加载大内存中的模块对象增加了一次引用，不会重新执行模块内的语句
+        模块之间不能发生循环引用。
 
         我们可以从sys.modules中找到当前已经加载的模块。
         sys.modules是一个字典，内部包含模块名与模块对象的映射，该字典决定了导入模块时是否需要重新导入。
@@ -4455,12 +5494,14 @@ def 常用模块():
         把这个模块的名称空间当做全局名称空间，这样我们在编写自己的模块时，就不用担心我们定义在自己模块中全局变量会在被导入时，与使用者的全局变量冲突
 
         首次导入模块my_module时会做三件事：
-        1.为源文件(my_module模块)创建新的名称空间，在my_module中定义的函数和方法若是使用到了global时访问的就是这个名称空间。
+        1.为源文件(my_module模块)创建新的名称空间。
         2.在新创建的命名空间中执行模块中包含的代码事实上函数定义也是“被执行”的语句，模块级别函数定义的执行将函数名放入模块全局名称空间表，用globals()可以查看
         3.创建名字my_module来引用该命名空间
 
         为模块名起别名
         import my_module as sm
+        from import 也支持 as语句 也支持 导入多个名字
+        from my_mod import func1 as f1,func2 as f2
 
         例:
         def sqlparse():
@@ -4522,6 +5563,26 @@ def 常用模块():
         在第一次导入某个模块时（比如my_module），会先检查该模块是否已经被加载到内存中（当前执行文件的名称空间对应的内存），如果有则直接引用
         如果没有，解释器则会查找同名的内建模块，如果还没有找到就从sys.path给出的目录列表中依次寻找my_module.py文件。
         模块的查找顺序是：内存中已经加载的模块->内置模块->sys.path路径中包含的模块
+
+        包:
+        一组py文件组成的文件夹，在这个文件夹里有一个__init__.py，包
+
+        import glance.api.policy as policy
+        policy.get()
+        import glance.api.policy
+        glance.api.policy.get()
+
+        from...import
+        from glance.api import policy
+        policy.get()
+
+        # 为什么模块的导入要从glance开始？
+        # 精确到一个模块
+
+
+        __init__文件有什么用？
+        导入一个包相当于执行这个包中的__init__ 文件
+        import后面的这个名字 永远会出现在全局的命名空间里
 
         sys.path的初始化的值来自于：
         需要特别注意的是：我们自定义的模块名不应该与系统内置模块重名。
