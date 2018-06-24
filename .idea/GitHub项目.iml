@@ -19,6 +19,7 @@
     <orderEntry type="module" module-name="oldboy" />
     <orderEntry type="module" module-name="zabbix 出图项目" />
     <orderEntry type="module" module-name="oldboy" />
+    <orderEntry type="module" module-name="speak-art_latest_20180613" />
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Unittests" />

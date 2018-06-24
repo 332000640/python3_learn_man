@@ -7,6 +7,9 @@
 # Version : 1
 
 def 更新日志():
+    log_2018_06_24 = '''
+        完善类与对象。完成包。
+        '''
     log_2018_06_14 = '''
         补充并发编程。
         '''
@@ -247,7 +250,7 @@ def 基础():
                 choice(seq)     # 从序列的元素中随机返回一个元素,比如import random; random.choice(range(10)),从0到9中随机挑选一个整数.
                 randrange([start, ]stop[, step]) # 从指定范围内,按指定基数递增的集合中返回一个随机数,基数缺省值为1
                 random()        # 随机返回下一个实数,它在[0, 1)范围内.import random;random.random()
-                seed([x])       # 改变随机数生成器的种子seed.如果你不了解其原理,你不必特别去设定seed,Python会帮你选择seed.
+                seed([x])       # 改变随机数生成器的种子seed.如果不了解其原理,不必特别去设定seed,Python会选择seed.
                 shuffle(lst)    # 将序列的所有元素随机排序
                 uniform(x, y)   # 随机生成下一个实数,它在[x, y] 范围内.
                 '''
@@ -306,7 +309,7 @@ def 基础():
             字符编码 = '''
                 sys.getdefaultencoding()        # 获取系统编码
                 python3默认编码为unicode,在unicode中,一个字符就是两个字节.python3,有两种数据类型,bytes和unicode. 字符串是unicode类型,bytes是bytes类型.
-                bytes.decode(encoding="utf-8", errors="strict")  # Python3 中没有 decode 方法,但我们可以使用 bytes 对象的 decode() 方法来解码给定的 bytes 对象,这个 bytes 对象可以由 str.encode() 来编码返回.
+                bytes.decode(encoding="utf-8", errors="strict")  # Python3 中没有 decode 方法,但可以使用 bytes 对象的 decode() 方法来解码给定的 bytes 对象,这个 bytes 对象可以由 str.encode() 来编码返回.
                 'test'.encode(encoding='UTF-8', errors='strict')  # 以 encoding 指定的编码格式编码字符串,errors 默认为 'strict',触发UnicodeError 也可指定'ignore',忽略,或者'replace' 将未知编码替换成？.
                 例:            
                 str='i an 特斯拉'
@@ -373,7 +376,7 @@ def 基础():
                 'test'.splitlines(True) # 按照行('\r', '\r\n', \n')分隔,返回一个包含各行作为元素的列表,如果参数 keepends 为 False,不包含换行符,如果为 True,则保留换行符.
                 '+'.join([1,2,3])       # join,以指定的字符并将一个容器类型的数据.接收一个可迭代对象,返回拼接后的字符串.可以直接将生成器表达式作为参数传入到join,不用加圆括号.join 里面可以直接传入生成器.
                 'test {}'.format('2')   # 用于字符串格式化,详见字符串格式化.
-                'test {name}'.format_map({'name':'lisli})  # 用于字符串格式化,与format不同的是format_map接收的是一个映射关系,如字典,字典的键是字符中的指定名字,键是你要传入的值.
+                'test {name}'.format_map({'name':'lisli})  # 用于字符串格式化,与format不同的是format_map接收的是一个映射关系,如字典,字典的键是字符中的指定名字,键是要传入的值.
                 '''
 
             索引与切片 = '''
@@ -619,7 +622,7 @@ def 基础():
             SyntaxError Python代码非法，代码不能编译(个人认为这是语法错误，写错了）
             TypeError 传入对象类型与要求的不符合
             UnboundLocalError 试图访问一个还未被设置的局部变量，基本上是由于另有一个同名的全局变量，
-            导致你以为正在访问它
+            导致以为正在访问它
             ValueError 传入一个调用者不期望的值，即使值的类型是正确的
             '''
 
@@ -703,7 +706,7 @@ def 函数():
             print(*objects, sep=' ', end='\n', file=sys.stdout,flush=False) 
                 打印输出 可以一次输出多个对象.输出多个对象时,需要用 , 分隔.
                 sep -- 用来间隔多个对象,默认值是一个空格.
-                end -- 用来设定以什么结尾.默认值是换行符 \n,我们可以换成其他字符串.
+                end -- 用来设定以什么结尾.默认值是换行符 \n,可以换成其他字符串.
                 file -- 要写入的文件对象.file是一个文件描述符,
                 with open('test.txt','a+') as f:
                     print('hello,world',file=f)
@@ -829,7 +832,7 @@ def 函数():
             memoryview()
                 返回给定参数的内存查看对象(Momory view). 所谓内存查看对象,是指对支持缓冲区协议的数据进行包装,在不需要复制对象基础上允许Python代码访问
             ord()
-                是 chr() 函数(对于8位的ASCII字符串)或 unichr() 函数(对于Unicode对象)的配对函数,它以一个字符(长度为1的字符串)作为参数,返回对应的 ASCII 数值,或者 Unicode 数值,如果所给的 Unicode 字符超出了你的 Python 定义范围,则会引发一个 TypeError 的异常. 
+                是 chr() 函数(对于8位的ASCII字符串)或 unichr() 函数(对于Unicode对象)的配对函数,它以一个字符(长度为1的字符串)作为参数,返回对应的 ASCII 数值,或者 Unicode 数值,如果所给的 Unicode 字符超出了 Python 定义范围,则会引发一个 TypeError 的异常. 
             chr()
                 用一个范围在 range(256)内的(就是0～255)整数作参数,返回一个对应的字符.
             ascii()
@@ -893,7 +896,7 @@ def 函数():
             staticmethod()
                 返回函数的静态方法.
             property()
-                作用是在新式类中返回属性值.如果你只有第一个参数则返回对象的类型,三个参数返回新的类型对象.
+                作用是在新式类中返回属性值.如果只有第一个参数则返回对象的类型,三个参数返回新的类型对象.
             '''
 
         判断类关系 = '''
@@ -1176,7 +1179,7 @@ def 函数():
         '''
 
         生成器 = '''
-            一个包含yield关键字的函数就是一个生成器函数.yield可以为我们从函数中返回值,但是yield又不同于return.
+            一个包含yield关键字的函数就是一个生成器函数.yield可以为从函数中返回值,但是yield又不同于return.
             生成器和迭代器本质上是一样的
             yield函数
                 执行生成器函数 会得到一个生成器 不会执行这个函数中的代码
@@ -1341,7 +1344,7 @@ def 函数():
             编程分为两类:
             系统编程,所谓系统编程,简单来说,就是编写库.
             应用编程,利用写好的各种库来编写具某种功用的程序,也就是应用.
-            在这里我们把调用回调函数的函数,称为中间函数.把调用中间函数的函数称为起始函数.
+            在这里把调用回调函数的函数,称为中间函数.把调用中间函数的函数称为起始函数.
             回调机制提供了非常大的灵活性.在回调中,用某种方式,把回调函数像参数一样传入中间函数.
             在传入一个回调函数之前,中间函数是不完整的.通过传入不同的回调函数,来决定、改变中间函数的行为.这就比简单的函数调用要灵活.
             回调函数可以携带额外的状态.
@@ -1620,7 +1623,7 @@ def 类与对象():
               即双下滑线开头的属性在继承给子类时,子类是无法覆盖的.
             
             这种变形需要注意的问题是:
-            1.这种机制也并没有真正意义上限制我们从外部直接访问属性,知道了类名和属性名就可以拼出名字:_类名__属性,然后就可以访问了,如a._A__N
+            1.这种机制也并没有真正意义上限制从外部直接访问属性,知道了类名和属性名就可以拼出名字:_类名__属性,然后就可以访问了,如a._A__N
             2.变形的过程只在类的内部生效,自定义的赋值操作,不会变形
             3.在继承中,父类如果不想让子类覆盖自己的方法,可以将方法定义为私有的
             a=A()
@@ -1772,105 +1775,104 @@ def 类与对象():
         def 内置函数super():
 
             super详解 = '''
-            返回一个代理对象,委托调用父类或兄弟类的方法.用于访问在继承中被覆盖的继承方法.getattr()搜索顺序与使用的顺序相同 .
-            该类__mro__属性列出了两者和使用的方法解析搜索顺序.该属性是动态的,只要继承层次更新就可以更改.getattr()super()
-            如果省略第二个参数,则返回的超类是未绑定的.如果第二个参数是一个对象,则isinstance(obj, type) 必须为真.如果第二个参数是一个类型,则 issubclass(type2, type)必须为true(这对于类方法很有用).
-            典型的超类调用如下所示:
-            class C(B):
-                def method(self, arg):
-                    super().method(arg)     # super(C, self).method(arg)
-
-            super() 函数是用于调用超类的方法.
-            如果是单继承可是使用类名来调用父类的方法.
-            super 是用来解决多重继承问题的,如果使用多继承,会涉及到查找顺序(MRO)、重复调用(钻石继承)等种种问题.
-            MRO 就是类的方法解析顺序表, 其实也就是继承父类方法时的顺序表.通过 类名.mro() 或 类名.__mro__  来查看MRO列表.
-
-            super 不一定指向父类, 他指向的是 mro 中的下一个类.
-            在 mro 中, 父类一定出现在子类后面, 若有多个父类, 其相对順序保持不变
-            super 对象不是其父类, 他的作用只是代理委托
-
-            super 的原理,可以用下面的代码理解:
-
-            def super(cls, obj):
-                mro = obj.__class__.mro()
-                return mro[mro.index(cls) + 1]
-
-            super 会去找第二个参数(可以是类,也可以是对象) 的mro.
-            返回 在mro 中第一个参数 cls 的下一個类.
-
-            举例:
-            class person:
-                def __init__(self, name):
-                    self.name = name
-
-                @property
-                def name(self):
-                    return self._name
-
-                @name.setter
-                def name(self, value):
-                    if not isinstance(value, str):
-                        raise TypeError('Expected a string')
-                    self._name = value
-
-                @name.deleter
-                def name(self):
-                    raise AttributeError("Can't delete attribute")
-
-            class subson(person):
-                @property
-                def name(self):
-                    print('getting name')
-                    return super().name
-
-                @name.setter
-                def name(self, value):
-                    print('setting name to', value)
-                    super(subson, subson).name.__set__(self, value)  # ??? 为什么要用 __set__  为什么不能用 super(subson,self)
-
-                @name.deleter
-                def name(self):
-                    print('delete name')
-                    super(subson, subson).name.__delete__(self)
-
-
-            s=subson('lisi') -----> setting name to lisi
-            s.__class__.mro()  -----> [<class '__main__.subson'>, <class '__main__.person'>, <class 'object'>]    # 对象s 的 类的mro
-            super(subson, s) 指的是 person类                                # s的类是subson, 在subson的mro中,subson的下一個是person类
-            super(subson, subson) 指的是 person                             # 在subson类的mro中 subson的下一个类是person类
-            super(subson, person) 指的是 object                             # 在person类的mro中并没有subson,  super(type, obj): obj必须是一个实例对象,或者是type的子类.
-
-            super 可以在类的外部使用,super 是一個內置函數, 不限制在 class 內部使用.
-            在类的外部使用时, 不允许省略参数, 不然不知道是找谁的 mro, 也不知道找谁的下一个
-            在类的內部使用时, 允许省略参数, 默认是super(类自己,self) 找的是自己的 mro, 找自己的下一个
-            super 不一定指向父类, 他指向的是 mro 中的下一個类.多重继承情况下,mro的下一个类可能是父类,也可能是兄弟类.
-            通常用 super 找单继承下的直接父类, 所以在类內部, 可以完全省略參数來调用 super()
-            实际上 並不能通过 super得到他指向的那个类, 只能通过 super 对象的代理去委托指向的那个类 使用其方法.
-
-            super在不同参数下可以代表unbound、bound到类型,Python3省略所有参数时候相当于super(class,self),是bound到对象.而super(class, class)自然是绑定到了父类.
-            实际上代码中super(subson, subson)是一种完全错误的写法,它应该被写成super(subson, type(self)),如果存在多继承的话,后一种写法才能正确代理到多继承的其他类上面去,实现菱形继承.只是在单继承的时候这种写法也正好可以用而已.
-
-            假如 A是一个类,而a是A的对象.
-            我们通过实例去调用类的方法实际上是这样做的:
-            A.__dict__['func'].__get__(a, A)=a.func -----> True  <bound method A.func of <__main__.A object at 0x0000025EB63AEC88>>
-            A.__dict__['func'].__get__(A, A)=A.func -----> True   <function __main__.A.func>
-            super(A,A).__init__是一个unbound,super(A,a).__init__是一个bound,
-            bound和unbound的区别,就是__get__操作的第一个参数是不是传入了一个实例对象.
-
-            关于绑定,类中的方法有staticmethod(无绑定)、method(绑定到对象)和classmethod(绑定到类)三种,第三种就是提供绑定到class的,它返回的类似于一个class对象.
-
-            接下来需要理解的是property的原理,property是在类的__dict__当中创建了一个描述对象,这个对象可以通过Person.name来获得.
-            对于@property创建的对象来说,property自己是个类,也是这个描述对象的类型,所以调用Person.name.__set__就相当于通过描述机制设置属性.
-            之所以要这么做是因为super()的代理并不是万能的,它差不多是个只读的代理,而不能写入,所以必须手工去调用__set__.
-
-            class Base:
-                def __init__(self):
-                    pass
-                def func(self):
-                    pass
-            a=Base()
-
-            '''
+                返回一个代理对象,委托调用父类或兄弟类的方法.用于访问在继承中被覆盖的继承方法.getattr()搜索顺序与使用的顺序相同 .
+                该类__mro__属性列出了两者和使用的方法解析搜索顺序.该属性是动态的,只要继承层次更新就可以更改.getattr()super()
+                如果省略第二个参数,则返回的超类是未绑定的.如果第二个参数是一个对象,则isinstance(obj, type) 必须为真.如果第二个参数是一个类型,则 issubclass(type2, type)必须为true(这对于类方法很有用).
+                典型的超类调用如下所示:
+                class C(B):
+                    def method(self, arg):
+                        super().method(arg)     # super(C, self).method(arg)
+    
+                super() 函数是用于调用超类的方法.
+                如果是单继承可是使用类名来调用父类的方法.
+                super 是用来解决多重继承问题的,如果使用多继承,会涉及到查找顺序(MRO)、重复调用(钻石继承)等种种问题.
+                MRO 就是类的方法解析顺序表, 其实也就是继承父类方法时的顺序表.通过 类名.mro() 或 类名.__mro__  来查看MRO列表.
+    
+                super 不一定指向父类, 他指向的是 mro 中的下一个类.
+                在 mro 中, 父类一定出现在子类后面, 若有多个父类, 其相对順序保持不变
+                super 对象不是其父类, 他的作用只是代理委托
+    
+                super 的原理,可以用下面的代码理解:
+    
+                def super(cls, obj):
+                    mro = obj.__class__.mro()
+                    return mro[mro.index(cls) + 1]
+    
+                super 会去找第二个参数(可以是类,也可以是对象) 的mro.
+                返回 在mro 中第一个参数 cls 的下一個类.
+    
+                举例:
+                class person:
+                    def __init__(self, name):
+                        self.name = name
+    
+                    @property
+                    def name(self):
+                        return self._name
+    
+                    @name.setter
+                    def name(self, value):
+                        if not isinstance(value, str):
+                            raise TypeError('Expected a string')
+                        self._name = value
+    
+                    @name.deleter
+                    def name(self):
+                        raise AttributeError("Can't delete attribute")
+    
+                class subson(person):
+                    @property
+                    def name(self):
+                        print('getting name')
+                        return super().name
+    
+                    @name.setter
+                    def name(self, value):
+                        print('setting name to', value)
+                        super(subson, subson).name.__set__(self, value)  # ??? 为什么要用 __set__  为什么不能用 super(subson,self)
+    
+                    @name.deleter
+                    def name(self):
+                        print('delete name')
+                        super(subson, subson).name.__delete__(self)
+    
+    
+                s=subson('lisi') -----> setting name to lisi
+                s.__class__.mro()  -----> [<class '__main__.subson'>, <class '__main__.person'>, <class 'object'>]    # 对象s 的 类的mro
+                super(subson, s) 指的是 person类                                # s的类是subson, 在subson的mro中,subson的下一個是person类
+                super(subson, subson) 指的是 person                             # 在subson类的mro中 subson的下一个类是person类
+                super(subson, person) 指的是 object                             # 在person类的mro中并没有subson,  super(type, obj): obj必须是一个实例对象,或者是type的子类.
+    
+                super 可以在类的外部使用,super 是一個內置函數, 不限制在 class 內部使用.
+                在类的外部使用时, 不允许省略参数, 不然不知道是找谁的 mro, 也不知道找谁的下一个
+                在类的內部使用时, 允许省略参数, 默认是super(类自己,self) 找的是自己的 mro, 找自己的下一个
+                super 不一定指向父类, 他指向的是 mro 中的下一個类.多重继承情况下,mro的下一个类可能是父类,也可能是兄弟类.
+                通常用 super 找单继承下的直接父类, 所以在类內部, 可以完全省略參数來调用 super()
+                实际上 並不能通过 super得到他指向的那个类, 只能通过 super 对象的代理去委托指向的那个类 使用其方法.
+    
+                super在不同参数下可以代表unbound、bound到类型,Python3省略所有参数时候相当于super(class,self),是bound到对象.而super(class, class)自然是绑定到了父类.
+                实际上代码中super(subson, subson)是一种完全错误的写法,它应该被写成super(subson, type(self)),如果存在多继承的话,后一种写法才能正确代理到多继承的其他类上面去,实现菱形继承.只是在单继承的时候这种写法也正好可以用而已.
+    
+                假如 A是一个类,而a是A的对象.
+                通过实例去调用类的方法实际上是这样做的:
+                A.__dict__['func'].__get__(a, A)=a.func -----> True  <bound method A.func of <__main__.A object at 0x0000025EB63AEC88>>
+                A.__dict__['func'].__get__(A, A)=A.func -----> True   <function __main__.A.func>
+                super(A,A).__init__是一个unbound,super(A,a).__init__是一个bound,
+                bound和unbound的区别,就是__get__操作的第一个参数是不是传入了一个实例对象.
+    
+                关于绑定,类中的方法有staticmethod(无绑定)、method(绑定到对象)和classmethod(绑定到类)三种,第三种就是提供绑定到class的,它返回的类似于一个class对象.
+    
+                接下来需要理解的是property的原理,property是在类的__dict__当中创建了一个描述对象,这个对象可以通过Person.name来获得.
+                对于@property创建的对象来说,property自己是个类,也是这个描述对象的类型,所以调用Person.name.__set__就相当于通过描述机制设置属性.
+                之所以要这么做是因为super()的代理并不是万能的,它差不多是个只读的代理,而不能写入,所以必须手工去调用__set__.
+    
+                class Base:
+                    def __init__(self):
+                        pass
+                    def func(self):
+                        pass
+                a=Base()
+                '''
 
             子类可以使用父类的所有属性和方法 = '''
                 super的官方文档
@@ -2001,7 +2003,7 @@ def 类与对象():
                 类A中使用 super().spam() 实际上调用的是跟类A毫无关系的类B中的 spam() 方法.查找顺序按照C的MRO列表.
 
                 使用 super() 时,注意在继承体系中所有相同名字的方法要拥有可兼容的参数(比如相同的参数个数和参数名称).这样可以确保 super() 调用一个非直接父类方法时不会出错.
-                最好确保最顶层的类提供了这个方法,在MRO上查找时,肯定可以找到你想要的方法.
+                最好确保最顶层的类提供了这个方法,在MRO上查找时,肯定可以找到想要的方法.
                 '''
 
         def 内置函数isinstance():
@@ -2174,7 +2176,7 @@ def 类与对象():
                     first_name = property(get_first_name,set_first_name,del_first_name)
 
                 property属性其实就是一系列相关绑定方法的集合.
-                如果你去查看拥有property的类,就会发现property本身的fget、fset和fdel属性就是类里面的普通方法.
+                如果去查看拥有property的类,就会发现property本身的fget、fset和fdel属性就是类里面的普通方法.
                 在使用frist_name = property(get_first_name,set_first_name,del_first_name) 创建property属性时.
                 括号里面的顺序不能变,分别对应的是 (fget,fset,fdel) 属性.通过指定property属性名字来调用.
                 比如:
@@ -2339,7 +2341,7 @@ def 类与对象():
                         self.y = y
 
                 __get__() 有点复杂的原因是实例变量和类变量的不同.如果一个描述器被当做一个类变量来访问,那么 instance 参数被设置成 None .
-                这种情况下,标准做法就是简单的返回这个描述器本身即可(尽管你还可以添加其他的自定义操作).例如:
+                这种情况下,标准做法就是简单的返回这个描述器本身即可(尽管还可以添加其他的自定义操作).例如:
 
                 class Integer:
                     def __get__(self, instance, cls):
@@ -2435,7 +2437,7 @@ def 类与对象():
             b.func() -----> this is type
             
             __metaclass__属性
-            你可以在写一个类的时候为其添加__metaclass__属性.
+            可以在写一个类的时候为其添加__metaclass__属性.
             class Foo(metaclass=something):
                 __metaclass__ = something     # 这是python2 中的写法，在python3 中已经失效.
             Python会用元类来创建类Foo. 当执行到 class Foo: 时,类对象Foo还没有在内存中创建.
@@ -2481,7 +2483,7 @@ def 类与对象():
             但实际的结果看来,SimpleMetaClass这个元类确实被使用过了,因为打印出了想要的结果.
             是因为python使用SimpleMetaClass元类来创建出了Earth这个类对象(不是Earth的一个实例).
             这个过程可以用一句话来描述:这个步骤相当于实例化了一个metaclass(SimpleMetaClass)对象,而这个对象正好是Earth类.
-            如果你不写 metaclass=SimpleMetaClass,最终这个类的元类就是type. SimpleMetaClass是继承自type的.
+            如果不写 metaclass=SimpleMetaClass,最终这个类的元类就是type. SimpleMetaClass是继承自type的.
             
             Earth类已经被metaclass所创建出来了,那么当实例化一个Earth类(也就是创建一个earth对象)的时候又发生了什么呢？
             有__call__,__new__这两个特殊方法,就能实现一个类的实例.对于一个实现了__call__的类,那么它的实例可以当做函数来调用.例子见 __call__ 的解释.
@@ -2492,7 +2494,7 @@ def 类与对象():
             instance = SomeClass()
             instance = SomeClass(args1,args2,...)
             类是元类的一个对象,而元类的实例都有一个__call__方法.拥有__call__方法的对象可以把对象当做一个函数调用.
-            我们在创建一个类的实例的时候,实际上是调用了这个类对象的元类的__call__(MetaClass:__call__)这个方法.
+            在创建一个类的实例的时候,实际上是调用了这个类对象的元类的__call__(MetaClass:__call__)这个方法.
 
             例子: 
             class SimpleMetaClass(type):
@@ -2550,7 +2552,7 @@ def 类与对象():
             这时,这个Earth类作为metaclass的一个实例就被创建好了.
             接下来通过 earth = Earth(9.8,R=65535) 创建一个Earth对象实例earth.
             这一步实际上是调用 Earth这个类对象的元类(SimpleMetaClass)的__call__方法来创建一个Earth的实例. 
-            打印出③,我们还能看到调用__call__的参数 .
+            打印出③,还能看到调用__call__的参数 .
             而创建earth实例的方法是调用 Earth这个类对象的 __new__(),和__init__(),
             先后执行 打印出④⑤⑥ 执行完成Earth实例earth对象被返回.
             ⑦⑧分别是调用earth实例的 __call__,sayHello方法的结果.
@@ -2907,7 +2909,7 @@ def 类与对象():
             2.__new__ 通常用于控制生成一个新实例的过程.它是类级别的方法.
 
             __new__最通常的用法:
-            __new__方法主要是当你继承一些不可变的class时(比如int, str, tuple), 提供给你一个自定义这些类的实例化过程的途径.
+            __new__方法主要是当继承一些不可变的class时(比如int, str, tuple), 提供一个自定义这些类的实例化过程的途径.
             实现自定义的metaclass.见 __metaclass__
             实现单例.
 
@@ -2921,12 +2923,12 @@ def 类与对象():
 
             用__new__来实现单例 单例适合只有一个对象的时候用.
             实现 设计模式中的 单例模式(singleton) .
-            因为类每一次实例化后产生的过程都是通过__new__来控制的,所以通过重载__new__方法,我们 可以很简单的实现单例模式.
+            因为类每一次实例化后产生的过程都是通过__new__来控制的,所以通过重载__new__方法, 可以很简单的实现单例模式.
 
             class person:
                 def __new__(cls):
                     if not hasattr(cls,'instance'):
-                        # 关键在于这,每一次实例化的时候,我们都只会返回这同一个instance对象
+                        # 关键在于这,每一次实例化的时候,都只会返回这同一个instance对象
                         cls.instance = super(person,cls).__new__(cls)
                         #cls.instance = super(person,person).__new__(cls)       # 注释掉的两种写法产生的结果与第一种写法的结果一样,推荐第一种.
                         #cls.instance = object.__new__(cls)
@@ -3172,7 +3174,7 @@ def 类与对象():
             描述器只能在类级别被定义
             __get__() 看上去有点复杂的原因归结于实例变量和类变量的不同。
             如果一个描述器被当做一个类变量来访问，那么 instance 参数被设置成 None 。
-            这种情况下，标准做法就是简单的返回这个描述器本身即可(尽管你还可以添加其他的自定义操作)。
+            这种情况下，标准做法就是简单的返回这个描述器本身即可(尽管还可以添加其他的自定义操作)。
             '''
 
         类的装饰器与描述器 = '''
@@ -3203,7 +3205,7 @@ def 类与对象():
                         # 将类型描述器附加到类中
                         # 将 cls 的name 属性设置为 Typed的一个实例对象。是一个描述器对象。
                         setattr(cls, name, Typed(name, expected_type))
-                        # 如果你想打印 cls的属性。这里不能print(cls.name)
+                        # 如果想打印 cls的属性。这里不能print(cls.name)
                         # cls.name 这样只会调用类的name 属性。这里的name与for循环的name不是一个。
                         # 应该是使用 print(getattr(cls,name))  #这里的name才是 for循环的name。 
                     print(cls.__dict__)
@@ -3224,8 +3226,957 @@ def 类与对象():
             
             s=Stock('A',1,3.4)
             如果只是想简单的自定义某个类的单个属性访问的话就不用去写描述器了.这种情况下使用property会更加容易.
-            当程序中有很多重复代码的时候描述器就很有用了(比如你想在你代码的很多地方使用描述器提供的功能或者将它作为一个函数库特性).
+            当程序中有很多重复代码的时候描述器就很有用了(比如想在代码的很多地方使用描述器提供的功能或者将它作为一个函数库特性).
             '''
+
+        延迟计算属性 = '''
+            class lazyproperty:
+                def __init__(self,func):
+                    self.func = func
+                def __get__(self, instance, cls):       # 这里的instance 是下文中的 Circle的实例对象，cls 是 Circle 这个类。
+                    if instance is None:
+                        return self
+                    else:
+                        value = self.func(instance)     # 这里的instance 就是 对象方法中的self。
+                        setattr(instance,self.func.__name__,value)      # 将值存储在实例字典中
+                        return value
+            
+            import math
+
+            class Circle:
+                def __init__(self,radius):
+                    self.radius = radius
+            
+                @lazyproperty   # area = lazyproperty(area)
+                def area(self):
+                    print('area')
+                    return math.pi * self.radius ** 2
+            
+                @lazyproperty
+                def peri(self):
+                    print('peri')
+                    return math.pi * self.radius *2
+            c=Circle(3)
+            print(c.area)
+            print(c.peri)
+            print(c.area)
+            print(c.peri)
+            在上文中 类的描述器 中提到:
+            只定义__get__()的描述器被称为非数据描述器.
+            如果对象的字典中有一个与非数据描述器名称相同的条目,则字典条目优先.
+            只有当被访问属性不在实例底层的字典中时 __get__() 方法才会被触发。
+            所以当第一次访问时才会触发 __get__
+            '''
+
+        基类中公用的__init__函数 = '''
+            有很多仅仅用作数据结构的类，可以简化数据结构的初始化
+            
+            class Structure:
+                # 形参的字段列表
+                _fields = list()
+                def __init__(self,*args,**kwargs):
+                    # 判断字段个数的一致性,如果实参的个数大于形参的个数 触发异常
+                    if len(args) > len(self._fields):
+                        raise TypeError('Expected {} arguments'.format(len(self._fields)))
+            
+                    # 将位置参数设置为实例属性
+                    for name,value in zip(self._fields,args):
+                        setattr(self,name,value)
+            
+                    # 将关键字参数设置为实例属性
+                    for name in self._fields[len(args):]:
+                        setattr(self, name, kwargs.pop(name))
+            
+                    # 将 不在 _fields 中的参数设置为实例属性 字典的 keys(),items() 方法有类似集合的操作方法。
+                    extra_args = kwargs.keys() - self._fields
+                    for name in extra_args:
+                        setattr(self,name,kwargs.pop(name))
+            
+                    # 如果还有其他参数，触发异常
+                    if kwargs:
+                        raise TypeError('Duplicate values for {}'.format(','.join(kwargs)))
+            
+            class test(Structure):
+                _fields = ['a','b','c']
+            
+            t1 = test(1,2,3)
+            t2 = test(1,2,c=3)
+            t3 = test(1,2,3,d=4)
+            t4 = test(1,2,c=3,d=4)
+        
+        '''
+
+        抽象基类 = '''
+            定义一个接口或抽象类，并且通过执行类型检查来确保子类实现了某些特定的方法
+            使用 abc 模块可以很轻松的定义抽象基类
+            from abc import ABCMeta, abstractmethod
+            略
+            http://python3-cookbook.readthedocs.io/zh_CN/latest/c08/p12_define_interface_or_abstract_base_class.html
+            '''
+
+        代理模式 = '''
+            代理是一种编程模式，它将某个操作转移给另外一个对象来实现。
+            __getattr __（）方法实际上是一种后备方法只有在找不到属性时才会调用它.
+            class Proxy:
+                def __init__(self,obj):
+                    self._obj = obj
+                def __getattr__(self, item):
+                    return getattr(self._obj,item)
+                def __setattr__(self, key, value):
+                    if key.startswith('_'):
+                        super().__setattr__(key,value)
+                    else:
+                        setattr(self._obj,key,value)
+            
+                def __delattr__(self, item):
+                    if item.startswith('_'):
+                        super().__delattr__(item)
+                    else:
+                        delattr(self._obj,item)
+            
+            
+            class Spam:
+                def __init__(self,x):
+                    self.x=x
+                def bar(self,y):
+                    print(self.x,y)
+            
+            s = Spam(2)
+            p=Proxy(s)
+            print(p.x)
+            p.bar(1)
+            p.x = 37
+            print(p.x)
+            
+            通过自定义属性访问方法，可以用不同方式自定义代理类行为(比如加入日志功能、只读访问等)
+            只代理那些不以下划线 _ 开头的属性
+            __getattr__() 对于大部分以双下划线(__)开始和结尾的属性并不适用
+           '''
+
+        类方法实现多个构造器 = '''
+            import time
+            class Date:
+                def __init__(self,year,month,day):
+                    self.year = year
+                    self.month = month
+                    self.day =day
+                    
+                @classmethod
+                def today(cls):
+                    t=time.localtime()
+                    return cls(t.tm_year,t.tm_month,t.tm_day)
+                    
+            a=Date(1,2,3)
+            b=Date.today()
+            print(a.year,b.year)
+            
+            类方法的一个主要用途就是定义多个构造器。它接受一个 class 作为第一个参数(cls)。 这个类被用来创建并返回最终的实例。
+            当一个类有多个构造函数时，__init__() 函数应尽可能简单，只有赋值操作。在备选的构造函数里实现更高级的功能。
+            '''
+
+        创建不调用init方法的实例 = '''
+            import time
+            class Date:
+                def __init__(self,year,month,day):
+                    self.year = year
+                    self.month = month
+                    self.day =day
+            
+                @classmethod
+                def today(cls):
+                    d = cls.__new__(cls)
+                    t=time.localtime()
+                    d.year = t.tm_year
+                    d.month = t.tm_mon
+                    d.day = t.tm_mday
+                    return d
+            
+                @classmethod
+                def strftime(cls,data):
+                    d = cls.__new__(cls)
+                    if isinstance(data,dict):
+                        for k,v in data.items():
+                            setattr(d,k,v)
+                    else:
+                        raise TypeError('Data must be a dict instance.')
+                    return d
+            
+            
+            d1=Date(1,2,3)
+            print(d1.year,d1.day)
+            d2=Date.today()
+            print(d2.year,d2.day)
+            d3=Date.strftime({'year':2012, 'month':8, 'day':29})
+            print(d3.year,d3.day)
+            '''
+
+        利用混入扩展类功能 = '''
+            有很多有用的方法，想使用它们来扩展其他类的功能。
+            但是这些类并没有任何继承的关系。 
+            因此不能简单的将这些方法放入一个基类，然后被其他类继承。
+            
+            自定义类的时候会碰上这些问题。可能是某个库提供了一些基础类， 可以利用它们来构造自己的类。
+            假设想扩展映射对象，给它们添加日志、唯一性设置、类型检查等等功能。
+            
+            # 添加日志等功能
+            class LoggedMappingMixin:
+
+                __slots__ = ()  # 混入类都没有实例变量，因为直接实例化混入类没有任何意义
+            
+                def __getitem__(self, key):
+                    print('Getting ' + str(key))
+                    return super().__getitem__(key)
+            
+                def __setitem__(self, key, value):
+                    print('Setting {} = {!r}'.format(key, value))
+                    return super().__setitem__(key, value)
+            
+                def __delitem__(self, key):
+                    print('Deleting ' + str(key))
+                    return super().__delitem__(key)
+            
+            # 键只能设置一次
+            class SetOnceMappingMixin:
+
+                __slots__ = ()
+            
+                def __setitem__(self, key, value):
+                    if key in self:
+                        raise KeyError(str(key) + ' already set')
+                    return super().__setitem__(key, value)
+            
+            # 键只能是字符串
+            class StringKeysMappingMixin:
+
+                __slots__ = ()
+            
+                def __setitem__(self, key, value):
+                    if not isinstance(key, str):
+                        raise TypeError('keys must be strings')
+                    return super().__setitem__(key, value)
+            
+            class LoggedDict(LoggedMappingMixin, dict):
+                pass
+            
+            d = LoggedDict()
+            d['x'] = 23
+            print(d['x'])
+            del d['x']
+            
+            from collections import defaultdict
+            
+            class SetOnceDefaultDict(SetOnceMappingMixin, StringKeysMappingMixin, defaultdict):
+                pass
+            
+            d = SetOnceDefaultDict(list)
+            d['x'].append(2)
+            d['x'].append(3)
+            s = SetOnceDefaultDict(dict)
+            s['a'] = 2
+            
+            混入类不能直接被实例化使用。 
+            其次，混入类没有自己的状态信息，也就是说它们并没有定义 __init__() 方法，并且没有实例属性。 
+            这也是为什么在上面明确定义了 __slots__ = () 。
+            
+            # 第二种方式：使用类装饰器
+            def LoggedMapping(cls):
+                cls_getitem = cls.__getitem__
+                cls_setitem = cls.__setitem__
+                cls_delitem = cls.__delitem__
+            
+                def __getitem__(self, key):
+                    print('Getting ' + str(key))
+                    return cls_getitem(self, key)
+            
+                def __setitem__(self, key, value):
+                    print('Setting {} = {!r}'.format(key, value))
+                    return cls_setitem(self, key, value)
+            
+                def __delitem__(self, key):
+                    print('Deleting ' + str(key))
+                    return cls_delitem(self, key)
+            
+                cls.__getitem__ = __getitem__
+                cls.__setitem__ = __setitem__
+                cls.__delitem__ = __delitem__
+                return cls
+        
+        
+            @LoggedMapping
+            class LoggedDict(dict):
+                pass
+            这个效果跟之前的是一样的，而且不再需要使用多继承。
+            '''
+
+        通过字符串调用对象方法 = '''
+            通过字符串形式的方法名称,调用某个对象的对应方法。最简单的情况，可以使用 getattr()
+            另外一种方法是使用 operator.methodcaller()
+            import math
+            
+            class Point:
+                def __init__(self, x, y):
+                    self.x = x
+                    self.y = y
+            
+                def __repr__(self):
+                    return 'Point({!r:},{!r:})'.format(self.x, self.y)
+            
+                def distance(self, x, y):
+                    return math.hypot(self.x - x, self.y - y)
+            
+            import operator
+            operator.methodcaller('distance', 0, 0)(p)
+            当需要通过相同的参数多次调用某个方法时，使用 operator.methodcaller 就很方便了。 比如需要排序一系列的点，就可以这样做：
+            
+            points = [
+                Point(1, 2),
+                Point(3, 0),
+                Point(10, -3),
+                Point(-5, -7),
+                Point(-1, 8),
+                Point(3, 2)
+            ]
+            # Sort by distance from origin (0, 0)
+            points.sort(key=operator.methodcaller('distance', 0, 0))
+
+            调用一个方法实际上是两部独立操作，第一步是查找属性，第二步是函数调用。 
+            因此，为了调用某个方法，可以首先通过 getattr() 来查找到这个属性，然后再去以函数方式调用它即可。
+            operator.methodcaller() 创建一个可调用对象，并同时提供所有必要参数， 然后调用的时候只需要将实例对象传递给它即可，比如：
+            
+            p = Point(3, 4)
+            d = operator.methodcaller('distance', 0, 0)
+            d(p) -----> 5.0
+            '''
+
+        访问者模式实现case = '''
+            处理由大量不同类型的对象组成的复杂数据结构，每一个对象都需要进行不同的处理
+            如: 写一个HTTP框架，可能会写这样一个请求分发的控制器
+            class HTTPHandler:
+                def handle(self, request):
+                    methname = 'do_' + request.request_method
+                    getattr(self, methname)(request)
+                def do_GET(self, request):
+                    pass
+                def do_POST(self, request):
+                    pass
+                def do_HEAD(self, request):
+                    pass
+        
+            '''
+
+        让类支持比较操作 = '''
+            Python类对每个比较操作都需要实现一个特殊方法来支持。 
+            例如为了支持>=操作符，需要定义一个 __ge__() 方法。
+            装饰器 functools.total_ordering 就是用来简化这个处理的。 
+            使用它来装饰一个类，只需定义一个 __eq__() 方法， 外加其他方法(__lt__, __le__, __gt__, or __ge__)中的一个即可。 
+            然后装饰器会自动填充其它比较方法。
+            
+            class Myorder:
+                def __eq__(self, other):
+                    pass
+                def __lt__(self, other):
+                    pass
+                # Methods created by @total_ordering
+                __le__ = lambda self, other: self < other or self == other
+                __gt__ = lambda self, other: not (self < other or self == other)
+                __ge__ = lambda self, other: not (self < other)
+                __ne__ = lambda self, other: not self == other
+            '''
+
+def 元编程():
+
+    def 装饰器():
+
+        解除一个装饰器 = '''
+            一个装饰器作用在某个函数上，但是这个函数的重要的元信息比如名字、文档字符串、注解和参数签名都丢失了。
+            任何时候定义装饰器的时候，都应该使用 functools 库中的 @wraps 装饰器来注解底层包装函数。
+            一个装饰器已经作用在一个函数上，想撤销它，直接访问原始的未包装的那个函数。
+            from functools import wraps
+
+            def decorator1(func):
+                @wraps(func)
+                def wrapper(*args, **kwargs):
+                    print('Decorator 1')
+                    return func(*args, **kwargs)
+                return wrapper
+            
+            @decorator1
+            def add(x, y):
+                return x + y
+            add(2, 3)
+            # Decorator 1
+            # Decorator 2    
+            add.__wrapped__(2, 3) -----> 5  
+            '''
+
+        将装饰器定义为类的一部分 = '''
+            在类中定义装饰器，并将其作用在其他函数或方法上。
+            首先要确认它的使用方式。比如到底是作为一个实例方法还是类方法。
+            
+            from functools import wraps
+            class A:
+                # 作为实例方法
+                def decorator1(self, func):
+                    @wraps(func)
+                    def wrapper(*args, **kwargs):
+                        print('Decorator 1')
+                        return func(*args, **kwargs)
+                    return wrapper
+            
+                # 作为类方法
+                @classmethod
+                def decorator2(cls, func):
+                    @wraps(func)
+                    def wrapper(*args, **kwargs):
+                        print('Decorator 2')
+                        return func(*args, **kwargs)
+                    return wrapper
+            下面是一使用例子：
+            # 作为实例方法
+            a = A()
+            @a.decorator1
+            def spam():
+                pass
+            # 作为类方法
+            @A.decorator2
+            def grok():
+                pass
+
+            @property 装饰器实际上是一个类，它里面定义了三个方法 getter(), setter(), deleter() , 每一个方法都是一个装饰器。例如：
+            
+            class Person:
+                # 创建一个 property 对象
+                first_name = property()
+            
+                # 应用装饰器的方法
+                @first_name.getter
+                def first_name(self):
+                    return self._first_name
+            
+                @first_name.setter
+                def first_name(self, value):
+                    if not isinstance(value, str):
+                        raise TypeError('Expected a string')
+                    self._first_name = value
+
+            
+            在类中定义装饰器有额外参数 self 或 cls 。 
+            最外层的装饰器函数比如 decorator1() 或 decorator2() 需要一个 self 或 cls 参数， 
+            但是在装饰器内部被创建的 wrapper() 函数不需要 self 参数。 
+            唯一需要这个参数是在访问装饰器中这个实例的某些部分的时候。
+            其他情况下都不用去管它。
+            
+            类里面定义的装饰器在涉及到继承的时候。必须显式的使用父类名去调用它 
+            例如，假设想让在A中定义的装饰器作用在子类B中。需要像下面这样写：
+            
+            class B(A):
+                @A.decorator2
+                def bar(self):
+                    pass
+           不能使用 @B.decorator2 ，因为在方法定义时，这个类B还没有被创建。
+            '''
+
+def 模块和包():
+    '''
+    详见 http://www.cnblogs.com/Eva-J/articles/7292109.html#_label7
+    模块就是一个py文件
+    所谓的模块导入 就是执行了这个文件而已
+    import加载的模块分为四个通用类别：　
+    　　1 使用python编写的代码（.py文件）
+    　　2 已被编译为共享库或DLL的C或C++扩展
+    　　3 包好一组模块的包
+    　　4 内置模块
+
+    import
+    模块可以包含可执行的语句和函数的定义.
+    它们只在模块名第一次遇到导入import语句时才执行.
+    import语句是可以在程序中的任意位置使用的,且针对同一个模块可以import多次.
+    第一次导入后就将模块名加载到内存了，后续的import语句仅是对已经加载大内存中的模块对象增加了一次引用，不会重新执行模块内的语句
+    模块之间不能发生循环引用。
+
+    可以从sys.modules中找到当前已经加载的模块。
+    sys.modules是一个字典，内部包含模块名与模块对象的映射，该字典决定了导入模块时是否需要重新导入。
+
+    每个模块都是一个独立的名称空间
+    把这个模块的名称空间当做全局名称空间，这样在编写自己的模块时，就不用担心定义在自己模块中全局变量会在被导入时，与使用者的全局变量冲突
+
+    首次导入模块my_module时会做三件事：
+    1.为源文件(my_module模块)创建新的名称空间。
+    2.在新创建的命名空间中执行模块中包含的代码事实上函数定义也是“被执行”的语句，模块级别函数定义的执行将函数名放入模块全局名称空间表，用globals()可以查看
+    3.创建名字my_module来引用该命名空间
+
+    为模块名起别名
+    import my_module as sm
+    from import 也支持 as语句 也支持 导入多个名字
+    from my_mod import func1 as f1,func2 as f2
+
+    例:
+    def sqlparse():
+        print('from mysql sqlparse')
+
+    def sqlparse():
+        print('from oracle sqlparse')
+
+    db_type=input('>>: ')
+    if db_type == 'mysql':
+        import mysql as db
+    elif db_type == 'oracle':
+        import oracle as db
+
+    例:
+    为已经导入的模块起别名的方式编写可扩展的代码.
+    假设有两个模块xmlreader.py和csvreader.py，它们都定义了函数read_data(filename):用来从文件中读取一些数据，但采用不同的输入格式。
+    可以编写代码来选择性地挑选读取模块，例如
+    if file_format == 'xml':
+         import xmlreader as reader
+    elif file_format == 'csv':
+         import csvreader as reader
+    data=reader.read_date(filename)
+
+    在一行导入多个模块
+    import sys,os,re
+    from ... import...
+
+    对比import my_module，会将源文件的名称空间'my_module'带到当前名称空间中，使用时必须是my_module.名字的方式
+    而from 语句相当于import，也会创建新的名称空间，但是将my_module中的名字直接导入到当前的名称空间中，在当前名称空间中，直接使用名字就可以了、
+    from my_module import read1,read2
+    这样在当前位置直接使用read1和read2就好了，执行时，仍然以my_module.py文件全局名称空间
+
+    如果当前有重名read1或者read2，那么会有覆盖效果。
+    python中的变量赋值不是一种存储操作，而只是一种绑定关系
+
+    from my_module import read1 as read
+    from my_module import (read1,
+                         read2,
+                         money)
+
+    from my_module import *     # 把my_module中所有的不是以下划线(_)开头的名字都导入到当前位置
+    from my_module import *     # 将模块my_module中所有的名字都导入到当前名称空间
+
+    在my_module.py中新增一行
+    __all__=['money','read1']   # 这样在另外一个文件中用from my_module import *就这能导入列表中规定的两个名字
+    如果my_module.py中的名字前加_,即_money，则from my_module import *,则_money不能被导入
+    每个模块只被导入一次,放入字典sys.modules中，如果改变了模块的内容，必须重启程序，python不支持重新加载或卸载之前导入的模块，
+
+    可以通过模块的全局变量__name__来查看模块名：
+    当做脚本运行：
+    __name__ 等于'__main__'
+
+    当做模块导入：
+    __name__= 模块名
+
+    模块搜索路径
+    python解释器在启动时会自动加载一些模块，可以使用sys.modules查看
+    在第一次导入某个模块时（比如my_module），会先检查该模块是否已经被加载到内存中（当前执行文件的名称空间对应的内存），如果有则直接引用
+    如果没有，解释器则会查找同名的内建模块，如果还没有找到就从sys.path给出的目录列表中依次寻找my_module.py文件。
+    模块的查找顺序是：内存中已经加载的模块->内置模块->sys.path路径中包含的模块
+
+    包:
+    一组py文件组成的文件夹，在这个文件夹里有一个__init__.py，包
+
+    import glance.api.policy as policy
+    policy.get()
+    import glance.api.policy
+    glance.api.policy.get()
+
+    from...import
+    from glance.api import policy
+    policy.get()
+
+    # 为什么模块的导入要从glance开始？
+    # 精确到一个模块
+
+
+    __init__文件有什么用？
+    导入一个包相当于执行这个包中的__init__ 文件
+    import后面的这个名字 永远会出现在全局的命名空间里
+
+    sys.path的初始化的值来自于：
+    需要特别注意的是：自定义的模块名不应该与系统内置模块重名。
+    在初始化后，python程序可以修改sys.path,路径放到前面的优先于标准库被加载。
+    import sys
+    sys.path.append('/a/b/c/d')
+    sys.path.insert(0,'/x/y/z') #排在前的目录，优先被搜索
+    注意：搜索时按照sys.path中从左到右的顺序查找，位于前的优先被查找。
+    sys.path中还可能包含.zip归档文件和.egg文件，python会把.zip归档文件当成一个目录去处理。
+
+    import sys
+    sys.path.append('module.zip')
+    import foo,bar
+
+    #也可以使用zip中目录结构的具体位置
+    sys.path.append('module.zip/lib/python')
+
+    #windows下的路径不加r开头，会语法错误
+    sys.path.insert(0,r'C:\Users\Administrator\PycharmProjects\a')
+    至于.egg文件是由setuptools创建的包，这是按照第三方python库和扩展时使用的一种常见格式，.egg文件实际上只是添加了额外元数据(如版本号，依赖项等)的.zip文件。
+    只能从.zip文件中导入.py，.pyc等文件。使用C编写的共享库和扩展块无法直接从.zip文件中加载（此时setuptools等打包系统有时能提供一种规避方法），且从.zip中加载文件不会创建.pyc或者.pyo文件，因此一定要事先创建他们，来避免加载模块是性能下降。
+    官网链接：https://docs.python.org/3/tutorial/modules.html#the-module-search-path
+    搜索路径：
+    当一个命名为my_module的模块被导入时
+        解释器首先会从内建模块中寻找该名字
+        找不到，则去sys.path中找该名字
+
+    sys.path从以下位置初始化
+    执行文件所在的当前目录
+    在支持软连接的文件系统中，执行脚本所在的目录是在软连接之后被计算的。
+    包含软连接的目录不会被添加到模块的搜索路径中
+    在初始化后，也可以在python程序中修改sys.path,执行文件所在的路径默认是sys.path的第一个目录。在所有标准库路径的前面。
+    当前目录是优先于标准库目录的
+    https://docs.python.org/3/library/compileall.html#module-compileall
+    '''
+
+    __init__用法 = '''
+        文件__init__.py的目的是要包含不同运行级别的包的可选的初始化代码。
+        __init__.py能够用来自动加载子模块
+        
+        # 一个目录的层级结构
+        graphics/
+            __init__.py
+            primitive/
+                __init__.py
+                line.py
+                fill.py
+                text.py
+            formats/
+                __init__.py
+                png.py
+                jpg.py
+                
+        # graphics/formats/__init__.py
+        from . import jpg
+        from . import png
+        
+        通过import grahpics.formats来代替import graphics.formats.jpg以及import graphics.formats.png。
+        
+        目录有以下文件：
+
+        mymodule/
+            __init__.py
+            a.py
+            b.py
+        在a.py文件中插入以下代码：
+        # a.py
+        class A:
+            def spam(self):
+                print('A.spam')
+        
+        在b.py文件中插入以下代码：
+        # b.py
+        from .a import A
+        class B(A):
+            def bar(self):
+                print('B.bar')
+        最后，在 __init__.py 中，将2个文件粘合在一起：
+        
+        # __init__.py
+        from .a import A
+        from .b import B
+        如果按照这些步骤，所产生的包mymodule将作为一个单一的逻辑模块：
+        合并多个文件合并成一个单一的逻辑命名空间。使用 __init__.py 文件来将每部分粘合在一起。
+        from mymodule import A, B
+        '''
+
+    控制模块被导入的内容 = '''
+        当使用’from module import *’ 语句时，希望对从模块或包导出的符号进行精确控制。
+
+        在被导入模块中定义一个变量 __all__ 来明确地列出需要导出的内容。
+        
+        举个例子:
+        
+        # somemodule.py
+        def spam():
+            pass
+        
+        def grok():
+            pass
+        
+        blah = 42
+        # Only export 'spam' and 'grok'
+        __all__ = ['spam', 'grok']
+        
+        反对使用 ‘from module import *’, 但如果定义了 __all__ , 那么只有被列举出的东西会被导出。
+        如果将 __all__ 定义成一个空列表, 没有东西将被导入。 
+        如果 __all__ 包含未定义的名字, 在导入时引起AttributeError。
+        '''
+
+    使用相对路径导入 = '''
+        使用包的相对导入，使一个模块导入在同一个包下的另一个模块 
+        举个例子，假设在文件系统上有mypackage包，组织如下：
+        
+        mypackage/
+            __init__.py
+            A/
+                __init__.py
+                spam.py
+                grok.py
+            B/
+                __init__.py
+                bar.py
+        
+        如果模块mypackage.A.spam要导入同目录下的模块grok，它应该包括的import语句如下：
+        # mypackage/A/spam.py
+        from . import grok
+        
+        如果模块mypackage.A.spam要导入不同目录下的模块B.bar，它应该使用的import语句如下：
+        # mypackage/A/spam.py
+        from ..B import bar
+        两个import语句都没包含顶层包名，而是使用了spam.py的相对路径。
+        
+
+        在包内，既可以使用相对路径也可以使用绝对路径来导入。 举个例子：
+        
+        # mypackage/A/spam.py
+        from mypackage.A import grok # OK
+        from . import grok # OK
+        import grok # Error (not found)
+        像mypackage.A这样使用绝对路径名的不利之处是这将顶层包名硬编码到源码中。
+        如果改变了包名，就必须检查所有文件来修正源码。 
+        
+        import语句的 . 和 .. 指定目录名.为当前目录，..B为目录../B。这种语法只适用于import。 举个例子：
+        
+        from . import grok # OK
+        import .grok # ERROR
+        使用点的这种模式 从不是包的目录中导入将会引发错误。
+        
+        相对导入只适用于在合适的包中的模块。尤其是在顶层的脚本的简单模块中，它们将不起作用。如果包的部分被作为脚本直接执行，那它们将不起作用 例如：
+        
+        % python3 mypackage/A/spam.py # Relative imports fail
+        另一方面，如果使用Python的-m选项来执行先前的脚本，相对导入将会正确运行。 例如：
+        % python3 -m mypackage.A.spam # Relative imports work
+        '''
+
+    用命名空间导入不同目录分散的代码 = '''
+
+        用共同的包前缀将所有组件连接起来，不是将每一个部分作为独立的包来安装。
+        在统一不同的目录里统一相同的命名空间，但是要删去用来将组件联合起来的__init__.py文件。
+        假设有Python代码的两个不同的目录如下：
+        
+        foo-package/
+            spam/
+                blah.py
+        
+        bar-package/
+            spam/
+                grok.py
+        
+        在这2个目录里，都有着共同的命名空间spam。在任何一个目录里都没有__init__.py文件。
+        将foo-package和bar-package都加到python模块路径导入
+        
+        >>> import sys
+        >>> sys.path.extend(['foo-package', 'bar-package'])
+        >>> import spam.blah
+        >>> import spam.grok
+        >>>
+        两个不同的包目录被合并到一起，可以导入spam.blah和spam.grok，并且它们能够工作。
+        在这里工作的机制被称为“包命名空间”的一个特征。
+        本质上，包命名空间是一种特殊的封装设计，为合并不同的目录的代码到一个共同的命名空间。
+        包命名空间的关键是确保顶级目录中没有__init__.py文件来作为共同的命名空间。
+        缺失__init__.py文件使得在导入包的时候 解释器创建了一个由所有包含匹配包名的目录组成的列表。
+        特殊的包命名空间模块被创建，只读的目录列表副本被存储在其__path__变量中。 举个例子：
+        
+        >>> import spam
+        >>> spam.__path__
+        _NamespacePath(['foo-package/spam', 'bar-package/spam'])
+        >>>
+        在定位包的子组件时，目录__path__将被用到(例如, 当导入spam.grok或者spam.blah的时候).
+        包命名空间的一个重要特点是任何人都可以用自己的代码来扩展命名空间。
+        举个例子，假设代码目录像这样：
+        
+        my-package/
+            spam/
+                custom.py
+        如果将代码目录和其他包一起添加到sys.path，这将无缝地合并到别的spam包目录中：
+        >>> import spam.custom
+        >>> import spam.grok
+        >>> import spam.blah
+        >>>
+        一个包是否被作为一个包命名空间的主要方法是检查其__file__属性。如果没有，那包是个命名空间。这也可以由其字符表现形式中的“namespace”这个词体现出来。
+        
+        >>> spam.__file__
+        Traceback (most recent call last):
+            File "<stdin>", line 1, in <module>
+        AttributeError: 'module' object has no attribute '__file__'
+        >>> spam
+        <module 'spam' (namespace)>
+        >>>
+        '''
+
+    重新加载模块 = '''
+        重新加载已经加载的模块。
+        使用imp.reload()来重新加载先前加载的模块。举个例子：
+        >>> import spam
+        >>> import imp
+        >>> imp.reload(spam)
+        <module 'spam' from './spam.py'>
+        >>>
+        重新加载模块在开发和调试过程中常常很有用。但在生产环境中的代码使用会不安全，因为它并不总是像您期望的那样工作。
+        reload()擦除了模块底层字典的内容，并通过重新执行模块的源代码来刷新它。
+        '''
+
+    运行目录或压缩文件 = '''
+        如果应用程序已经有多个文件，可以把应用程序放进它自己的目录并添加一个__main__.py文件。 
+        举个例子，可以像这样创建目录：
+        
+        myapplication/
+            spam.py
+            bar.py
+            grok.py
+            __main__.py
+        如果__main__.py存在，可以简单地在顶级目录运行Python解释器：
+        
+        bash % python3 myapplication
+        解释器将执行__main__.py文件作为主程序。
+        
+        如果将代码打包成zip文件，这种技术同样也适用，举个例子：
+        
+        bash % ls
+        spam.py bar.py grok.py __main__.py
+        bash % zip -r myapp.zip *.py
+        bash % python3 myapp.zip
+        ... output from __main__.py ...
+        
+        创建一个目录或zip文件并添加__main__.py文件来将一个更大的Python应用打包是可行的。
+        这和作为标准库被安装到Python库的代码包是有一点区别的。相反，这只是让别人执行的代码包。
+        由于目录和zip文件与正常文件有一点不同，可能还需要增加一个shell脚本，使执行更加容易。
+        例如，如果代码文件名为myapp.zip，可以创建这样一个顶级脚本：
+        #!/usr/bin/env python3 /usr/local/bin/myapp.zip
+        '''
+
+    读取包中的数据文件  = '''
+        包中包含代码需要去读取的数据文件。需要尽可能地用最便捷的方式来做这件事。
+        假设包中的文件组织成如下：
+        
+        mypackage/
+            __init__.py
+            somedata.dat
+            spam.py
+        现在假设spam.py文件需要读取somedata.dat文件中的内容。可以用以下代码来完成：
+        
+        # spam.py
+        import pkgutil
+        data = pkgutil.get_data(__package__, 'somedata.dat')
+        由此产生的变量是包含该文件的原始内容的字节字符串。
+        pkgutil.get_data()函数是一个读取数据文件的高级工具，不用管包是如何安装以及安装在哪。
+        它只是工作并将文件内容以字节字符串返回
+        get_data()的第一个参数是包含包名的字符串。可以直接使用包名，也可以使用特殊的变量，比如__package__。
+        第二个参数是包内文件的相对名称。如果有必要，可以使用标准的Unix命名规范到不同的目录，只要最后的目录仍然位于包中。
+        '''
+
+    将文件夹加入到sys点path = '''
+        添加新目录到Python路径。
+
+        有两种常用的方式将新目录添加到sys.path。第一种，可以使用PYTHONPATH环境变量来添加。例如：
+        
+        bash % env PYTHONPATH=/some/dir:/other/dir python3
+        Python 3.3.0 (default, Oct 4 2012, 10:17:33)
+        [GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
+        Type "help", "copyright", "credits" or "license" for more information.
+        >>> import sys
+        >>> sys.path
+        ['', '/some/dir', '/other/dir', ...]
+        >>>
+        在自定义应用程序中，这样的环境变量可在程序启动时设置或通过shell脚本。
+        
+        第二种方法是创建一个.pth文件，将目录列举出来，像这样：
+        # myapplication.pth
+        /some/dir
+        /other/dir
+        这个.pth文件需要放在某个Python的site-packages目录，通常位于/usr/local/lib/python3.3/site-packages 或者 ~/.local/lib/python3.3/sitepackages。
+        当解释器启动时，.pth文件里列举出来的存在于文件系统的目录将被添加到sys.path安装一个.pth文件可能需要管理员权限，如果它被添加到系统级的Python解释器。
+        
+        讨论
+        比起费力地找文件，可能会倾向于写一个代码手动调节sys.path的值。例如:
+        
+        import sys
+        sys.path.insert(0, '/some/dir')
+        sys.path.insert(0, '/other/dir')
+        虽然这能“工作”，应尽量避免使用。这种方法的问题是，它将目录名硬编码到了源代码。
+        如果代码被移到一个新的位置，这会导致维护问题。
+        更好的做法是在不修改源代码的情况下，将path配置到其他地方。
+        如果您使用模块级的变量来精心构造一个适当的绝对路径，有时可以解决硬编码目录的问题，比如__file__。举个例子：
+        
+        import sys
+        from os.path import abspath, join, dirname
+        sys.path.insert(0, join(abspath(dirname(__file__)), 'src'))
+        这将src目录添加到path里，和执行插入步骤的代码在同一个目录里。
+        site-packages目录是第三方包和模块安装的目录。
+        如果手动安装代码，它将被安装到site-packages目录。
+        虽然用于配置path的.pth文件必须放置在site-packages里，但它配置的路径可以是系统上任何目录。
+        因此，可以把代码放在一系列不同的目录，只要那些目录包含在.pth文件里。
+        '''
+
+    通过字符串名导入模块 = '''
+        导入一个模块，但是模块的名字在字符串里。对字符串调用导入命令。
+
+        使用importlib.import_module()函数来手动导入,名字为字符串给出的一个模块或者包的一部分。
+        举个例子：
+        
+        >>> import importlib
+        >>> math = importlib.import_module('math')
+        >>> math.sin(2)
+        0.9092974268256817
+        >>> mod = importlib.import_module('urllib.request')
+        >>> u = mod.urlopen('http://www.python.org')
+        >>>
+        import_module只是简单地执行和import相同的步骤，但是返回生成的模块对象。只需要将其存储在一个变量，然后像正常的模块一样使用。
+        
+        如果正在使用的包，import_module()也可用于相对导入。但是，需要给它一个额外的参数。例如：
+        
+        import importlib
+        # Same as 'from . import b'
+        b = importlib.import_module('.b', __package__)
+
+        使用import_module()手动导入模块的问题通常出现在以某种方式编写修改或覆盖模块的代码时候。
+        例如，也许正在执行某种自定义导入机制，需要通过名称来加载一个模块，通过补丁加载代码。
+        '''
+
+    远程加载模块 = '''
+        http://python3-cookbook.readthedocs.io/zh_CN/latest/c10/p11_load_modules_from_remote_machine_by_hooks.html#
+        '''
+
+    创建新的Python环境 = '''
+        创建一个新的Python环境，用来安装模块和包。
+
+        可以使用 pyvenv 命令创建一个新的“虚拟”环境。 这个命令被安装在Python解释器同一目录，或Windows上面的Scripts目录中。下面是一个例子：
+        
+        bash % pyvenv Spam
+        bash %
+        传给 pyvenv 命令的名字是将要被创建的目录名。当被创建后，Span目录像下面这样：
+        
+        bash % cd Spam
+        bash % ls
+        bin include lib pyvenv.cfg
+        bash %
+        在bin目录中，会找到一个可以使用的Python解释器：
+        
+        bash % Spam/bin/python3
+        Python 3.3.0 (default, Oct 6 2012, 15:45:22)
+        [GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
+        Type "help", "copyright", "credits" or "license" for more information.
+        >>> from pprint import pprint
+        >>> import sys
+        >>> pprint(sys.path)
+        ['',
+        '/usr/local/lib/python33.zip',
+        '/usr/local/lib/python3.3',
+        '/usr/local/lib/python3.3/plat-darwin',
+        '/usr/local/lib/python3.3/lib-dynload',
+        '/Users/beazley/Spam/lib/python3.3/site-packages']
+        >>>
+        这个解释器的特点就是他的site-packages目录被设置为新创建的环境。 如果要安装第三方包，它们会被安装在那里，而不是通常系统的site-packages目录。
+
+        创建虚拟环境通常是为了安装和管理第三方包。 
+        默认情况下，虚拟环境是空的，不包含任何额外的第三方库。
+        如果将一个已经安装的包作为虚拟环境的一部分， 可以使用“–system-site-packages”选项来创建虚拟环境，例如：
+        
+        bash % pyvenv --system-site-packages Spam
+        bash %
+        '''
+
+    分发包 = '''
+        http://python3-cookbook.readthedocs.io/zh_CN/latest/c10/p15_distributing_packages.html#
+        '''
 
 def socket网络编程():
     '''Socket是 应用层与TCP/IP协议族 中间 用于通信的抽象层，它是一组接口。'''
@@ -3423,6 +4374,7 @@ def socket网络编程():
         '''
 
 def 并发():
+    '''http://www.liujiangblog.com/course/python/78'''
 
     def 进程():
         '''
@@ -3807,7 +4759,7 @@ def 并发():
     
                 def my_func(args):
                     """
-                    你可以把任何你想让线程做的事定义在这里
+                    可以把任何想让线程做的事定义在这里
                     """
                     pass
     
@@ -4002,14 +4954,15 @@ def 并发():
                 '''
 
     def 协程():
+        '''http://www.liujiangblog.com/course/python/83'''
         '''
         对于单线程下，不可避免程序中出现io操作.
         如果能在自己的程序中（即用户程序级别，而非操作系统级别）控制单线程下的多个任务能在一个任务遇到io阻塞时就切换到另外一个任务去计算，
         这样就保证了该线程能够最大限度地处于就绪态，即随时都可以被cpu执行的状态，
-        相当于我们在用户程序级别将自己的io操作最大限度地隐藏起来，表现出该线程好像是一直在计算，io比较少，从而更多的将cpu的执行权限分配给我们的线程。
+        相当于在用户程序级别将自己的io操作最大限度地隐藏起来，表现出该线程好像是一直在计算，io比较少，从而更多的将cpu的执行权限分配给线程。
 
         协程的本质就是在单线程下，由用户自己控制一个任务遇到io阻塞了就切换另外一个任务去执行，以此来提升效率。
-        为了实现它，我们需要找寻一种可以同时满足以下条件的解决方案：
+        为了实现它，需要找寻一种可以同时满足以下条件的解决方案：
         1. 可以控制多个任务之间的切换，切换之前将任务的状态保存下来，以便重新运行时，可以基于暂停的位置继续执行。
         2. 作为1的补充：可以检测io操作，在遇到io操作的情况下才发生切换
 
@@ -4180,6 +5133,58 @@ def 并发():
                 print('run time is %s' %(stop_time-start_time))
                 '''
 
+def 脚本与系统管理():
+
+    通过重定向或管道或文件接受输入 = '''
+        将命令行的输出通过管道传递给脚本、 重定向文件到脚本，或在命令行中传递一个文件名或文件名列表给脚本。
+        Python内置的 fileinput 模块让这个变得简单。如果有一个下面这样的脚本：
+        
+        #!/usr/bin/env python3
+        import fileinput
+        
+        with fileinput.input() as f_input:
+            for line in f_input:
+                print(line, end='')
+        那么就能以前面提到的所有方式来为此脚本提供输入。假设将此脚本保存为 filein.py 并将其变为可执行文件， 那么可以像下面这样调用它，得到期望的输出：
+        
+        $ ls | ./filein.py          # Prints a directory listing to stdout.
+        $ ./filein.py /etc/passwd   # Reads /etc/passwd to stdout.
+        $ ./filein.py < /etc/passwd # Reads /etc/passwd to stdout.
+        讨论
+        fileinput.input() 创建并返回一个 FileInput 类的实例。
+        该实例除了拥有一些有用的帮助方法外，它还可被当做一个上下文管理器使用。 
+        因此，整合起来，如果要写一个打印多个文件输出的脚本，那么需要在输出中包含文件名和行号，如下所示：
+        
+        >>> import fileinput
+        >>> with fileinput.input('/etc/passwd') as f:
+        >>>     for line in f:
+        ...         print(f.filename(), f.lineno(), line, end='')
+        ...
+        /etc/passwd 1 ##
+        /etc/passwd 2 # User Database
+        /etc/passwd 3 #
+        
+        <other output omitted>
+        通过将它作为一个上下文管理器使用，可以确保它不再使用时文件能自动关闭， 而在之后还演示了 FileInput 的一些有用的帮助方法来获取输出中的一些其他信息。
+        '''
+
+    终止程序并给出错误信息 = '''
+        向标准错误打印一条消息并返回某个非零状态码来终止程序运行
+        
+        一个程序像下面这样终止，抛出一个 SystemExit 异常，使用错误消息作为参数。例如：
+        
+        简单方便的写法：
+        raise SystemExit('It failed!')
+        它会将消息在 sys.stderr 中打印，然后程序以状态码1退出。
+        
+        麻烦的写法：
+        import sys
+        sys.stderr.write('It failed!\n')
+        raise SystemExit(1)
+        如果你直接将消息作为参数传给 SystemExit() ，那么你可以省略其他步骤。
+        '''
+
+
 def 常用模块():
 
     def collections模块():
@@ -4187,7 +5192,7 @@ def 常用模块():
 
         deque方法 = '''
             from collections import deque  # 双端队列
-            两端都可以操作的序列,在序列的前后你都可以执行添加或删除操作.
+            两端都可以操作的序列,在序列的前后都可以执行添加或删除操作.
             q=deque()           # 可以通过maxlen=3限制长度,当超过指定长度时,会移除最老的元素.默认不指定无长度限制.
             q.append(1)         # 在右边追加一个元素
             q.appendleft(0)     # 在左边追加一个元素
@@ -4383,8 +5388,8 @@ def 常用模块():
         sys.getfilesystemencoding() 获取文件系统使用编码方式,Windows下返回'mbcs',mac下返回'utf-8'.
         sys.stdin,sys.stdout,sys.stderr:
             stdin , stdout , 以及stderr 变量包含与标准I/O 流对应的流对象.
-            如果需要更好地控制输出,而print 不能满足你的要求, 它们就是你所需要的.
-            你也可以替换它们, 这时候你就可以重定向输出和输入到其它设备( device ), 或者以非标准的方式处理它们.
+            如果需要更好地控制输出,而print 不能满足的要求, 它们就是所需要的.
+            也可以替换它们, 这时候就可以重定向输出和输入到其它设备( device ), 或者以非标准的方式处理它们.
         '''
 
     def re模块():
@@ -4496,7 +5501,7 @@ def 常用模块():
                 re.M	多行匹配,影响 ^ 和 $
                 re.S	re.DOTALL   都可以使 . 匹配包括换行在内的所有字符
                 re.U	根据Unicode字符集解析字符.这个标志影响 \w, \W, \b, \B.
-                re.X	该标志通过给予你更灵活的格式以便你将正则表达式写得更易于理解.
+                re.X	该标志通过给予更灵活的格式以便将正则表达式写得更易于理解.
             匹配多行
                 text="/*  this is a 
                           multiline coment  */"
@@ -5005,7 +6010,7 @@ def 常用模块():
             subprocess.getoutput(cmd)
             参数详解:
             args: 用于加载该进程的参数,这可能是一个列表或一个字符串
-            shell: 如果shell为True,那么指定的命令将通过shell执行.如果我们需要访问某些shell的特性,如管道、文件名通配符、环境变量扩展功能,这将是非常有用的.
+            shell: 如果shell为True,那么指定的命令将通过shell执行.如果需要访问某些shell的特性,如管道、文件名通配符、环境变量扩展功能,这将是非常有用的.
             check: 如果check参数的值是True,且执行命令的进程以非0状态码退出,则会抛出一个CalledProcessError的异常,且该异常对象会包含 参数、退出状态码、以及stdout和stder
             stdout, stderr
             input: 该参数是传递给Popen.communicate(),通常该参数的值必须是一个字节序列,如果universal_newlines=True,则其值应该是一个字符串
@@ -5025,7 +6030,7 @@ def 常用模块():
         run方法 = '''
             Python 3.5中新增的函数.执行指定的命令,等待命令执行完成后返回一个包含执行结果的CompletedProcess类的实例.
             官方文档中提倡通过subprocess.run()函数替代其他函数来使用subproccess模块的功能.
-            run()函数默认不会捕获命令执行结果的正常输出和错误输出,如果我们向获取这些内容需要传递subprocess.PIPE,然后可以通过返回的CompletedProcess类实例的stdout和stderr属性或捕获相应的内容.
+            run()函数默认不会捕获命令执行结果的正常输出和错误输出,如果向获取这些内容需要传递subprocess.PIPE,然后可以通过返回的CompletedProcess类实例的stdout和stderr属性或捕获相应的内容.
             obj=subprocess.run("ping 127.0.0.1",shell=True,stdout=subprocess.PIPE)  # 如果不指定 输出,默认直接显示.
             obj -----> CompletedProcess(args='ping 127.0.0.1', returncode=0)
             obj.stdout          # 获取执行的结果是bytes类型的.
@@ -5043,7 +6048,7 @@ def 常用模块():
             '''
 
         getoutput方法 = '''
-            check_output()函数默认就会返回命令执行结果,所以不用设置stdout的值,如果我们希望在结果中捕获错误信息,可以执行stderr=subprocess.STDOUT.
+            check_output()函数默认就会返回命令执行结果,所以不用设置stdout的值,如果希望在结果中捕获错误信息,可以执行stderr=subprocess.STDOUT.
             以字符串的形式返回执行结果,错误或者正确都会返回,命令本身不会报错
             subprocess.getoutput('fdsfs') -----> '/bin/sh: fdsfs: command not found'
             '''
@@ -5059,7 +6064,7 @@ def 常用模块():
             直接使用Popen会对如何运行命令以及如何处理其输入输出有更多控制.如通过为stdin, stdout和stderr传递不同的参数.
             要将一个进程的执行输出作为另一个进程的输入.
             如果要先进到输入环境,再执行一系列的指令.就需要用suprocess.Popen()方法.
-            Popen对象创建后,主程序不会自动等待子进程完成.我们必须调用对象的wait()方法,父进程才会等待 (也就是阻塞block),
+            Popen对象创建后,主程序不会自动等待子进程完成.必须调用对象的wait()方法,父进程才会等待 (也就是阻塞block),
             该方法有以下参数:
             args:shell命令,可以是字符串,或者序列类型,如list,tuple.
             bufsize:指定缓存策略,0表示不缓冲,1表示行缓冲,其他大于1的数字表示缓冲区大小,负数 表示使用系统默认缓冲策略.
@@ -5469,155 +6474,20 @@ def 常用模块():
     def seocketserver模块():
         pass
 
-    def 模块和包():
-        '''
-        详见 http://www.cnblogs.com/Eva-J/articles/7292109.html#_label7
-        模块就是一个py文件
-        所谓的模块导入 就是执行了这个文件而已
-        import加载的模块分为四个通用类别：　
-        　　1 使用python编写的代码（.py文件）
-        　　2 已被编译为共享库或DLL的C或C++扩展
-        　　3 包好一组模块的包
-        　　4 内置模块
+    def imp模块():
+        pass
 
-        import
-        模块可以包含可执行的语句和函数的定义.
-        它们只在模块名第一次遇到导入import语句时才执行.
-        import语句是可以在程序中的任意位置使用的,且针对同一个模块可以import多次.
-        第一次导入后就将模块名加载到内存了，后续的import语句仅是对已经加载大内存中的模块对象增加了一次引用，不会重新执行模块内的语句
-        模块之间不能发生循环引用。
+    def urllib模块():
+        pass
 
-        我们可以从sys.modules中找到当前已经加载的模块。
-        sys.modules是一个字典，内部包含模块名与模块对象的映射，该字典决定了导入模块时是否需要重新导入。
+    def importlib模块():
+        pass
 
-        每个模块都是一个独立的名称空间
-        把这个模块的名称空间当做全局名称空间，这样我们在编写自己的模块时，就不用担心我们定义在自己模块中全局变量会在被导入时，与使用者的全局变量冲突
+    def pprint模块():
+        pass
 
-        首次导入模块my_module时会做三件事：
-        1.为源文件(my_module模块)创建新的名称空间。
-        2.在新创建的命名空间中执行模块中包含的代码事实上函数定义也是“被执行”的语句，模块级别函数定义的执行将函数名放入模块全局名称空间表，用globals()可以查看
-        3.创建名字my_module来引用该命名空间
-
-        为模块名起别名
-        import my_module as sm
-        from import 也支持 as语句 也支持 导入多个名字
-        from my_mod import func1 as f1,func2 as f2
-
-        例:
-        def sqlparse():
-            print('from mysql sqlparse')
-
-        def sqlparse():
-            print('from oracle sqlparse')
-
-        db_type=input('>>: ')
-        if db_type == 'mysql':
-            import mysql as db
-        elif db_type == 'oracle':
-            import oracle as db
-
-        例:
-        为已经导入的模块起别名的方式编写可扩展的代码.
-        假设有两个模块xmlreader.py和csvreader.py，它们都定义了函数read_data(filename):用来从文件中读取一些数据，但采用不同的输入格式。
-        可以编写代码来选择性地挑选读取模块，例如
-        if file_format == 'xml':
-             import xmlreader as reader
-        elif file_format == 'csv':
-             import csvreader as reader
-        data=reader.read_date(filename)
-
-        在一行导入多个模块
-        import sys,os,re
-        from ... import...
-
-        对比import my_module，会将源文件的名称空间'my_module'带到当前名称空间中，使用时必须是my_module.名字的方式
-        而from 语句相当于import，也会创建新的名称空间，但是将my_module中的名字直接导入到当前的名称空间中，在当前名称空间中，直接使用名字就可以了、
-        from my_module import read1,read2
-        这样在当前位置直接使用read1和read2就好了，执行时，仍然以my_module.py文件全局名称空间
-
-        如果当前有重名read1或者read2，那么会有覆盖效果。
-        python中的变量赋值不是一种存储操作，而只是一种绑定关系
-
-        from my_module import read1 as read
-        from my_module import (read1,
-                             read2,
-                             money)
-
-        from my_module import *     # 把my_module中所有的不是以下划线(_)开头的名字都导入到当前位置
-        from my_module import *     # 将模块my_module中所有的名字都导入到当前名称空间
-
-        在my_module.py中新增一行
-        __all__=['money','read1']   # 这样在另外一个文件中用from my_module import *就这能导入列表中规定的两个名字
-        如果my_module.py中的名字前加_,即_money，则from my_module import *,则_money不能被导入
-        每个模块只被导入一次,放入字典sys.modules中，如果你改变了模块的内容，你必须重启程序，python不支持重新加载或卸载之前导入的模块，
-
-        我们可以通过模块的全局变量__name__来查看模块名：
-        当做脚本运行：
-        __name__ 等于'__main__'
-
-        当做模块导入：
-        __name__= 模块名
-
-        模块搜索路径
-        python解释器在启动时会自动加载一些模块，可以使用sys.modules查看
-        在第一次导入某个模块时（比如my_module），会先检查该模块是否已经被加载到内存中（当前执行文件的名称空间对应的内存），如果有则直接引用
-        如果没有，解释器则会查找同名的内建模块，如果还没有找到就从sys.path给出的目录列表中依次寻找my_module.py文件。
-        模块的查找顺序是：内存中已经加载的模块->内置模块->sys.path路径中包含的模块
-
-        包:
-        一组py文件组成的文件夹，在这个文件夹里有一个__init__.py，包
-
-        import glance.api.policy as policy
-        policy.get()
-        import glance.api.policy
-        glance.api.policy.get()
-
-        from...import
-        from glance.api import policy
-        policy.get()
-
-        # 为什么模块的导入要从glance开始？
-        # 精确到一个模块
-
-
-        __init__文件有什么用？
-        导入一个包相当于执行这个包中的__init__ 文件
-        import后面的这个名字 永远会出现在全局的命名空间里
-
-        sys.path的初始化的值来自于：
-        需要特别注意的是：我们自定义的模块名不应该与系统内置模块重名。
-        在初始化后，python程序可以修改sys.path,路径放到前面的优先于标准库被加载。
-        import sys
-        sys.path.append('/a/b/c/d')
-        sys.path.insert(0,'/x/y/z') #排在前的目录，优先被搜索
-        注意：搜索时按照sys.path中从左到右的顺序查找，位于前的优先被查找。
-        sys.path中还可能包含.zip归档文件和.egg文件，python会把.zip归档文件当成一个目录去处理。
-
-        import sys
-        sys.path.append('module.zip')
-        import foo,bar
-
-        #也可以使用zip中目录结构的具体位置
-        sys.path.append('module.zip/lib/python')
-
-        #windows下的路径不加r开头，会语法错误
-        sys.path.insert(0,r'C:\Users\Administrator\PycharmProjects\a')
-        至于.egg文件是由setuptools创建的包，这是按照第三方python库和扩展时使用的一种常见格式，.egg文件实际上只是添加了额外元数据(如版本号，依赖项等)的.zip文件。
-        只能从.zip文件中导入.py，.pyc等文件。使用C编写的共享库和扩展块无法直接从.zip文件中加载（此时setuptools等打包系统有时能提供一种规避方法），且从.zip中加载文件不会创建.pyc或者.pyo文件，因此一定要事先创建他们，来避免加载模块是性能下降。
-        官网链接：https://docs.python.org/3/tutorial/modules.html#the-module-search-path
-        搜索路径：
-        当一个命名为my_module的模块被导入时
-            解释器首先会从内建模块中寻找该名字
-            找不到，则去sys.path中找该名字
-
-        sys.path从以下位置初始化
-        执行文件所在的当前目录
-        在支持软连接的文件系统中，执行脚本所在的目录是在软连接之后被计算的。
-        包含软连接的目录不会被添加到模块的搜索路径中
-        在初始化后，我们也可以在python程序中修改sys.path,执行文件所在的路径默认是sys.path的第一个目录。在所有标准库路径的前面。
-        当前目录是优先于标准库目录的
-        https://docs.python.org/3/library/compileall.html#module-compileall
-        '''
+    def fileinput模块():
+        pass
 
 def 生产工具():
 
@@ -5884,7 +6754,7 @@ def 题目详解():
     def globals_locals_dir_vars区别():
 
         globals函数 = '''
-            函数会以字典类型返回当前位置的全部全局变量.globals不会有局部变量的值,如果你在def或class中定义了某个变量,在全局中式没有的,即使你执行了函数,除非使用global 参数声明.
+            函数会以字典类型返回当前位置的全部全局变量.globals不会有局部变量的值,如果在def或class中定义了某个变量,在全局中式没有的,即使执行了函数,除非使用global 参数声明.
             '''
         locals函数 = '''
             会以字典类型返回当前位置的全部局部变量. 获取执行本方法所在命名空间内的局部变量的字典
@@ -6016,4 +6886,79 @@ def 使用参考():
         '''
 
 def 例子():
-    pass
+
+    爬虫实例一 = '''
+        import requests
+        from bs4 import BeautifulSoup
+        import sys
+        import time
+        
+        """
+        下载小说'一念永恒'
+        """
+        class downloader:
+            def __init__(self):
+                self.server = 'http://www.biqukan.com/'
+                self.target = 'http://www.biqukan.com/1_1094/'
+                self.names = []  # 不同章节的名称
+                self.urls = []  # 不同章节的网址
+                self.nums = 0  # 总章数
+        
+            """
+            获取不同章节的网址
+            """
+            def get_download_url(self):
+                req = requests.get(url=self.target)     # 发起请求
+                html = req.text     # 以文本形式打印网页源码
+                div_bf = BeautifulSoup(html, 'html.parser')  # 从HTML文件中提取数据 使用 html.parser解析器,返回美化后的数据
+                div = div_bf.find_all('div', class_='listmain')     #找到页面中 class名是 lismain的 div 标签，返回的是一个列表。
+                a_bf = BeautifulSoup(str(div[0]), 'html.parser')    # 将标签再次 解析
+                a = a_bf.find_all('a')      #找到div 下面所有的a 标签 a是一个<class 'bs4.element.ResultSet'>  help(a)
+                self.nums = len(a[15:])  # 删除不必要的章节 删掉 外传和非正文的标签
+                for each in a[15:]:             # each 是一个 <class 'bs4.element.Tag'>
+                    # print(help(each))
+                    # each.string 获取这个标签中的单个字符串。
+                    # 如果此标签具有单个字符串子元素,这个个字符串.如果这个标签没有子标签
+                    # 如果不止一个子标签,返回值是None。
+                    # 如果这个标签有一个子标签,返回值是子标记的'string'属性,递归.
+                    self.names.append(each.string)
+                    # each.get 返回标记的'key'属性值，或如果没有，则给出'默认'的值 属性。
+                    self.urls.append(self.server + each.get('href'))    # 将跳转的url 与 根url 拼接。 /1_1094/17817978.html
+        
+            """
+            获取每章的内容
+            """
+            def get_contents(self, target):
+                """
+                :param target: url
+                :return: str
+                """
+                req = requests.get(url=target)      # 发起请求
+                html = req.text                     # 以文本形式打印网页源码
+                bf = BeautifulSoup(html, 'html.parser')         # 从HTML文件中提取数据 使用 html.parser解析器,返回美化后的数据
+                texts = bf.find_all('div', class_='showtxt')        # 找到 div 名字是showtxt的标签
+                texts = texts[0].text.replace('\xa0'*8, '\n\n')     # \xa0 是不间断空白符 用8个空格代替两个换行符。
+                return texts        # 返回文本
+        
+            """
+            将内容放入文件中
+            """
+            def writer(self, name, path, text):
+                write_flag = True
+                with open(path, 'a', encoding='utf-8') as f:
+                    f.write(name + '\n')
+                    f.writelines(text)
+                    f.write('\n\n')
+        
+        if __name__ == '__main__':
+            dl = downloader()
+            dl.get_download_url()
+            print('Start downloading')
+            for i in range(dl.nums):
+                # dl.names[i]章节名列表，i 是索引值。 'contents/YI_NIAN_YONG_HENG.txt' 指 存储的文本。每个章节的内容。
+                dl.writer(dl.names[i], 'contents/YI_NIAN_YONG_HENG.txt', dl.get_contents(dl.urls[i]))
+                sys.stdout.write("  Already downloaded:%.3f%%" % float(i/dl.nums) + '\r')
+                sys.stdout.flush()
+                time.sleep(1)
+            print('Downloading completed ')
+    '''
