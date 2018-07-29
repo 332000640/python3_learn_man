@@ -3,20 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/GitHub项目.iml" filepath="$PROJECT_DIR$/.idea/GitHub项目.iml" />
-      <module fileurl="file://E:/asrmonitor/.idea/asrmonitor.iml" filepath="E:/asrmonitor/.idea/asrmonitor.iml" />
-      <module fileurl="file://E:/login_register/.idea/login_register.iml" filepath="E:/login_register/.idea/login_register.iml" />
-      <module fileurl="file://E:/monitor/.idea/monitor.iml" filepath="E:/monitor/.idea/monitor.iml" />
-      <module fileurl="file://E:/myechartsite/.idea/myechartsite.iml" filepath="E:/myechartsite/.idea/myechartsite.iml" />
-      <module fileurl="file://E:/newlearn/.idea/oldboy.iml" filepath="E:/newlearn/.idea/oldboy.iml" />
-      <module fileurl="file://$USER_HOME$/Desktop/金牌话术源码/金牌话术源码/speak-art_latest_20180613/.idea/speak-art_latest_20180613.iml" filepath="$USER_HOME$/Desktop/金牌话术源码/金牌话术源码/speak-art_latest_20180613/.idea/speak-art_latest_20180613.iml" />
-      <module fileurl="file://E:/surveillance/.idea/surveillance.iml" filepath="E:/surveillance/.idea/surveillance.iml" />
-      <module fileurl="file://E:/vote/.idea/vote.iml" filepath="E:/vote/.idea/vote.iml" />
-      <module fileurl="file://E:/zabbix 出图项目/.idea/zabbix 出图项目.iml" filepath="E:/zabbix 出图项目/.idea/zabbix 出图项目.iml" />
-      <module fileurl="file://E:/zabbix-monitor-master/.idea/zabbix-monitor-master.iml" filepath="E:/zabbix-monitor-master/.idea/zabbix-monitor-master.iml" />
-      <module fileurl="file://$USER_HOME$/Desktop/脚本/zabbix_api/zabbix_api/.idea/zabbix_api - 副本.iml" filepath="$USER_HOME$/Desktop/脚本/zabbix_api/zabbix_api/.idea/zabbix_api - 副本.iml" />
-      <module fileurl="file://E:/zabbix_echarts/.idea/zabbix_echarts.iml" filepath="E:/zabbix_echarts/.idea/zabbix_echarts.iml" />
-      <module fileurl="file://E:/zk_monitor/.idea/zk_monitor.iml" filepath="E:/zk_monitor/.idea/zk_monitor.iml" />
-      <module fileurl="file://E:/爬虫/.idea/爬虫.iml" filepath="E:/爬虫/.idea/爬虫.iml" />
+      <module fileurl="file://E:/laoqi/.idea/laoqi.iml" filepath="E:/laoqi/.idea/laoqi.iml" />
+      <module fileurl="file://E:/mysite/.idea/mysite.iml" filepath="E:/mysite/.idea/mysite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../newlearn/.idea/newlearn.iml" filepath="$PROJECT_DIR$/../newlearn/.idea/newlearn.iml" />
+      <module fileurl="file://E:/前端笔记/.idea/前端笔记.iml" filepath="E:/前端笔记/.idea/前端笔记.iml" />
     </modules>
   </component>
 </project>

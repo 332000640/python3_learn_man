@@ -7,6 +7,9 @@
 # Version : 1
 
 def 更新日志():
+    log_2018_07_29 = '''
+        补充pymysql
+        '''
     log_2018_06_24 = '''
         完善类与对象。完成包。
         '''
@@ -2393,9 +2396,6 @@ def 类与对象():
                 B.echo('lisi')
                 '''
 
-        def overload方法():
-            '''pass'''
-
     def 元类():
 
         元类 = '''
@@ -3057,7 +3057,65 @@ def 类与对象():
             '''
 
     def type和object的关系():
-        '''pass'''
+        '''
+        object类是所有新式类的父类。
+        type是所有类的类。
+        在python里要查看一个类型的父类，使用它的__bases__属性可以查看。
+        在python里要查看一个实例的类型，使用它的__class__属性可以查看，或者使用type()函数查看。
+        type和object：
+        object -----> <type 'object'>
+        type -----> <type 'type'>
+        它们都是type的一个实例，表示它们都是类型对象。
+        object是父子关系的顶端，所有的数据类型的父类都是它；
+        type是类型实例关系的顶端，所有对象都是它的实例的。
+        它们两个的关系可以这样描述：object是一个type，Object是type的一个实例。
+        object.__class__ -----> <type 'type'>
+        object.__bases__ -----> ()
+        object 无父类，因为它是链条顶端。type是一种object，Type是object的子类。
+        type.__bases__ -----> (<type 'object'>,)
+        type.__class__ -----> <type 'type'>
+        type的类型是自己<type 'type'>
+
+        引入list, dict, tuple 这些内置数据类型来看看
+        list.__bases__ -----> (<type 'object'>,)
+        list.__class__ -----> <type 'type'>
+        dict.__bases__ -----> (<type 'object'>,)
+        dict.__class__ -----> <type 'type'>
+        tuple.__class__ -----> <type 'type'>
+        tuple.__bases__ -----> (<type 'object'>,)
+        它们的父类都是object，类型都是type。
+
+        再实例化一个list看看：
+        mylist = [1,2,3]
+        mylist.__class__ -----> <type 'list'>
+        mylist.__bases__
+        实例化的list的类型是<type 'list'>, 而没有了父类。
+
+        class C(object):
+            pass
+        C.__class__ -----> <type 'type'>
+        C.__bases__ -----> (<type 'object'>,)
+        实例化
+        c = C()
+        c.__class__ -----> <class '__main__.C'>
+        c.__bases__ 这个实例化的C类对象也是没有父类的属性的
+        只需要继承type就可以定义类：
+        class M(type):
+            pass
+        M.__class__<type 'type'>
+        M.__bases__(<type 'type'>,)
+        M类的类型和父类都是type。
+        创建了一个元类，MetaClass！即类的类。
+        如果你要实例化一个元类，那还是得定义一个类：
+        class TM(object):
+         	__metaclass__ = M    # 这样来指定元类。
+        TM.__class__ -----> <class '__main__.M'>
+        # 这个类不再是type类型，而是M类型的。
+        TM.__bases__ -----> (<type 'object'>,)
+        type是所有元类的父亲。我们可以通过继承type来创建元类
+        object是所有类的父亲，
+        实例是对象关系链的末端，不能再被子类化和实例化。
+        '''
 
     def 类的使用():
 
@@ -5184,6 +5242,9 @@ def 脚本与系统管理():
         如果你直接将消息作为参数传给 SystemExit() ，那么你可以省略其他步骤。
         '''
 
+    解析命令行参数 = '''
+        http://python3-cookbook.readthedocs.io/zh_CN/latest/c13/p03_parsing_command_line_options.html
+        '''
 
 def 常用模块():
 
@@ -5642,7 +5703,44 @@ def 常用模块():
             '''
 
         wraps='''
-            pass
+            当你使用装饰器时，你正在用另一个替换一个函数。
+            def logged(func):
+                def with_logging(*args, **kwargs):
+                    print func.__name__ + " was called"
+                    return func(*args, **kwargs)
+                return with_logging
+            
+            @logged
+            def f(x):
+               """does some math"""
+               return x + x * x
+            
+            def f(x):
+                """does some math"""
+                return x + x * x
+            f = logged(f)
+
+            print (f.__name__)
+            它会打印，with_logging因为这是你的新功能的名称。如果查看f.__doc__，它将是空白的，因为with_logging没有文档字符串，因此写入的文档字符串将不再存在。
+
+            如果使用装饰器意味着丢失关于某个函数的信息。functools.wraps。这是需要一个在装饰器中使用的函数，并在函数名称，docstring，参数列表等中添加复制功能。
+            由于wraps它本身就是一个装饰器，因此下面的代码会执行正确的操作：
+            
+            from functools import wraps
+            def logged(func):
+                @wraps(func)
+                def with_logging(*args, **kwargs):
+                    print func.__name__ + " was called"
+                    return func(*args, **kwargs)
+                return with_logging
+            
+            @logged
+            def f(x):
+               """does some math"""
+               return x + x * x
+            
+            print f.__name__  # prints 'f'
+            print f.__doc__   # prints 'does some math'
             '''
 
     def fnmatch模块():
@@ -6438,10 +6536,17 @@ def 常用模块():
             '''
 
     def copy模块():
-        '''pass'''
+        import copy
+        copy = '''
+            浅拷贝只能拷贝最外层，修改内层则原列表和新列表都会变化
+            '''
+
+        deepcopy = '''
+            深拷贝是指将原列表完全克隆一份新的
+            '''
 
     def tempfile模块():
-        pass
+        '''详见 https://docs.python.org/3.5/library/tempfile.html'''
 
     def virtualenv模块():
         pass
@@ -6488,6 +6593,104 @@ def 常用模块():
 
     def fileinput模块():
         pass
+
+    def argparse模块():
+        pass
+
+    def shutil模块():
+        '''
+        提供高级文件访问功能
+        import shutil
+        shutil.copyfile('data.db', 'archive.db')             # 拷贝文件
+        shutil.move('/build/executables', 'installdir')      # 移动文件或目录
+        '''
+
+    def glob模块():
+        '''
+        # 查找当前目录下py结尾的文件
+        import glob
+        glob.glob('*.py')
+        '''
+
+    def psutil模块():
+        '''
+        获取系统信息
+        pip install psutil                     # 安装
+        import psutil
+        dir(psutil)
+        psutil.boot_time()                     # 开机时间
+        psutil.virtual_memory()                # 内存详细信息
+        psutil.virtual_memory().total          # 内存总大小
+        psutil.disk_partitions()               # 获取磁盘信息
+        psutil.disk_io_counters()              # 磁盘IO信息
+        psutil.net_io_counters()               # 获取网络IO信息
+
+        psutil.pids()                          # 返回所有进程PID
+        psutil.Process(PID)                    # 获取进程信息
+        psutil.Process(PID).name()             # 指定进程的进程名
+        psutil.Process(PID).exe()              # 进程的路径
+        psutil.Process(PID).cwd()              # 进程工作路径
+        psutil.Process(PID).status()           # 进程状态
+        psutil.Process(PID).create_time()      # 进程创建时间
+        psutil.Process(PID).memory_percent()   # 进程内存使用率
+        psutil.Process(PID).io_counters()      # 进程IO信息
+        psutil.Process(PID).num_threads()      # 进程线程数
+        '''
+
+    def pymysql模块():
+        '''
+        import pymysql
+        # 建立链接
+        d={'host':'1.1.1.1',
+           'port':3306,
+           'user':'lisi',
+           'password':'123456',
+           'db':'a',
+           'charset':'utf8'}
+        # 第一种方式传入字典
+        conn = pymysql.connect(**d)
+        # 第二种关键字参数的形式
+        conn = pymysql.connect(host='1.1.1.1',port=3306,user='lisi',password='123456',db='a',charset='utf8')
+        # 实例化游标 以字典的形式
+        cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
+
+        # execute 后面可以跟执行的sql语句，和SQL语句里面的参数。参数可以是一个字符串，一个列表，元组或字典。返回的是受影响的表的条数。
+        sql="select * from a.t1 where id > %s"
+        ret=cursor.execute(sql,0)
+        # 或
+        ret=cursor.execute(sql,[0])
+        # 或
+        sql="select * from a.t1 where id > %(id)s"
+        ret=cursor.execute(sql,{'id':0})
+
+        # 查:fetchone fetchmany fetchall
+        # fetchone 获取下一行数据，第一次为首行
+        # 查询第一行的数据 返回第一行的数据
+        row = cursor.fetchone()
+        # 查询下一行的数据 返回下一行的数据
+        row = cursor.fetchone()
+        # fetchmany 获取指定行数据
+        # 获取2条数据
+        rows = cursor.fetchmany(2)
+        # fetchall 获取所有行数据源
+        # 获取所有的数据
+        rows = cursor.fetchall()
+
+        # 移动行指针 第一个值为移动的行数，整数为向下移动，负数为向上移动，mode指定了是相对当前位置移动，还是相对于首行移动
+        # 相对当前位置移动
+        cursor.scroll(1,mode='relative')
+        # 相对绝对位置移动
+        cursor.scroll(2,mode='absolute')
+
+        #增、删、改：conn.commit() 在数据库里增、删、改的时候，必须要进行提交，否则插入的数据不生效。
+        sql="insert into a.t1 VALUES (6,'f')"
+        cursor.execute(sql)
+        conn.commit()
+
+        #最后关闭游标和链接
+        cursor.close()
+        conn.close()
+        '''
 
 def 生产工具():
 
@@ -6783,7 +6986,7 @@ def 题目详解():
         '''
 
     def __repr__和__str__区别():
-        pass
+        '''见类与对象中特殊成员'''
 
     def 类的题目():
         '''
@@ -6874,6 +7077,7 @@ def 使用参考():
         os.system: 只能显示在屏幕上,返回的是命令的执行状态.
         os.popen: 内部其实是调用的subprocess.pope方法.
         subprocess.pope: 详见subprocess模块
+        http://python3-cookbook.readthedocs.io/zh_CN/latest/c13/p06_executing_external_command_and_get_its_output.html
         commands.getstatusoutput: python3 中已经废弃,详见 commands模块
         sh: 第三方模块,用于替代subprocess 模块.详见,https://github.com/amoffat/sh
         '''
